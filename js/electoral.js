@@ -1,8 +1,8 @@
 /* ── electoral.js ── Dashboard Electoral Querétaro ── */
 
 const ARCHIVOS = {
-    ayuntamiento: { '2024': 'data/Ayuntamientos_2024.csv', '2021': 'data/Ayuntamientos_2021.csv', '2018': 'data/Ayuntamientos_2018.csv' },
-    gobernatura:  { '2021': 'data/Gubernatura_2021.csv' }
+    ayuntamiento: { '2024': 'jsons/Ayuntamientos_2024.json', '2021': 'jsons/Ayuntamientos_2021.json', '2018': 'jsons/Ayuntamientos_2018.json' },
+    gobernatura:  { '2021': 'jsons/Gubernatura_2021.json' }
 };
 const GEOJSON_MAP = {
     ayuntamiento: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' },
@@ -51,25 +51,9 @@ function iconosPartido(partido, size = 32) {
     return `<span class="p-icon-dot" style="background:${color};width:${size}px;height:${size}px;"></span>`;
 }
 
-// ── CSV ──
+// ── JSON ──
 async function cargarCSV(url) {
-    const text = await (await fetch(url)).text();
-    const lines = text.split('\n').filter(l => l.trim());
-    const headers = parseCSVLine(lines[0]);
-    return lines.slice(1).map(line => {
-        const vals = parseCSVLine(line), obj = {};
-        headers.forEach((h,i) => obj[h] = vals[i] || '');
-        return obj;
-    });
-}
-function parseCSVLine(line) {
-    const r = []; let cur = '', q = false;
-    for (const ch of line) {
-        if (ch === '"') q = !q;
-        else if (ch === ',' && !q) { r.push(cur.trim()); cur = ''; }
-        else cur += ch;
-    }
-    r.push(cur.trim()); return r;
+    return (await fetch(url)).json();
 }
 
 // ── Filtros ──
