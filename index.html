@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados Electorales - Querétaro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <script src="js/theme.js"></script>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<header class="top-bar">
+    <div class="top-bar-inner">
+        <div class="brand-logo">
+            <img src="images/logo.png" alt="Metrix" class="brand-img brand-img-dark">
+            <img src="images/metrixSinfondo.png" alt="Metrix" class="brand-img brand-img-light">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.1rem;flex:1;">
+            <h1 class="dashboard-title">RESULTADOS ELECTORALES</h1>
+            <span id="dashboard-subtitle" class="dashboard-subtitle">Querétaro</span>
+        </div>
+        <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar tema">☀</button>
+        <img src="images/heraldica-para-pag-web-01_180x180px.png" alt="Escudo" class="brand-escudo">
+    </div>
+</header>
+
+<!-- ── FILTROS ── -->
+<div class="filtros-bar">
+    <div class="filtros-inner">
+        
+        <div class="filtro-grupo">
+            <label class="filtro-label">Elección</label>
+            <select id="filtro-eleccion" class="filtro-select">
+                <option value="ayuntamiento">Ayuntamiento</option>
+                <option value="gobernatura">Gobernatura</option>
+            </select>
+        </div>
+        <div class="filtro-grupo">
+            <label class="filtro-label">Año</label>
+            <select id="filtro-anio" class="filtro-select"></select>
+        </div>
+        <div class="filtro-grupo">
+            <label class="filtro-label">Municipio</label>
+            <select id="filtro-municipio" class="filtro-select"><option value="">Todos</option></select>
+        </div>
+        <div class="filtro-grupo">
+            <label class="filtro-label">Sección</label>
+            <select id="filtro-seccion" class="filtro-select"><option value="">Todas</option></select>
+        </div>
+        <button id="filtro-limpiar" class="filtro-btn-limpiar">Limpiar</button>
+    </div>
+</div>
+
+<!-- ── KPIs ── -->
+<div class="container kpi-wrapper">
+    <div class="kpi-grid">
+        <div class="kpi-card kpi-card--invitados">
+            <div class="kpi-body"><span class="kpi-label">Lista Nominal</span><span class="kpi-value" id="kpi-lista-nominal">—</span></div>
+            <div class="kpi-accent-bar kpi-accent-bar--invitados"></div>
+        </div>
+        <div class="kpi-card kpi-card--asistentes">
+            <div class="kpi-body"><span class="kpi-label">Votos Emitidos</span><span class="kpi-value" id="kpi-votos-emitidos">—</span></div>
+            <div class="kpi-accent-bar kpi-accent-bar--asistentes"></div>
+        </div>
+        <div class="kpi-card kpi-card--ausentes">
+            <div class="kpi-body"><span class="kpi-label">Votos Nulos</span><span class="kpi-value" id="kpi-votos-nulos">—</span></div>
+            <div class="kpi-accent-bar kpi-accent-bar--ausentes"></div>
+        </div>
+        <div class="kpi-card kpi-card--efectividad">
+            <div class="kpi-body"><span class="kpi-label">Participación</span><span class="kpi-value" id="kpi-participacion">—</span></div>
+            <div class="kpi-accent-bar kpi-accent-bar--efectividad"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ── MAIN: top candidatos + partidos + mapa ── -->
+<main class="container">
+    <div class="electoral-main-grid">
+
+        <!-- TOP CANDIDATOS: 3 tarjetas verticales -->
+        <div class="col-candidatos">
+            <h2 class="section-title">TOP CANDIDATOS</h2>
+            <div id="top-ganadores" class="top-ganadores-row"></div>
+        </div>
+
+        <!-- VOTOS POR PARTIDO -->
+        <div class="col-partidos">
+            <h2 class="section-title">VOTOS POR PARTIDO POLÍTICO</h2>
+            <div id="partidos-grid" class="partidos-grid-2col"></div>
+        </div>
+
+        <!-- MAPA PLOTLY -->
+        <div class="col-mapa">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <h2 class="section-title" style="margin-bottom:0;">DISTRIBUCIÓN DE SECCIONES GANADAS</h2>
+                <select id="mapa-vista" class="filtro-select" style="min-width:auto;font-size:0.72rem;padding:0.35rem 0.6rem;">
+                    <option value="secciones">Secciones</option>
+                    <option value="municipios">Municipios</option>
+                </select>
+            </div>
+            <div id="mapa-electoral" style="width:100%;height:520px;"></div>
+        </div>
+
+    </div>
+
+    <!-- Gráfica y tabla -->
+    <section class="section" style="margin-top:2rem;">
+        <h2 class="section-title">Distribución de Votos</h2>
+        <div class="chart-card"><div id="chart-barras" style="width:100%;height:340px;"></div></div>
+    </section>
+    <section class="section">
+        <h2 class="section-title">Resultados por Sección</h2>
+        <div class="chart-card"><div id="tabla-secciones" class="tabla-electoral"></div></div>
+    </section>
+</main>
+
+<footer class="footer"><span>Resultados Electorales · Querétaro · Metrix 2026</span></footer>
+
+<script src="js/electoral.js"></script>
+</body>
+</html>
