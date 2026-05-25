@@ -793,8 +793,7 @@ body {
 }
 
 /* â”€â”€ THEME-AWARE LOGO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-[data-theme="dark"] .brand-img-light { display: none; }
-/* light: brand-img overrides are in the light-mode block below */
+/* ── THEME-AWARE LOGO ── single logo for both themes */
 
 .page-nav-btn {
     background: transparent;
@@ -1395,8 +1394,7 @@ body {
 
 [data-theme="light"] .brand-divider { background: rgba(80, 140, 20, 0.20); }
 
-/* En light mode mostrar logo oscuro, ocultar el blanco */
-[data-theme="light"] .brand-img-dark  { display: none; }
+/* Single logo used in both themes */
 
 [data-theme="light"] .page-nav-btn {
     border-color: rgba(80, 140, 20, 0.30);
@@ -2173,6 +2171,127 @@ body {
 
 /* ── DASHBOARD ELECTORAL ──────────────────────────────────────────────────── */
 
+/* ── Single logo for both themes ── */
+.brand-img-single {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+/* logos por tema */
+.brand-img-light { display: block; }
+.brand-img-dark  { display: none;  }
+[data-theme="dark"] .brand-img-light { display: none;  }
+[data-theme="dark"] .brand-img-dark  { display: block; }
+
+/* ── Centered enlarged title ── */
+.top-bar-inner {
+    justify-content: flex-start;
+}
+.dashboard-title {
+    flex: 1;
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+/* ── Filter search and checkbox ── */
+.filtro-grupo-search {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+}
+.filtro-search-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.filtro-search-input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.78rem;
+    padding: 0.22rem 0.6rem;
+    outline: none;
+    transition: border-color 0.18s ease;
+}
+.filtro-search-input:focus { border-color: var(--accent-1); }
+.filtro-search-input::placeholder { color: var(--text-muted); }
+[data-theme="light"] .filtro-search-input { background: rgba(0,0,0,0.04); color: var(--text-primary); }
+
+.filtro-checkbox {
+    accent-color: var(--accent-1);
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 0.4rem;
+}
+
+/* ── KPI new layout: digit above label, larger digit ── */
+.kpi-card {
+    padding: 0.9rem 1.1rem;
+    position: relative;
+}
+.kpi-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+.kpi-value {
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 800;
+    order: -1;
+}
+.kpi-label {
+    font-size: 0.68rem;
+    order: 1;
+}
+.kpi-grid {
+    gap: 1.5rem;
+}
+
+/* ── KPI help button ── */
+.kpi-help {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-1);
+    color: var(--accent-1);
+    font-size: 0.65rem;
+    font-weight: 700;
+    cursor: help;
+    user-select: none;
+}
+[data-theme="light"] .kpi-help { border-color: #267e28; color: #267e28; }
+
+/* ── KPI color variants ── */
+.kpi-card--lista-nominal .kpi-value { color: #9ca3af; }
+.kpi-card--votos-emitidos .kpi-value { color: #7bc11d; }
+.kpi-card--votos-nulos .kpi-value { color: #ef4444; }
+.kpi-card--participacion .kpi-value { color: #7bc11d; } /* dynamic via JS */
+
+[data-theme="light"] .kpi-card--lista-nominal .kpi-value { color: #6b7280; }
+[data-theme="light"] .kpi-card--votos-emitidos .kpi-value { color: #267e28; }
+[data-theme="light"] .kpi-card--votos-nulos .kpi-value { color: #dc2626; }
+
+/* ── KPI accent bars ── */
+.kpi-card--lista-nominal .kpi-accent-bar { background: linear-gradient(90deg, #6b7280, #9ca3af); }
+.kpi-card--votos-emitidos .kpi-accent-bar { background: linear-gradient(90deg, #7bc11d, #a3e635); }
+.kpi-card--votos-nulos .kpi-accent-bar { background: linear-gradient(90deg, #ef4444, #f87171); }
+.kpi-card--participacion .kpi-accent-bar { background: linear-gradient(90deg, #7bc11d, #a3e635); }
+
 .filtro-select {
     background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
     color: var(--text-primary); padding: 0.5rem 0.8rem; font-size: 0.82rem;
@@ -2186,15 +2305,16 @@ body {
     display: grid;
     grid-template-columns: 1.4fr 0.8fr 1.3fr;
     gap: 1.2rem;
-    align-items: start;
+    align-items: stretch;
 }
-.col-candidatos { grid-column: auto; }
+.col-candidatos { grid-column: auto; display: flex; flex-direction: column; }
 
 /* ── Tarjetas de candidatos en fila horizontal ── */
 .top-ganadores-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.6rem;
+    flex: 1;
 }
 
 .candidato-card {
@@ -2207,12 +2327,15 @@ body {
     padding: 0 0 0.9rem;
     text-align: center;
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 .candidato-card:hover { transform: translateY(-2px); }
 
 .candidato-foto-wrap {
     width: 100%;
-    aspect-ratio: 2/3;
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
     background: var(--bg-paper);
 }
@@ -2223,6 +2346,10 @@ body {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
     background: linear-gradient(160deg, var(--bg-paper) 0%, var(--bg-card) 100%);
+    overflow: hidden; border-radius: inherit;
+}
+.candidato-foto-img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: inherit;
 }
 .candidato-foto-num {
     font-family: var(--font-display); font-size: 2.5rem; font-weight: 800;
@@ -2249,7 +2376,7 @@ body {
 }
 
 /* ── Iconos de partido ── */
-.p-icon { border-radius: 50%; object-fit: contain; }
+.p-icon { border-radius: 4px; object-fit: contain; }
 .p-icon-dot { display: inline-block; border-radius: 50%; }
 
 /* ── Partidos grid 2 columnas ── */
@@ -2315,4 +2442,102 @@ body {
     .electoral-main-grid { grid-template-columns: 1fr; }
     .top-ganadores-row { grid-template-columns: 1fr 1fr 1fr; }
     .partidos-grid-2col { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── Square party icons (not circular) ── */
+.p-icon-square {
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+/* ── Candidato card: bold labels, regular values ── */
+.candidato-nombre {
+    font-size: 0.78rem;
+    color: var(--text-primary);
+    margin: 0.2rem 0 0.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.candidato-partido-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.candidato-stat-label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+.candidato-stat-val {
+    font-weight: 400;
+    font-size: 0.82rem;
+    font-family: var(--font-main);
+}
+
+/* ── Section titles bold ── */
+.section-title {
+    font-weight: 700;
+}
+
+/* ── Table headers bold ── */
+.electoral-table th {
+    font-weight: 700;
+}
+
+/* ── Chart controls bar ── */
+.chart-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.chart-controls-left, .chart-controls-right {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+
+/* ── Fullscreen button ── */
+.mapa-fs-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s;
+}
+.mapa-fs-btn:hover { border-color: var(--accent-1); color: var(--text-primary); }
+
+/* ── Fullscreen map ── */
+.col-mapa:fullscreen {
+    background: var(--bg-base);
+    padding: 1rem;
+}
+.col-mapa:fullscreen #mapa-electoral {
+    height: calc(100vh - 60px) !important;
+}
+
+/* ── Partidos grid 2x4 ── */
+.partidos-grid-2col {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    flex: 1;
+    min-height: 0;
+}
+.partido-card-v2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+}
+.col-partidos {
+    display: flex;
+    flex-direction: column;
 }

@@ -1,0 +1,153 @@
+{
+  "gobernatura": {
+    "2021": {
+      "PAN": { "nombre": "Mauricio Kuri González", "foto": "images/candidatos/candidatos-img-main/Gob_2021/mauricio_gonzalez.jpg" },
+      "PAN_QI": { "nombre": "Mauricio Kuri González", "foto": "images/candidatos/candidatos-img-main/Gob_2021/mauricio_gonzalez.jpg" },
+      "MORENA": { "nombre": "Celia Maya García", "foto": "images/candidatos/candidatos-img-main/Gob_2021/celia_garcia.jpg" },
+      "PRI": { "nombre": "Abigail Arredondo Ramos", "foto": "images/candidatos/candidatos-img-main/Gob_2021/abigail_ramos.jpg" },
+      "MC": { "nombre": "Katia Reséndiz Ríos", "foto": "images/candidatos/candidatos-img-main/Gob_2021/katia_jaime.jpg" },
+      "PVEM": { "nombre": "Beatriz Sotelo", "foto": "images/candidatos/candidatos-img-main/Gob_2021/beatriz_sotelo.jpg" },
+      "PT": { "nombre": "Miguel Alvarado", "foto": "images/candidatos/candidatos-img-main/Gob_2021/miguel_alvarado.jpg" },
+      "PES": { "nombre": "Juan Rodríguez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/juan_rodriguez.jpg" },
+      "RSP": { "nombre": "Penélope Manríquez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/penelope_manriquez.jpg" },
+      "FxM": { "nombre": "María Silva", "foto": "images/candidatos/candidatos-img-main/Gob_2021/maria_silva.jpg" },
+      "QI": { "nombre": "Raquel Álvarez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/raquel_alvarez.jpg" }
+    }
+  },
+  "ayuntamiento": {
+    "2024": {
+      "_default": {
+        "MC": { "nombre": "Felifer Macías Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/felipe_olvera.jpg" },
+        "PAN-PRI-PRD": { "nombre": "Dorantes Macías", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
+        "PAN-PRI": { "nombre": "Dorantes Macías", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" }
+      },
+      "QUERETARO": {
+        "MC": { "nombre": "Felifer Macías Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/felipe_olvera.jpg" },
+        "PAN-PRI-PRD": { "nombre": "Paulina Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/paulina_romero.jpg" },
+        "PAN-PRI": { "nombre": "Paulina Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/paulina_romero.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" },
+        "PVEM-MORENA": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" },
+        "QS": { "nombre": "Agnoli Rosales", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/agnoli_rosales.jpg" }
+      },
+      "CORREGIDORA": {
+        "MC": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/roberto_valencia.jpg" },
+        "PAN-PRI": { "nombre": "Diana Rubio", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/diana_rubio.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Carolina Cruz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/carolina_cruz.jpg" }
+      },
+      "EL MARQUES": {
+        "MC": { "nombre": "Rodrigo Monsalvo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/rodrigo_castelan.jpg" },
+        "PAN-PRI": { "nombre": "Sergio Gómez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sergio_gomez.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Reyna García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/reyna_garcia.jpg" }
+      },
+      "SAN JUAN DEL RIO": {
+        "MC": { "nombre": "Roberto Cabrera Valencia", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/roberto_valencia.jpg" },
+        "PAN-PRI": { "nombre": "Juan Cabrera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/juan_cabrera.png" },
+        "PVEM-MORENA-PT": { "nombre": "Liz Pérez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/liz_perez.jpg" }
+      },
+      "AMEALCO DE BONFIL": {
+        "MC": { "nombre": "Jesús Balderas", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
+        "PAN-PRI": { "nombre": "Miriam Anaya", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miriam_anaya.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Guadalupe Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/guadalupe_romero.jpg" }
+      },
+      "COLON": {
+        "MC": { "nombre": "Alejandro Ochoa", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
+        "PAN-PRI": { "nombre": "Miguel Peñaloza", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miguel_penaloza.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Efraín Cosme", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/efrain_cosme.jpg" }
+      },
+      "PEDRO ESCOBEDO": {
+        "MC": { "nombre": "Sonia Camacho", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sonia_camacho.jpg" },
+        "PAN-PRI": { "nombre": "José Camacho", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_camacho.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Perla Sánchez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/perla_sanchez.jpg" }
+      },
+      "TEQUISQUIAPAN": {
+        "MC": { "nombre": "Miguel Solano", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miguel_solano.jpg" },
+        "PAN-PRI": { "nombre": "Antonio Montes", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/antonio_montes.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Edgar Botello", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/edgar_botello.jpg" }
+      },
+      "HUIMILPAN": {
+        "MC": { "nombre": "Marissa Morán", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/marissa_moran.jpg" },
+        "PAN-PRI": { "nombre": "Saúl Jáuregui", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/saul_jauregui.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Herminia Bermúdez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/herminia_bermudez.jpg" }
+      },
+      "CADEREYTA DE MONTES": {
+        "MC": { "nombre": "Gaspar Moncada", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/gaspar_moncada.jpg" },
+        "PAN-PRI": { "nombre": "Rubén Robles", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/ruben_robles.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "María Naranjo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_naranjo.jpg" }
+      },
+      "EZEQUIEL MONTES": {
+        "MC": { "nombre": "Andrés Valencia", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/andres_valencia.jpg" },
+        "PAN-PRI": { "nombre": "Carlos Robles", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/carlos_robles.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "María Rodríguez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_rodriguez.jpg" }
+      },
+      "TOLIMAN": {
+        "MC": { "nombre": "Alejo Santiago", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/alejo_santiago.jpg" },
+        "PAN-PRI": { "nombre": "María Saldivar", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_saldivar.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Alejandra Santiago", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/alejandra_santiago.jpg" }
+      },
+      "JALPAN DE SERRA": {
+        "MC": { "nombre": "Víctor Velázquez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/victor_velazquez.jpg" },
+        "PAN-PRI": { "nombre": "José Maqueda", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_maqueda.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Isidro Pacheco", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/isidro_pacheco.jpg" }
+      },
+      "PINAL DE AMOLES": {
+        "MC": { "nombre": "Víctor Basurto", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/victor_basurto.jpg" },
+        "PAN-PRI": { "nombre": "Josué Trápala", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/josue_trapala.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Cipriano Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/cipriano_olvera.jpg" }
+      },
+      "ARROYO SECO": {
+        "MC": { "nombre": "Leonardo González", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/leonardo_gonzalez.jpg" },
+        "PAN-PRI": { "nombre": "René Sixtos", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/rene_sixtos.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "María Mayorga", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_mayorga.jpg" }
+      },
+      "LANDA DE MATAMOROS": {
+        "MC": { "nombre": "Jairo Martínez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jairo_martinez.jpg" },
+        "PAN-PRI": { "nombre": "José Ruiz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_ruiz.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Jorge Noriega", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jorge_noriega.jpg" }
+      },
+      "SAN JOAQUIN": {
+        "MC": { "nombre": "Mireya Acevedo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mireya_acevedo.jpg" },
+        "PAN-PRI": { "nombre": "María Molina", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_molina.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Antonio Ramírez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/antonio_ramirez.jpg" }
+      },
+      "PENAMILLER": {
+        "MC": { "nombre": "Adolfo Díaz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/adolfo_diaz.jpg" },
+        "PAN-PRI": { "nombre": "María Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_pichardo.jpg" },
+        "PVEM-MORENA-PT": { "nombre": "Manuel Hernández", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/manuel_hernandez.jpg" }
+      }
+    },
+    "2021": {
+      "_default": {
+        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/luis_guerrero.jpg" },
+        "PAN_QI": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/luis_guerrero.jpg" },
+        "PRI": { "nombre": "René Montoya", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/rene_montoya.jpg" },
+        "MORENA": { "nombre": "Verónica Flores", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/veronica_flores.jpg" },
+        "MC": { "nombre": "Candidato MC", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/sin_foto.jpg" }
+      }
+    },
+    "2018": {
+      "_default": {
+        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
+        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
+        "MORENA_PT_PES": { "nombre": "Héctor Rentería", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/hector_renteria.jpg" },
+        "PAN_PRD_MC": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
+        "MC": { "nombre": "Agnoli Rosales", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/agnoli_rosales.jpg" }
+      },
+      "QUERETARO": {
+        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
+        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
+        "MORENA_PT_PES": { "nombre": "Héctor Rentería", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/hector_renteria.jpg" }
+      },
+      "CORREGIDORA": {
+        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
+        "PAN": { "nombre": "Enrique Vega Carriles", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/enrique_carriles.jpeg" }
+      },
+      "EL MARQUES": {
+        "PAN": { "nombre": "Enrique Vega Carriles", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/enrique_carriles.jpeg" }
+      },
+      "SAN JUAN DEL RIO": {
+        "PAN": { "nombre": "Guillermo Vega Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/guillermo_guerrero.jpg" }
+      }
+    }
+  }
+}

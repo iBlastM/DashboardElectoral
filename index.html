@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados Electorales - Querétaro</title>
+    <title>Panel Electoral</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -17,40 +17,57 @@
 <header class="top-bar">
     <div class="top-bar-inner">
         <div class="brand-logo">
-            <img src="images/logo.png" alt="Metrix" class="brand-img brand-img-dark">
             <img src="images/metrixSinfondo.png" alt="Metrix" class="brand-img brand-img-light">
+            <img src="images/LogoMetrixOscuro.png" alt="Metrix" class="brand-img brand-img-dark">
         </div>
-        <div style="display:flex;flex-direction:column;gap:0.1rem;flex:1;">
-            <h1 class="dashboard-title">RESULTADOS ELECTORALES</h1>
-            <span id="dashboard-subtitle" class="dashboard-subtitle">Querétaro</span>
-        </div>
+        <h1 class="dashboard-title">PANEL ELECTORAL</h1>
         <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar tema">☀</button>
-        <img src="images/heraldica-para-pag-web-01_180x180px.png" alt="Escudo" class="brand-escudo">
     </div>
 </header>
 
 <!-- ── FILTROS ── -->
 <div class="filtros-bar">
     <div class="filtros-inner">
-        
+
         <div class="filtro-grupo">
-            <label class="filtro-label">Elección</label>
-            <select id="filtro-eleccion" class="filtro-select">
-                <option value="ayuntamiento">Ayuntamiento</option>
-                <option value="gobernatura">Gobernatura</option>
-            </select>
+            <label class="filtro-label">Entidad Federativa</label>
+            <select id="filtro-estado" class="filtro-select filtro-select-lg"></select>
         </div>
         <div class="filtro-grupo">
             <label class="filtro-label">Año</label>
-            <select id="filtro-anio" class="filtro-select"></select>
+            <select id="filtro-anio" class="filtro-select">
+                <option value="2024">2024</option>
+                <option value="2021">2021</option>
+                <option value="2018">2018</option>
+            </select>
+        </div>
+        <div class="filtro-grupo">
+            <label class="filtro-label">Elección</label>
+            <select id="filtro-eleccion" class="filtro-select"></select>
         </div>
         <div class="filtro-grupo">
             <label class="filtro-label">Municipio</label>
-            <select id="filtro-municipio" class="filtro-select"><option value="">Todos</option></select>
+            <div class="ms-wrap ms-wrap-lg" id="ms-municipio-wrap">
+                <button type="button" class="ms-btn" id="ms-municipio-btn">Todos <span class="ms-arrow">▾</span></button>
+                <div class="ms-panel" id="ms-municipio-panel" hidden>
+                    <div class="ms-search-wrap">
+                        <input type="text" class="ms-search" id="buscar-municipio" placeholder="Buscar municipio...">
+                    </div>
+                    <div class="ms-panel-scroll" id="ms-municipio-list"></div>
+                </div>
+            </div>
         </div>
         <div class="filtro-grupo">
             <label class="filtro-label">Sección</label>
-            <select id="filtro-seccion" class="filtro-select"><option value="">Todas</option></select>
+            <div class="ms-wrap" id="ms-seccion-wrap">
+                <button type="button" class="ms-btn" id="ms-seccion-btn">Todas <span class="ms-arrow">▾</span></button>
+                <div class="ms-panel" id="ms-seccion-panel" hidden>
+                    <div class="ms-search-wrap">
+                        <input type="text" class="ms-search" id="buscar-seccion" placeholder="Buscar sección...">
+                    </div>
+                    <div class="ms-panel-scroll" id="ms-seccion-list"></div>
+                </div>
+            </div>
         </div>
         <button id="filtro-limpiar" class="filtro-btn-limpiar">Limpiar</button>
     </div>
@@ -59,21 +76,33 @@
 <!-- ── KPIs ── -->
 <div class="container kpi-wrapper">
     <div class="kpi-grid">
-        <div class="kpi-card kpi-card--invitados">
-            <div class="kpi-body"><span class="kpi-label">Lista Nominal</span><span class="kpi-value" id="kpi-lista-nominal">—</span></div>
-            <div class="kpi-accent-bar kpi-accent-bar--invitados"></div>
+        <div class="kpi-card kpi-card--lista-nominal">
+            <div class="kpi-body">
+                <span class="kpi-value" id="kpi-lista-nominal">—</span>
+                <span class="kpi-label">Lista Nominal</span>
+            </div>
+            <span class="kpi-help" title="Es la lista oficial de todas las personas que tienen su credencial vigente y están autorizadas para votar el día de la elección.">?</span>
         </div>
-        <div class="kpi-card kpi-card--asistentes">
-            <div class="kpi-body"><span class="kpi-label">Votos Emitidos</span><span class="kpi-value" id="kpi-votos-emitidos">—</span></div>
-            <div class="kpi-accent-bar kpi-accent-bar--asistentes"></div>
+        <div class="kpi-card kpi-card--votos-emitidos">
+            <div class="kpi-body">
+                <span class="kpi-value" id="kpi-votos-emitidos">—</span>
+                <span class="kpi-label">Votos Emitidos</span>
+            </div>
+            <span class="kpi-help" title="Es el total de boletas físicas que la gente depositó dentro de las urnas, sin importar cómo hayan sido marcadas.">?</span>
         </div>
-        <div class="kpi-card kpi-card--ausentes">
-            <div class="kpi-body"><span class="kpi-label">Votos Nulos</span><span class="kpi-value" id="kpi-votos-nulos">—</span></div>
-            <div class="kpi-accent-bar kpi-accent-bar--ausentes"></div>
+        <div class="kpi-card kpi-card--votos-nulos">
+            <div class="kpi-body">
+                <span class="kpi-value" id="kpi-votos-nulos">—</span>
+                <span class="kpi-label">Votos Nulos</span>
+            </div>
+            <span class="kpi-help" title="Son las boletas que no cuentan para ningún candidato, ya sea porque se dejaron en blanco o se marcaron con errores.">?</span>
         </div>
-        <div class="kpi-card kpi-card--efectividad">
-            <div class="kpi-body"><span class="kpi-label">Participación</span><span class="kpi-value" id="kpi-participacion">—</span></div>
-            <div class="kpi-accent-bar kpi-accent-bar--efectividad"></div>
+        <div class="kpi-card kpi-card--participacion">
+            <div class="kpi-body">
+                <span class="kpi-value" id="kpi-participacion">—</span>
+                <span class="kpi-label">Participación</span>
+            </div>
+            <span class="kpi-help" title="Es el porcentaje que representa cuántas personas de la Lista Nominal fueron a votar el día de la elección.">?</span>
         </div>
     </div>
 </div>
@@ -98,10 +127,13 @@
         <div class="col-mapa">
             <div style="display:flex;align-items:center;justify-content:space-between;">
                 <h2 class="section-title" style="margin-bottom:0;">DISTRIBUCIÓN DE SECCIONES GANADAS</h2>
-                <select id="mapa-vista" class="filtro-select" style="min-width:auto;font-size:0.72rem;padding:0.35rem 0.6rem;">
-                    <option value="secciones">Secciones</option>
-                    <option value="municipios">Municipios</option>
-                </select>
+                <div style="display:flex;gap:0.4rem;align-items:center;">
+                    <select id="mapa-vista" class="filtro-select" style="min-width:auto;font-size:0.72rem;padding:0.35rem 0.6rem;">
+                        <option value="secciones">Secciones</option>
+                        <option value="municipios">Municipios</option>
+                    </select>
+                    <button id="mapa-fullscreen" class="mapa-fs-btn" title="Pantalla completa">⛶</button>
+                </div>
             </div>
             <div id="mapa-electoral" style="width:100%;height:520px;"></div>
         </div>
@@ -111,15 +143,51 @@
     <!-- Gráfica y tabla -->
     <section class="section" style="margin-top:2rem;">
         <h2 class="section-title">Distribución de Votos</h2>
-        <div class="chart-card"><div id="chart-barras" style="width:100%;height:340px;"></div></div>
+        <div class="chart-card">
+            <div class="chart-controls">
+                <div class="chart-controls-left">
+                    <button class="vt-btn active" id="btn-vista-individual" data-view="individual">Individual</button>
+                    <button class="vt-btn" id="btn-vista-coalicion" data-view="coalicion">Coalición</button>
+                </div>
+                <div class="chart-controls-right">
+                    <button class="vt-btn active" data-view="top" id="btn-barras-top">Top</button>
+                    <select class="top-select" id="barras-top-n">
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                        <option value="5">5</option>
+                    </select>
+                    <button class="vt-btn" data-view="comparativa" id="btn-barras-comp">Comparativa</button>
+                </div>
+            </div>
+            <div id="chart-barras" style="width:100%;height:380px;"></div>
+        </div>
     </section>
+
+    <!-- Modal comparativa partidos -->
+    <div class="rng-modal-overlay" id="modal-barras-partidos" hidden>
+        <div class="rng-modal">
+            <div class="rng-modal-header">
+                <span class="rng-modal-title">Seleccionar Partidos</span>
+                <button class="rng-modal-close">&times;</button>
+            </div>
+            <div class="rng-modal-actions">
+                <button class="rng-action-btn" data-action="all">Todos</button>
+                <button class="rng-action-btn" data-action="none">Ninguno</button>
+            </div>
+            <div class="rng-modal-checks" id="modal-barras-checks"></div>
+            <div class="rng-modal-footer">
+                <button class="rng-footer-btn rng-cancel-btn">Cancelar</button>
+                <button class="rng-footer-btn rng-apply-btn">Aplicar</button>
+            </div>
+        </div>
+    </div>
     <section class="section">
         <h2 class="section-title">Resultados por Sección</h2>
         <div class="chart-card"><div id="tabla-secciones" class="tabla-electoral"></div></div>
     </section>
 </main>
 
-<footer class="footer"><span>Resultados Electorales · Querétaro · Metrix 2026</span></footer>
+<footer class="footer"><span>Panel Electoral · Metrix 2026</span></footer>
 
 <script src="js/electoral.js"></script>
 </body>
