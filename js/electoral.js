@@ -213,38 +213,86 @@ function renderDashboard() {
 }
 window.renderDashboard = renderDashboard;
 
-// ── Top 3 Candidatos (BUG FIX: use all 3 places, not just primerLugar) ──
+// ── Top 3 Candidatos (coalición: agrupa votos por candidato) ──
 function renderTop3(datos, cols) {
-    // Aggregate votes from 1st, 2nd, 3rd place columns to get full picture
-    const votosPorPartido = {};
-    datos.forEach(r => {
-        [[cols.primerLugar, cols.votosP], [cols.segundoLugar, cols.votos2], [cols.tercerLugar, cols.votos3]].forEach(([pCol, vCol]) => {
-            const p = r[pCol]; if (!p) return;
-            votosPorPartido[p] = (votosPorPartido[p] || 0) + parseNum(r[vCol]);
-        });
-    });
-    const totalVotos = datos.reduce((s,r) => s + parseNum(r[cols.votosEmitidos]), 0);
-    const top3 = Object.entries(votosPorPartido).sort((a,b) => b[1]-a[1]).slice(0,3);
+    const tipo = elElec.value, anio = elAnio.value;
+    const totalVotos = datos.reduce((s, r) => s + parseNum(r[cols.votosEmitidos]), 0);
 
-    document.getElementById('top-ganadores').innerHTML = top3.map(([partido, votos], i) => {
-        const pct = totalVotos > 0 ? (votos/totalVotos*100).toFixed(1) : 0;
-        const color = COLORES[partido] || '#666';
-        const iconosHtml = iconosPartido(partido, 40);
-        const info = getCandidatoInfo(partido);
-        const nombre = info?.nombre || partido.replace(/_/g,'-');
-        const fotoHtml = info?.foto
-            ? `<img src="${info.foto}" class="candidato-foto-img" alt="${nombre}">`
-            : `<span class="candidato-foto-num">${i+1}°</span>`;
+    let top3 = null;
+    if (candidatosData?.[tipo]?.[anio]) {
+        const data = candidatosData[tipo][anio];
+        if (tipo === 'gobernatura') {
+            // Single candidate list
+            top3 = buildTop3FromCandData(data, datos);
+        } else if (selMunicipios.size === 1) {
+            const munKey = [...selMunicipios][0];
+            if (data[munKey]) top3 = buildTop3FromCandData(data[munKey], datos);
+        } else {
+            // All/multiple municipios: compute each candidate's votes in their municipio rows
+            const allResults = [];
+            const munCol = cols.municipio;
+            Object.entries(data).forEach(([munKey, munCands]) => {
+                const munRows = datos.filter(r => normStr(r[munCol]) === munKey);
+                if (!munRows.length) return;
+                Object.entries(munCands).forEach(([nombre, columnas]) => {
+                    if (!columnas.length) return;
+                    const votos = columnas.reduce((s, col) => s + munRows.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
+                    if (votos <= 0) return;
+                    const mainCol = columnas.reduce((best, col) => {
+                        const v = munRows.reduce((ss, r) => ss + parseNum(r[col]), 0);
+                        return v > best[1] ? [col, v] : best;
+                    }, ['', 0])[0];
+                    allResults.push({ nombre, votos, mainCol, columnas });
+                });
+            });
+            top3 = allResults.sort((a, b) => b.votos - a.votos).slice(0, 3);
+        }
+    }
+
+    // Fallback if no candidatos data
+    if (!top3 || !top3.length) {
+        const groups = {};
+        cols.partidos.forEach(col => {
+            const base = col.replace(/-/g,'_').split('_')[0];
+            if (!groups[base]) groups[base] = [];
+            groups[base].push(col);
+        });
+        top3 = Object.entries(groups).map(([base, columns]) => {
+            const votos = columns.reduce((s, col) => s + datos.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
+            const mainCol = columns.reduce((best, col) => {
+                const v = datos.reduce((ss, r) => ss + parseNum(r[col]), 0);
+                return v > best[1] ? [col, v] : best;
+            }, ['', 0])[0];
+            return { nombre: base, votos, mainCol, columnas: columns };
+        }).filter(c => c.votos > 0).sort((a, b) => b.votos - a.votos).slice(0, 3);
+    }
+
+    document.getElementById('top-ganadores').innerHTML = top3.map((c, i) => {
+        const pct = totalVotos > 0 ? (c.votos / totalVotos * 100).toFixed(1) : 0;
+        const iconosHtml = iconosPartido(c.mainCol, 40);
+        const color = COLORES[c.mainCol] || '#666';
         return `<div class="candidato-card">
-            <div class="candidato-foto-wrap"><div class="candidato-foto-placeholder">${fotoHtml}</div></div>
+            <div class="candidato-foto-wrap"><div class="candidato-foto-placeholder"><span class="candidato-foto-num">${i + 1}°</span></div></div>
             <div class="candidato-partido-icons">${iconosHtml}</div>
-            <div class="candidato-nombre"><b>${nombre}</b></div>
-            <div class="candidato-partido-label">${partido.replace(/_/g,'-')}</div>
-            <div class="candidato-stat-row"><b class="candidato-stat-label">Votos:</b> <span class="candidato-stat-val">${fmtNum(votos)}</span></div>
+            <div class="candidato-nombre"><b>${titleCase(c.nombre)}</b></div>
+            <div class="candidato-partido-label">${c.columnas.map(p => p.replace(/_/g, '-')).join(' + ')}</div>
+            <div class="candidato-stat-row"><b class="candidato-stat-label">Votos:</b> <span class="candidato-stat-val">${fmtNum(c.votos)}</span></div>
             <div class="candidato-stat-row"><b class="candidato-stat-label">Porcentaje:</b> <span class="candidato-stat-val">${pct}%</span></div>
             <div class="candidato-accent" style="background:${color}"></div>
         </div>`;
     }).join('');
+}
+
+function buildTop3FromCandData(candData, datos) {
+    return Object.entries(candData).map(([nombre, columnas]) => {
+        if (!columnas.length) return null;
+        const votos = columnas.reduce((s, col) => s + datos.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
+        const mainCol = columnas.reduce((best, col) => {
+            const v = datos.reduce((ss, r) => ss + parseNum(r[col]), 0);
+            return v > best[1] ? [col, v] : best;
+        }, ['', 0])[0];
+        return { nombre, votos, mainCol, columnas };
+    }).filter(c => c && c.votos > 0).sort((a, b) => b.votos - a.votos).slice(0, 3);
 }
 
 // ── Partidos: only individual parties in 2x4 grid ──

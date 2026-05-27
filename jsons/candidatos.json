@@ -1,153 +1,880 @@
 {
-  "gobernatura": {
-    "2021": {
-      "PAN": { "nombre": "Mauricio Kuri González", "foto": "images/candidatos/candidatos-img-main/Gob_2021/mauricio_gonzalez.jpg" },
-      "PAN_QI": { "nombre": "Mauricio Kuri González", "foto": "images/candidatos/candidatos-img-main/Gob_2021/mauricio_gonzalez.jpg" },
-      "MORENA": { "nombre": "Celia Maya García", "foto": "images/candidatos/candidatos-img-main/Gob_2021/celia_garcia.jpg" },
-      "PRI": { "nombre": "Abigail Arredondo Ramos", "foto": "images/candidatos/candidatos-img-main/Gob_2021/abigail_ramos.jpg" },
-      "MC": { "nombre": "Katia Reséndiz Ríos", "foto": "images/candidatos/candidatos-img-main/Gob_2021/katia_jaime.jpg" },
-      "PVEM": { "nombre": "Beatriz Sotelo", "foto": "images/candidatos/candidatos-img-main/Gob_2021/beatriz_sotelo.jpg" },
-      "PT": { "nombre": "Miguel Alvarado", "foto": "images/candidatos/candidatos-img-main/Gob_2021/miguel_alvarado.jpg" },
-      "PES": { "nombre": "Juan Rodríguez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/juan_rodriguez.jpg" },
-      "RSP": { "nombre": "Penélope Manríquez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/penelope_manriquez.jpg" },
-      "FxM": { "nombre": "María Silva", "foto": "images/candidatos/candidatos-img-main/Gob_2021/maria_silva.jpg" },
-      "QI": { "nombre": "Raquel Álvarez", "foto": "images/candidatos/candidatos-img-main/Gob_2021/raquel_alvarez.jpg" }
-    }
-  },
   "ayuntamiento": {
-    "2024": {
-      "_default": {
-        "MC": { "nombre": "Felifer Macías Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/felipe_olvera.jpg" },
-        "PAN-PRI-PRD": { "nombre": "Dorantes Macías", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
-        "PAN-PRI": { "nombre": "Dorantes Macías", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" }
-      },
-      "QUERETARO": {
-        "MC": { "nombre": "Felifer Macías Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/felipe_olvera.jpg" },
-        "PAN-PRI-PRD": { "nombre": "Paulina Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/paulina_romero.jpg" },
-        "PAN-PRI": { "nombre": "Paulina Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/paulina_romero.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" },
-        "PVEM-MORENA": { "nombre": "Arturo Maximiliano García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mauricio_garcia.jpg" },
-        "QS": { "nombre": "Agnoli Rosales", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/agnoli_rosales.jpg" }
-      },
-      "CORREGIDORA": {
-        "MC": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/roberto_valencia.jpg" },
-        "PAN-PRI": { "nombre": "Diana Rubio", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/diana_rubio.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Carolina Cruz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/carolina_cruz.jpg" }
-      },
-      "EL MARQUES": {
-        "MC": { "nombre": "Rodrigo Monsalvo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/rodrigo_castelan.jpg" },
-        "PAN-PRI": { "nombre": "Sergio Gómez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sergio_gomez.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Reyna García", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/reyna_garcia.jpg" }
-      },
-      "SAN JUAN DEL RIO": {
-        "MC": { "nombre": "Roberto Cabrera Valencia", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/roberto_valencia.jpg" },
-        "PAN-PRI": { "nombre": "Juan Cabrera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/juan_cabrera.png" },
-        "PVEM-MORENA-PT": { "nombre": "Liz Pérez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/liz_perez.jpg" }
-      },
+    "2018": {
       "AMEALCO DE BONFIL": {
-        "MC": { "nombre": "Jesús Balderas", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
-        "PAN-PRI": { "nombre": "Miriam Anaya", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miriam_anaya.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Guadalupe Romero", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/guadalupe_romero.jpg" }
-      },
-      "COLON": {
-        "MC": { "nombre": "Alejandro Ochoa", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sin_foto.jpg" },
-        "PAN-PRI": { "nombre": "Miguel Peñaloza", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miguel_penaloza.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Efraín Cosme", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/efrain_cosme.jpg" }
-      },
-      "PEDRO ESCOBEDO": {
-        "MC": { "nombre": "Sonia Camacho", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/sonia_camacho.jpg" },
-        "PAN-PRI": { "nombre": "José Camacho", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_camacho.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Perla Sánchez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/perla_sanchez.jpg" }
-      },
-      "TEQUISQUIAPAN": {
-        "MC": { "nombre": "Miguel Solano", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/miguel_solano.jpg" },
-        "PAN-PRI": { "nombre": "Antonio Montes", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/antonio_montes.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Edgar Botello", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/edgar_botello.jpg" }
-      },
-      "HUIMILPAN": {
-        "MC": { "nombre": "Marissa Morán", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/marissa_moran.jpg" },
-        "PAN-PRI": { "nombre": "Saúl Jáuregui", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/saul_jauregui.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Herminia Bermúdez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/herminia_bermudez.jpg" }
-      },
-      "CADEREYTA DE MONTES": {
-        "MC": { "nombre": "Gaspar Moncada", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/gaspar_moncada.jpg" },
-        "PAN-PRI": { "nombre": "Rubén Robles", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/ruben_robles.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "María Naranjo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_naranjo.jpg" }
-      },
-      "EZEQUIEL MONTES": {
-        "MC": { "nombre": "Andrés Valencia", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/andres_valencia.jpg" },
-        "PAN-PRI": { "nombre": "Carlos Robles", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/carlos_robles.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "María Rodríguez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_rodriguez.jpg" }
-      },
-      "TOLIMAN": {
-        "MC": { "nombre": "Alejo Santiago", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/alejo_santiago.jpg" },
-        "PAN-PRI": { "nombre": "María Saldivar", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_saldivar.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Alejandra Santiago", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/alejandra_santiago.jpg" }
-      },
-      "JALPAN DE SERRA": {
-        "MC": { "nombre": "Víctor Velázquez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/victor_velazquez.jpg" },
-        "PAN-PRI": { "nombre": "José Maqueda", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_maqueda.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Isidro Pacheco", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/isidro_pacheco.jpg" }
-      },
-      "PINAL DE AMOLES": {
-        "MC": { "nombre": "Víctor Basurto", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/victor_basurto.jpg" },
-        "PAN-PRI": { "nombre": "Josué Trápala", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/josue_trapala.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Cipriano Olvera", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/cipriano_olvera.jpg" }
+        "ROSENDO ANAYA AGUILAR": [
+          "PAN"
+        ],
+        "ANSELMA GREGORIO ILDEFONSA": [
+          "PRD"
+        ],
+        "LORENA DEL ROCIO GALVAN SANTOS": [
+          "NA"
+        ],
+        "KARINA FLORES ESTRADA": [
+          "CQ"
+        ],
+        "LEONEL MARTINEZ VICTORIANO": [
+          "QI"
+        ],
+        "FELIX VALDEZ LICEA": [
+          "ES",
+          "MORENA",
+          "PT",
+          "MORENA_PT",
+          "MORENA_PT_PES",
+          "MORENA_PES",
+          "PT_PES"
+        ],
+        "GUSTAVO EFRAIN MENDOZA NAVARRETE": [
+          "PRI",
+          "PVEM",
+          "PRI_PVEM"
+        ]
       },
       "ARROYO SECO": {
-        "MC": { "nombre": "Leonardo González", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/leonardo_gonzalez.jpg" },
-        "PAN-PRI": { "nombre": "René Sixtos", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/rene_sixtos.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "María Mayorga", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_mayorga.jpg" }
-      },
-      "LANDA DE MATAMOROS": {
-        "MC": { "nombre": "Jairo Martínez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jairo_martinez.jpg" },
-        "PAN-PRI": { "nombre": "José Ruiz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jose_ruiz.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Jorge Noriega", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/jorge_noriega.jpg" }
-      },
-      "SAN JOAQUIN": {
-        "MC": { "nombre": "Mireya Acevedo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/mireya_acevedo.jpg" },
-        "PAN-PRI": { "nombre": "María Molina", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_molina.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Antonio Ramírez", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/antonio_ramirez.jpg" }
-      },
-      "PENAMILLER": {
-        "MC": { "nombre": "Adolfo Díaz", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/adolfo_diaz.jpg" },
-        "PAN-PRI": { "nombre": "María Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/maria_pichardo.jpg" },
-        "PVEM-MORENA-PT": { "nombre": "Manuel Hernández", "foto": "images/candidatos/candidatos-img-main/Ayun_2024/manuel_hernandez.jpg" }
+        "MARIA ELENA SUAREZ OLVERA": [
+          "PAN"
+        ],
+        "MARIANO PALACIOS TREJO": [
+          "PRD"
+        ],
+        "LORENA RAMIREZ AGUADO": [
+          "NA"
+        ],
+        "MARIA GUADALUPE VEGA AGUADO": [
+          "CQ"
+        ],
+        "DELIA COLUNGA ESCAMILLA": [
+          "QI"
+        ],
+        "OFELIA DEL CASTILLO GUILLEN": [
+          "ES",
+          "MORENA",
+          "PT",
+          "MORENA_PT",
+          "MORENA_PT_PES",
+          "MORENA_PES",
+          "PT_PES"
+        ],
+        "ILIANA GUADALUPE MONTES RIOS": [
+          "PRI",
+          "PVEM",
+          "PRI_PVEM"
+        ],
+        "OSCAR ESTEBAN LUNA OLLERVIDES": []
       }
     },
     "2021": {
-      "_default": {
-        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/luis_guerrero.jpg" },
-        "PAN_QI": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/luis_guerrero.jpg" },
-        "PRI": { "nombre": "René Montoya", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/rene_montoya.jpg" },
-        "MORENA": { "nombre": "Verónica Flores", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/veronica_flores.jpg" },
-        "MC": { "nombre": "Candidato MC", "foto": "images/candidatos/candidatos-img-main/Ayun_2021/sin_foto.jpg" }
-      }
-    },
-    "2018": {
-      "_default": {
-        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
-        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
-        "MORENA_PT_PES": { "nombre": "Héctor Rentería", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/hector_renteria.jpg" },
-        "PAN_PRD_MC": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
-        "MC": { "nombre": "Agnoli Rosales", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/agnoli_rosales.jpg" }
+      "AMEALCO DE BONFIL": {
+        "VERONICA HERNANDEZ FLORES": [
+          "PAN",
+          "QI",
+          "PAN_QI"
+        ],
+        "RENE MEJIA MONTOYA": [
+          "PRI"
+        ],
+        "MARIA GUADALUPE OBREGON RODRIGUEZ": [
+          "PRD"
+        ],
+        "MARTIN SOTO SOTO": [
+          "MC"
+        ],
+        "IMELDA GARCIA UGALDE": [
+          "PVEM",
+          "PVEM_PT"
+        ],
+        "ANGEL SANCHEZ VICENTE": [
+          "MORENA"
+        ],
+        "MA. ELENA FONSECA RUIZ": [
+          "PES"
+        ],
+        "JAIME HERNANDEZ RAMIREZ": [
+          "RSP"
+        ],
+        "ROSARIO RAQUEL ESCOBAR ROSQUERO": [
+          "FXM"
+        ]
       },
-      "QUERETARO": {
-        "PAN": { "nombre": "Luis Nava Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/luis_guerrero.jpg" },
-        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
-        "MORENA_PT_PES": { "nombre": "Héctor Rentería", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/hector_renteria.jpg" }
+      "ARROYO SECO": {
+        "MA. FRANCISCA ESCAMILLA ZARATE": [
+          "PAN"
+        ],
+        "ILIANA GUADALUPE MONTES RIOS": [
+          "PRI",
+          "PVEM",
+          "PRI_PVEM"
+        ],
+        "OFELIA DEL CASTILLO GUILLEN": [
+          "MORENA"
+        ],
+        "LETICIA TELLO CORONA": [
+          "FXM"
+        ],
+        "JUAN ANTONIO TORRES BALDERAS": []
+      },
+      "CADEREYTA DE MONTES": {
+        "MIGUEL MARTINEZ PEÑALOZA": [
+          "PAN"
+        ],
+        "CARLOTA LEDESMA LEAL": [
+          "PRI"
+        ],
+        "JAIME HERNANDEZ VELAZQUEZ": [
+          "PRD"
+        ],
+        "MIGUEL ANGEL LEAL CISNEROS": [
+          "PVEM"
+        ],
+        "MARLEN OCAMPO ROJO": [
+          "MORENA"
+        ],
+        "HELIDA MARTINEZ GUDIÑO": [
+          "QI"
+        ],
+        "MYRIAM LIZZETH GUARDADO HURTADO": [
+          "RSP"
+        ],
+        "ADAN GONZALEZ TORRES": [
+          "FXM"
+        ]
+      },
+      "COLON": {
+        "LEOPOLDO BARCENAS HERNANDEZ": [
+          "PAN",
+          "PAN_QI"
+        ],
+        "MANUEL MONTES HERNANDEZ": [
+          "PRI"
+        ],
+        "TERESA IBARRA HILARIO": [
+          "PRD"
+        ],
+        "MIREYA IBARRA CASAS": [
+          "MC"
+        ],
+        "KAREN MOLINA AGUILERA": [
+          "PVEM"
+        ],
+        "MARIA DEL ROCIO ARREDONDO AMEZCUA": [
+          "MORENA"
+        ],
+        "LUIS CURIEL MEJIA": [
+          "PES"
+        ],
+        "M. NORMA HERRERA OLVERA": [
+          "RSP"
+        ],
+        "JOSE LUIS OSORNIO PONCE": [
+          "FXM"
+        ],
+        "GASPAR RAMON TRUEBA MONCADA": []
       },
       "CORREGIDORA": {
-        "PRI_PVEM": { "nombre": "Roberto Sosa Pichardo", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/roberto_pichardo.jpeg" },
-        "PAN": { "nombre": "Enrique Vega Carriles", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/enrique_carriles.jpeg" }
+        "ROBERTO SOSA PICHARDO": [
+          "PAN"
+        ],
+        "HECTOR RICARDO GONZALEZ FLORES": [
+          "PRI"
+        ],
+        "ZACARIAS AVILA CORONA": [
+          "PRD"
+        ],
+        "CUAUHTEMOC ALEJANDRO RIOS LOPEZ": [
+          "MC"
+        ],
+        "JAVIER NAVARRETE DE LEON": [
+          "PVEM"
+        ],
+        "DOMITILA LIRA ARREOLA": [
+          "MORENA"
+        ],
+        "MARIA GABRIELA MORENO MAYORGA": [
+          "PT"
+        ],
+        "JORGE RAMON HERNANDEZ MOYA": [
+          "QI"
+        ],
+        "ARTURO CASTAÑEDA OLALDE": [
+          "PES"
+        ],
+        "ADABALDO JESUS ROMERO SEGURA": [
+          "RSP"
+        ],
+        "CRISTINA DEL LLANO FEREGRINO": [
+          "FXM"
+        ],
+        "SAUL MORALES MORALES": []
+      },
+      "EZEQUIEL MONTES": {
+        "MAGDA GUADALUPE PEREZ MONTES": [
+          "PAN",
+          "PRD",
+          "QI",
+          "PAN_PRD_QI",
+          "PAN_PRD",
+          "PAN_QI",
+          "PRD_QI"
+        ],
+        "LUZ MARIA QUINTANAR FEREGRINO": [
+          "PRI"
+        ],
+        "GABRIELA GUDIÑO PEREZ": [
+          "MC"
+        ],
+        "CELIA MARIANA ASCENCION VAZQUEZ": [
+          "PVEM"
+        ],
+        "VENECIA MARIANA JIMENEZ VELAZQUEZ": [
+          "PT"
+        ],
+        "ANAYELI SOLANO VERDE": [
+          "PES"
+        ],
+        "MARGARITA FEREGRINO FEREGRINO": [
+          "RSP"
+        ],
+        "FRANCIA NAYELI BONILLA MACIAS": [
+          "FXM"
+        ],
+        "IVAN RESENDIZ RAMIREZ": [],
+        "DAVID JOVITO VEGA VEGA": []
+      },
+      "HUIMILPAN": {
+        "LETICIA SERVIN MOYA": [
+          "PAN"
+        ],
+        "BLANCA DIANA MARTINEZ JURADO": [
+          "PRI"
+        ],
+        "MARIA ALMA ROSA HERNANDEZ TRENADO": [
+          "PRD"
+        ],
+        "MARIA GUADALUPE FONSECA MORA": [
+          "MC"
+        ],
+        "JUAN GUZMAN CABRERA": [
+          "PVEM"
+        ],
+        "LUIS JAVIER GUTIERREZ CHILLON": [
+          "MORENA"
+        ],
+        "MARIA MAGDALENA HERNANDEZ ESPINOZA": [
+          "QI"
+        ],
+        "GEORGINA ELIZABETH SAAVEDRA URIBE": [
+          "PES"
+        ],
+        "RUBEN LUNA MIRANDA": [
+          "RSP"
+        ],
+        "MARIO DANIEL ESPINOSA VALENCIA": [
+          "FXM"
+        ],
+        "JOSE FILEMON GOMEZ LARA": []
+      },
+      "JALPAN DE SERRA": {
+        "MARITZA PEDRAZA MAR": [
+          "PAN"
+        ],
+        "KARINA CAREAGA PINEDA": [
+          "PRI",
+          "PVEM",
+          "PRI_PVEM"
+        ],
+        "MARIANE ARAIZA MARQUEZ": [
+          "MC"
+        ],
+        "MARIA MARISOL ESTRADA AGUAS": [
+          "QI"
+        ],
+        "ADELA MUÑOZ MARTINEZ": [
+          "RSP"
+        ],
+        "DIANA GARCIA PALESTINA": [
+          "FXM"
+        ],
+        "JESUS URIBE YAÑEZ": [],
+        "EFRAIN MUÑOZ COSME": []
+      },
+      "LANDA DE MATAMOROS": {
+        "MARINA PONCE CAMACHO": [
+          "PAN"
+        ],
+        "JHONATAN TREJO RAMIREZ": [
+          "PRI"
+        ],
+        "SASILJA LETICIA DELGADO RODRIGUEZ": [
+          "MC"
+        ],
+        "LUZ VIVIANA OLVERA NUÑEZ": [
+          "PVEM"
+        ],
+        "NORBERTO JIMENEZ OTERO": [
+          "MORENA"
+        ],
+        "MARAYANI PEREZ MARQUEZ": [
+          "QI"
+        ],
+        "AQUILINA YAÑEZ MARTINEZ": [
+          "FXM"
+        ]
       },
       "EL MARQUES": {
-        "PAN": { "nombre": "Enrique Vega Carriles", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/enrique_carriles.jpeg" }
+        "ENRIQUE VEGA CARRILES": [
+          "PAN"
+        ],
+        "MARIA GUADALUPE CARDENAS MOLINA": [
+          "PRI"
+        ],
+        "MANUEL ALONSO BARREDO SANCHEZ": [
+          "PRD"
+        ],
+        "EMILIO PEREZ MARTINEZ": [
+          "MC"
+        ],
+        "MARIA DEL PILAR SARTI AVELAR": [
+          "PVEM"
+        ],
+        "JOSE GUADALUPE GARCIA RAMIREZ": [
+          "MORENA"
+        ],
+        "HUGO JAVIER MARTINEZ BRIONES": [
+          "PT"
+        ],
+        "BERENICE PEREZ RUBI": [
+          "QI"
+        ],
+        "SERGIO MOCTEZUMA ZARAZUA": [
+          "PES"
+        ],
+        "SONIA JIMENEZ LOPEZ": [
+          "RSP"
+        ],
+        "SILVESTRE JAVIER MARTINEZ GUTIERREZ": [
+          "FXM"
+        ]
+      },
+      "PEDRO ESCOBEDO": {
+        "ISIDRO AMARILDO BARCENAS RESENDIZ": [
+          "PAN"
+        ],
+        "MARTIN FIGUEROA OLVERA": [
+          "PRI"
+        ],
+        "JOSE LUIS RODRIGUEZ GOMEZ": [
+          "PRD"
+        ],
+        "KARLA LIZETTE LANDEROS LOPEZ": [
+          "MC"
+        ],
+        "MARIA JULIA ORTA CENTENO": [
+          "PVEM"
+        ],
+        "JUANA PATRICIA OJEDA GRIFALDO": [
+          "MORENA"
+        ],
+        "MARIA LILIA PACHECO RIVERA": [
+          "QI"
+        ],
+        "ELIZABETH CHAVEZ CAÑAS": [
+          "PES"
+        ],
+        "ALMA FABIOLA VELAZQUEZ MORALES": [
+          "RSP"
+        ],
+        "NORMA LIZBETH SOTO SANDOVAL": [
+          "FXM"
+        ],
+        "SERGIO HERNANDEZ URIBE": []
+      },
+      "PENAMILLER": {
+        "JUAN CARLOS LINARES AGUILAR": [
+          "PAN"
+        ],
+        "LILIA RAMIREZ TREJO": [
+          "PRI"
+        ],
+        "AGNOLI GARCIA ROSALES": [
+          "PVEM"
+        ],
+        "MA. GUADALUPE ALVARADO GONZALEZ": [
+          "MORENA"
+        ],
+        "ROSA MARIA HERNANDEZ RUBIO": [
+          "PES"
+        ]
+      },
+      "PINAL DE AMOLES": {
+        "MARIA GUADALUPE RAMIREZ PLAZA": [
+          "PAN"
+        ],
+        "ISIDRO GARAY PACHECO": [
+          "PRI",
+          "PVEM",
+          "PRI_PVEM"
+        ],
+        "MA. MAGDALENA RESENDIZ JIMENEZ": [
+          "PRD"
+        ],
+        "AMADO HERRERA ALVAREZ": [
+          "MC"
+        ],
+        "ALFREDO AGUILAR VELAZQUEZ": [
+          "PT",
+          "QI",
+          "PT_QI"
+        ],
+        "MA. CONSEPCION RESENDIZ VILLEDA": [
+          "FXM"
+        ]
+      },
+      "QUERETARO": {
+        "LUIS BERNARDO NAVA GUERRERO": [
+          "PAN",
+          "PAN_QI"
+        ],
+        "MARIA ALEMAN MUÑOZ CASTILLO": [
+          "PRI"
+        ],
+        "CLARA VANESA GARFIAS ROJAS": [
+          "PRD"
+        ],
+        "TERESITA CALZADA ROVIROSA": [
+          "MC"
+        ],
+        "JAIME GARCIA ALCOCER": [
+          "PVEM"
+        ],
+        "ARTURO MAXIMILIANO GARCIA PEREZ": [
+          "MORENA"
+        ],
+        "WALTTER LOPEZ GONZALEZ": [
+          "PT"
+        ],
+        "JOSE CARLOS MAYA JIMENEZ": [
+          "PES"
+        ],
+        "CARLOS ALBERTO RENTERIA RIVERA": [
+          "RSP"
+        ],
+        "J. JESUS LLAMAS CONTRERAS": [
+          "FXM"
+        ]
+      },
+      "SAN JOAQUIN": {
+        "MARIANA GARDUÑO ERREGUIN": [
+          "PAN",
+          "QI",
+          "PAN_QI"
+        ],
+        "MA. IRMA TORRES MARTINEZ": [
+          "PRI"
+        ],
+        "CARLOS MANUEL LEDESMA ROBLES": [
+          "PVEM"
+        ],
+        "MARIA GUADALUPE LEDESMA SANCHEZ": [
+          "MORENA"
+        ],
+        "J. ERNESTO CRUZ TAVERA": []
       },
       "SAN JUAN DEL RIO": {
-        "PAN": { "nombre": "Guillermo Vega Guerrero", "foto": "images/candidatos/candidatos-img-main/Ayun_2018/guillermo_guerrero.jpg" }
+        "ROBERTO CARLOS CABRERA VALENCIA": [
+          "PAN"
+        ],
+        "GUSTAVO NIETO CHAVEZ": [
+          "PRI"
+        ],
+        "JAIRO IVAN PUENTE RAMIREZ": [
+          "PRD"
+        ],
+        "GILBERTO ARIEL CECILIO ORTEGA MEJIA": [
+          "MC"
+        ],
+        "FERNANDO IRVIN MATAMOROS MENESES": [
+          "PVEM"
+        ],
+        "ROSA MARIA RIOS GARCIA": [
+          "MORENA"
+        ],
+        "ANTONIO JUAN CAMACHO RAMIREZ": [
+          "QI"
+        ],
+        "ARMANDO GUERRERO RESENDIZ": [
+          "PES"
+        ],
+        "ERIKA DEL ROSARIO ROSALES MORENO": [
+          "RSP"
+        ],
+        "RICARDO BADILLO GONZALEZ": [
+          "FXM"
+        ]
+      },
+      "TEQUISQUIAPAN": {
+        "JOSE ALFONSO TREJO MORAN": [
+          "PAN"
+        ],
+        "LUIS ANTONIO MACIAS TREJO": [
+          "PRI"
+        ],
+        "RAUL ORIHUELA GONZALEZ": [
+          "PRD"
+        ],
+        "WENDY MARIA SEELDRAYERS IRACHETA": [
+          "PVEM"
+        ],
+        "HECTOR IVAN MAGAÑA RENTERIA": [
+          "MORENA"
+        ],
+        "KARLA MARTINEZ VALENZUELA": [
+          "QI"
+        ],
+        "MARIA GUADALUPE TORRES VILA": [
+          "PES"
+        ],
+        "ISAAC CASTRO SAHADE": [
+          "RSP"
+        ],
+        "KARLA LILIANA PIÑERA DOMINGUEZ": [
+          "FXM"
+        ],
+        "JOSE ANTONIO MEJIA LIRA": []
+      },
+      "TOLIMAN": {
+        "MA. GUADALUPE ALCANTARA DE SANTIAGO": [
+          "PAN"
+        ],
+        "MIGUEL ANGEL HERRERA GUERRERO": [
+          "PRI"
+        ],
+        "MAGDALENA FEREGRINO VELAZQUEZ": [
+          "PRD"
+        ],
+        "JEHUDANIEL RESENDIZ MARTINEZ": [
+          "MC"
+        ],
+        "JONATHAN DE SANTIAGO MARTINEZ": [
+          "PVEM"
+        ],
+        "MARTIN JIMENEZ RAMOS": [
+          "MORENA"
+        ],
+        "ADRIAN LINARES AGUILAR": [
+          "PT"
+        ],
+        "JOSE PEREZ DONDIEGO": [
+          "QI"
+        ],
+        "SABINO SANCHEZ MARTINEZ": [
+          "PES"
+        ],
+        "ALEJO SANCHEZ DE SANTIAGO": [
+          "RSP"
+        ],
+        "JAIME LOPEZ DE SANTIAGO": [
+          "FXM"
+        ],
+        "ANDRES SANCHEZ SANCHEZ": []
       }
+    },
+    "2024": {
+      "AMEALCO DE BONFIL": {
+        "ALEJANDRA GARCIA SANTIAGO": [
+          "PAN",
+          "PAN-PRI"
+        ],
+        "OSCAR PEREZ MARTINEZ": [
+          "MC"
+        ],
+        "HERMINIA FLORES BERMUDEZ": [
+          "QS"
+        ],
+        "MA. DE LA LUZ GARCIA SANTIAGO": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ]
+      },
+      "ARROYO SECO": {
+        "RENE MEJIA MONTOYA": [
+          "PAN",
+          "PRI",
+          "PAN-PRI"
+        ],
+        "FERNANDO SANCHEZ GIL": [
+          "PRI"
+        ],
+        "EDGAR HUERTA BOTELLO": [
+          "PVEM"
+        ],
+        "OFELIA DEL CASTILLO GUILLEN": [
+          "MORENA"
+        ],
+        "CIPRIANO SUAREZ OLVERA": [
+          "PT"
+        ],
+        "ARCELIA MENDEZ VAZQUEZ": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "CADEREYTA DE MONTES": {
+        "GABRIELA ALEGRIA RAMIREZ": [
+          "PRD"
+        ],
+        "GUADALUPE PATRICIA LEDESMA ROMERO": [
+          "MC"
+        ],
+        "LAURA ALEXA HERNANDEZ BALBOA": [
+          "PVEM"
+        ],
+        "ASTRID ALEJANDRA ORTEGA VAZQUEZ": [
+          "MORENA"
+        ],
+        "MARISSA VAZQUEZ MORAN": [
+          "PT"
+        ],
+        "JOSE MANUEL RUIZ MAQUEDA": [
+          "QS"
+        ],
+        "MIGUEL MARTINEZ PEÑALOZA": [
+          "PAN",
+          "PRI",
+          "PAN-PRI"
+        ]
+      },
+      "COLON": {
+        "GASPAR RAMON TRUEBA MONCADA": [
+          "MC"
+        ],
+        "SOCRATES ALEJANDRO VALDEZ ROSALES": [
+          "PVEM"
+        ],
+        "NANCY URIBE CARBAJAL": [
+          "MORENA"
+        ],
+        "MARIA HERNANDEZ URIBE": [
+          "PT"
+        ],
+        "JOSE HUGO CABRERA RUIZ": [
+          "QS"
+        ],
+        "LEONARDO DIEZ DE BONILLA GONZALEZ": [],
+        "SERGIO MARTINEZ GOMEZ": [],
+        "MANUEL MONTES HERNANDEZ": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "CORREGIDORA": {
+        "JOSUE DAVID GUERRERO TRAPALA": [
+          "PAN"
+        ],
+        "ELIZABETH ANA YELY OLVERA AGUILAR": [
+          "PRI"
+        ],
+        "MARIA LIZBETH OLVERA DE JESUS": [
+          "PRD"
+        ],
+        "NORA HILDA AMAYA LLACA": [
+          "MC"
+        ],
+        "LAURA ALEJANDRA ARROYO NAVARRETE": [
+          "PVEM"
+        ],
+        "MARIA GABRIELA MORENO MAYORGA": [
+          "QS"
+        ],
+        "MIREYA MARITZA FERNANDEZ ACEVEDO": [
+          "MORENA",
+          "PT",
+          "MORENA-PT"
+        ]
+      },
+      "EZEQUIEL MONTES": {
+        "ANTONIO MERCED VELAZQUEZ MONTES": [
+          "PRD"
+        ],
+        "MARIANA MICHELLE CARBAJAL ALVAREZ": [
+          "MC"
+        ],
+        "MARIA DE GUADALUPE RESENDIZ RODRIGUEZ": [
+          "PVEM"
+        ],
+        "MARIA LAURA RAMIREZ VALENCIA": [
+          "QS"
+        ],
+        "MAGDA GUADALUPE PEREZ MONTES": [
+          "PAN",
+          "PRI",
+          "PAN-PRI"
+        ]
+      },
+      "HUIMILPAN": {
+        "CAROLINA FLORES CRUZ": [
+          "MC"
+        ],
+        "JUAN GUZMAN CABRERA": [
+          "PVEM"
+        ],
+        "JENNIFER ALEJANDRA PEREZ ROMERO": [
+          "MORENA"
+        ],
+        "JOSE BENJAMIN MARTINEZ CABRERA": [
+          "PT"
+        ],
+        "DAVID JIMENEZ CARBAJAL": [
+          "QS"
+        ],
+        "JAIRO IVAN MORALES MARTINEZ": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "JALPAN DE SERRA": {
+        "LUIS FORTANEL LEON": [
+          "MORENA"
+        ],
+        "JEANNETE ALI GALLEGOS GALVAN": [
+          "PT"
+        ],
+        "EFRAIN MUÑOZ COSME": [],
+        "LIZ SELENE SALAZAR PEREZ": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "LANDA DE MATAMOROS": {
+        "YUNUEN ARACELI BENITEZ MALDONADO": [
+          "PRI"
+        ],
+        "LIZETH DIAZ GARCIA": [
+          "MC"
+        ],
+        "DIANA LAURA OLVERA RUBIO": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "SONIA PONCE CAMACHO": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "EL MARQUES": {
+        "RODRIGO MONSALVO CASTELAN": [
+          "PAN"
+        ],
+        "MARIA GUADALUPE CARDENAS MOLINA": [
+          "PRI"
+        ],
+        "JOSE GUADALUPE SANCHEZ CAMACHO": [
+          "PRD"
+        ],
+        "DALIA ITZEL ROMERO GONZALEZ": [
+          "MC"
+        ],
+        "MARIA DEL PILAR SARTI AVELAR": [
+          "PVEM"
+        ],
+        "JORGE ARTURO LOMELI NORIEGA": [
+          "MORENA"
+        ],
+        "MARIA DE LA LUZ PEREZ NARANJO": [
+          "PT"
+        ],
+        "ALEJANDRA DEL SOCORRO BARRERA RAIGOZA": [
+          "QS"
+        ]
+      },
+      "PEDRO ESCOBEDO": {
+        "MERCEDES PONCE TOVAR": [
+          "PAN"
+        ],
+        "MIGUEL ANGEL RUIZ BARRON": [
+          "MC"
+        ],
+        "MARIA ROMERO BOTELLO": [
+          "PVEM"
+        ],
+        "JUAN ALBERTO NAVA CRUZ": [
+          "MORENA"
+        ],
+        "PERLA ALCANTARA SANCHEZ": [
+          "PT"
+        ],
+        "RENE ARCILA SIXTOS": [
+          "QS"
+        ],
+        "NATALIA PALOMA SILVA OLVERA": [
+          "PRI",
+          "PRD",
+          "PRI-PRD"
+        ]
+      }
+    }
+  },
+  "gobernatura": {
+    "2021": {
+      "ABIGAIL ARREDONDO RAMOS": [
+        "PRI"
+      ],
+      "MAURICIO KURI GONZALEZ": [
+        "PAN",
+        "PAN_QI"
+      ],
+      "RAQUEL RUIZ DE SANTIAGO ALVAREZ": [
+        "PRD"
+      ],
+      "BEATRIZ MAGDALENA LEON SOTELO": [
+        "MC"
+      ],
+      "KATIA RESENDIZ JAIME": [
+        "PVEM"
+      ],
+      "CELIA MAYA GARCIA": [
+        "MORENA"
+      ],
+      "PENELOPE RAMIREZ MANRIQUEZ": [
+        "PT"
+      ],
+      "MA. DE JESUS IBARRA SILVA": [
+        "PES"
+      ],
+      "MIGUEL NAVA ALVARADO": [
+        "RSP"
+      ],
+      "JUAN CARLOS MARTINEZ CECIAS RODRIGUEZ": [
+        "FxM"
+      ]
     }
   }
 }

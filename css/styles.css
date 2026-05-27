@@ -2453,9 +2453,9 @@ body {
 /* ── Candidato card: bold labels, regular values ── */
 .candidato-nombre {
     font-size: 0.78rem;
+    font-family: 'Barlow', sans-serif;
     color: var(--text-primary);
     margin: 0.2rem 0 0.1rem;
-    text-transform: uppercase;
     letter-spacing: 0.3px;
 }
 .candidato-partido-label {
