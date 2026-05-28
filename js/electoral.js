@@ -23,8 +23,8 @@ const ESTADOS_MX = ['Aguascalientes','Baja California','Baja California Sur','Ca
 
 const COLORES = {
     'PAN':'#0057B8','PRI':'#C4161C','PRD':'#FFD700','MORENA':'#8B1A1A','PT':'#FF0000',
-    'PVEM':'#00A651','MC':'#FF8C00','QI':'#aaaaaa','PES':'#7B2D8B','RSP':'#E91E63',
-    'FXM':'#FF69B4','FxM':'#FF69B4','NA':'#00BCD4','ES':'#7B2D8B','CQ':'#795548','QS':'#9C27B0',
+    'PVEM':'#00A651','MC':'#FF8C00','QI':'#E0218A','PES':'#7B2D8B','RSP':'#FF8080',
+    'FXM':'#FF69B4','FxM':'#FF69B4','NA':'#00BCD4','ES':'#7B2D8B','CQ':'#E0218A','QS':'#E0218A',
     'PAN-PRI-PRD':'#0057B8','PAN-PRI':'#0057B8','PAN-PRD':'#0057B8','PRI-PRD':'#C4161C',
     'PVEM-MORENA-PT':'#8B1A1A','PVEM-MORENA':'#8B1A1A','PVEM-PT':'#00A651','MORENA-PT':'#8B1A1A',
     'PAN_PRD_QI':'#0057B8','PAN_PRD':'#0057B8','PAN_QI':'#0057B8','PRD_QI':'#FFD700',
@@ -40,6 +40,31 @@ const ICONOS = { 'PAN':'images/partidos/pan.png','PRI':'images/partidos/pri.png'
 
 let datosActuales = [], colsActuales = null, geoCache = {}, candidatosData = null;
 let barrasTop = 3, barrasVista = 'individual'; // chart state
+
+// ── Fotos candidatos 2021 ──
+const FOTOS_GUBERNATURA_2021 = {
+    'ABIGAIL ARREDONDO RAMOS':'abigail_ramos.jpg','MAURICIO KURI GONZALEZ':'mauricio_gonzalez.jpg',
+    'RAQUEL RUIZ DE SANTIAGO ALVAREZ':'raquel_alvarez.jpg','BEATRIZ MAGDALENA LEON SOTELO':'beatriz_sotelo.jpg',
+    'KATIA RESENDIZ JAIME':'katia_jaime.jpg','CELIA MAYA GARCIA':'celia_garcia.jpg',
+    'PENELOPE RAMIREZ MANRIQUEZ':'penelope_manriquez.jpg','MA. DE JESUS IBARRA SILVA':'maria_silva.jpg',
+    'MIGUEL NAVA ALVARADO':'miguel_alvarado.jpg','JUAN CARLOS MARTINEZ CECIAS RODRIGUEZ':'juan_rodriguez.jpg'
+};
+const MUNICIPIO_CARPETA_2021 = {
+    'AMEALCO DE BONFIL':'AMEALCO','COLON':'COLÓN','EL MARQUES':'EL MARQUÉS',
+    'JALPAN DE SERRA':'JALPÁN DE SERRA','PENAMILLER':'PEÑA MILLER','QUERETARO':'QUERÉTARO',
+    'SAN JOAQUIN':'SAN JOAQUÍN','SAN JUAN DEL RIO':'SAN JUAN DEL RÍO','TOLIMAN':'TOLIMÁN'
+};
+const FOTO_EXCEPCIONES_2021 = { 'RENE MEJIA MONTOYA':'rene_montoya.jpg' };
+
+function getFotoCandidato2021(nombre, tipo, municipio) {
+    if (tipo === 'gobernatura') {
+        const archivo = FOTOS_GUBERNATURA_2021[nombre];
+        return archivo ? `images/candidatos/2021/Gubernatura/${archivo}` : null;
+    }
+    const carpeta = MUNICIPIO_CARPETA_2021[municipio] || municipio;
+    const archivo = FOTO_EXCEPCIONES_2021[nombre] || `${nombre}.jpg`;
+    return `images/candidatos/2021/Ayuntamientos/${carpeta}/${archivo}`;
+}
 
 
 // ── Utilidades ──
@@ -98,13 +123,13 @@ function msToggle(wrap, panel) {
 }
 function msLabel(sel, def) { return !sel.size ? def : sel.size === 1 ? [...sel][0] : `${sel.size} seleccionados`; }
 
-function buildMsList(containerId, items, sel, onToggle, searchId) {
+function buildMsList(containerId, items, sel, onSelect, searchId, groupName) {
     const list = document.getElementById(containerId), search = document.getElementById(searchId);
     search.value = '';
     function render(q) {
         const filtered = q ? items.filter(v => v.toLowerCase().includes(q)) : items;
-        list.innerHTML = filtered.map(v => `<label class="ms-opt"><input type="checkbox" value="${v}" ${sel.has(v)||sel.has(normStr(v))?'checked':''}> ${v}</label>`).join('');
-        list.querySelectorAll('input[type=checkbox]').forEach(cb => cb.addEventListener('change', () => onToggle(cb.value, cb.checked)));
+        list.innerHTML = filtered.map(v => `<label class="ms-opt"><input type="radio" name="${groupName}" value="${v}" ${sel.has(v)||sel.has(normStr(v))?'checked':''}> ${v}</label>`).join('');
+        list.querySelectorAll('input[type=radio]').forEach(rb => rb.addEventListener('change', () => { if (rb.checked) onSelect(rb.value); }));
     }
     search.oninput = () => render(search.value.toLowerCase());
     render('');
@@ -118,28 +143,37 @@ function actualizarElecciones() {
 
 function actualizarMunicipios() {
     selMunicipios.clear(); selSecciones.clear();
+    const tipo = elElec.value;
     const munsRaw = [...new Set(datosActuales.map(r => r[colsActuales.municipio]).filter(Boolean))].sort();
     const muns = munsRaw.map(m => titleCase(m));
     const munBtnEl = document.getElementById('ms-municipio-btn');
-    buildMsList('ms-municipio-list', muns, selMunicipios, (val, chk) => {
-        const key = normStr(val);
-        chk ? selMunicipios.add(key) : selMunicipios.delete(key);
-        const label = selMunicipios.size === 0 ? 'Todos' : selMunicipios.size === 1 ? val : `${selMunicipios.size} seleccionados`;
-        munBtnEl.firstChild.textContent = label + ' ';
+    const items = tipo === 'gobernatura' ? ['Todos', ...muns] : muns;
+    if (tipo === 'gobernatura') {
+        munBtnEl.firstChild.textContent = 'Todos ';
+    } else if (muns.length) {
+        selMunicipios.add(normStr(muns[0]));
+        munBtnEl.firstChild.textContent = muns[0] + ' ';
+    }
+    const defaultSel = tipo === 'gobernatura' ? new Set(['Todos']) : selMunicipios;
+    buildMsList('ms-municipio-list', items, defaultSel, (val) => {
+        selMunicipios.clear();
+        if (val !== 'Todos') selMunicipios.add(normStr(val));
+        munBtnEl.firstChild.textContent = val + ' ';
         actualizarSecciones(); renderDashboard();
-    }, 'buscar-municipio');
-    munBtnEl.firstChild.textContent = 'Todos ';
+    }, 'buscar-municipio', 'radio-municipio');
     actualizarSecciones();
 }
 
 function actualizarSecciones() {
     selSecciones.clear();
     const secs = [...new Set(getDatosFiltrados(true).map(r => r[colsActuales.seccion]).filter(Boolean))].sort((a,b)=>parseNum(a)-parseNum(b)).map(String);
-    buildMsList('ms-seccion-list', secs, selSecciones, (val, chk) => {
-        chk ? selSecciones.add(val) : selSecciones.delete(val);
-        document.getElementById('ms-seccion-btn').firstChild.textContent = msLabel(selSecciones, 'Todas') + ' ';
+    const items = ['Todas', ...secs];
+    buildMsList('ms-seccion-list', items, new Set(['Todas']), (val) => {
+        selSecciones.clear();
+        if (val !== 'Todas') selSecciones.add(val);
+        document.getElementById('ms-seccion-btn').firstChild.textContent = (val === 'Todas' ? 'Todas' : val) + ' ';
         renderDashboard();
-    }, 'buscar-seccion');
+    }, 'buscar-seccion', 'radio-seccion');
     document.getElementById('ms-seccion-btn').firstChild.textContent = 'Todas ';
 }
 
@@ -226,7 +260,7 @@ function renderTop3(datos, cols) {
             top3 = buildTop3FromCandData(data, datos);
         } else if (selMunicipios.size === 1) {
             const munKey = [...selMunicipios][0];
-            if (data[munKey]) top3 = buildTop3FromCandData(data[munKey], datos);
+            if (data[munKey]) top3 = buildTop3FromCandData(data[munKey], datos, munKey);
         } else {
             // All/multiple municipios: compute each candidate's votes in their municipio rows
             const allResults = [];
@@ -242,7 +276,7 @@ function renderTop3(datos, cols) {
                         const v = munRows.reduce((ss, r) => ss + parseNum(r[col]), 0);
                         return v > best[1] ? [col, v] : best;
                     }, ['', 0])[0];
-                    allResults.push({ nombre, votos, mainCol, columnas });
+                    allResults.push({ nombre, votos, mainCol, columnas, municipio: munKey });
                 });
             });
             top3 = allResults.sort((a, b) => b.votos - a.votos).slice(0, 3);
@@ -271,11 +305,15 @@ function renderTop3(datos, cols) {
         const pct = totalVotos > 0 ? (c.votos / totalVotos * 100).toFixed(1) : 0;
         const iconosHtml = iconosPartido(c.mainCol, 40);
         const color = COLORES[c.mainCol] || '#666';
+        const foto = anio === '2021' ? getFotoCandidato2021(c.nombre, tipo, c.municipio) : null;
+        const fotoHtml = foto
+            ? `<div class="candidato-foto-wrap"><img src="${foto}" class="candidato-foto-img" alt="${titleCase(c.nombre)}" onerror="this.parentElement.innerHTML='<div class=\\'candidato-foto-placeholder\\'><span class=\\'candidato-foto-num\\'>${i+1}°</span></div>'"><span class="candidato-foto-num-overlay">${i + 1}°</span></div>`
+            : `<div class="candidato-foto-wrap"><div class="candidato-foto-placeholder"><span class="candidato-foto-num">${i + 1}°</span></div></div>`;
         return `<div class="candidato-card">
-            <div class="candidato-foto-wrap"><div class="candidato-foto-placeholder"><span class="candidato-foto-num">${i + 1}°</span></div></div>
+            ${fotoHtml}
             <div class="candidato-partido-icons">${iconosHtml}</div>
             <div class="candidato-nombre"><b>${titleCase(c.nombre)}</b></div>
-            <div class="candidato-partido-label">${c.columnas.map(p => p.replace(/_/g, '-')).join(' + ')}</div>
+            <div class="candidato-partido-label">${(() => { const coaliciones = c.columnas.filter(p => p.includes('_')); const enCoalicion = new Set(coaliciones.flatMap(p => p.split('_'))); return c.columnas.filter(p => p.includes('_') || !enCoalicion.has(p)).map(p => p.replace(/_/g, '-')).join(' + '); })()}</div>
             <div class="candidato-stat-row"><b class="candidato-stat-label">Votos:</b> <span class="candidato-stat-val">${fmtNum(c.votos)}</span></div>
             <div class="candidato-stat-row"><b class="candidato-stat-label">Porcentaje:</b> <span class="candidato-stat-val">${pct}%</span></div>
             <div class="candidato-accent" style="background:${color}"></div>
@@ -283,7 +321,7 @@ function renderTop3(datos, cols) {
     }).join('');
 }
 
-function buildTop3FromCandData(candData, datos) {
+function buildTop3FromCandData(candData, datos, municipio) {
     return Object.entries(candData).map(([nombre, columnas]) => {
         if (!columnas.length) return null;
         const votos = columnas.reduce((s, col) => s + datos.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
@@ -291,7 +329,7 @@ function buildTop3FromCandData(candData, datos) {
             const v = datos.reduce((ss, r) => ss + parseNum(r[col]), 0);
             return v > best[1] ? [col, v] : best;
         }, ['', 0])[0];
-        return { nombre, votos, mainCol, columnas };
+        return { nombre, votos, mainCol, columnas, municipio };
     }).filter(c => c && c.votos > 0).sort((a, b) => b.votos - a.votos).slice(0, 3);
 }
 
@@ -423,13 +461,13 @@ function actualizarMapa() {
     const span = Math.max(maxLat-minLat, maxLon-minLon);
     // More zoom when filtering
     const hasFilter = selMunicipios.size || selSecciones.size;
-    const zoom = hasFilter ? (span > 0.5 ? 9.5 : span > 0.1 ? 11 : 13) : (span > 1.5 ? 6.8 : span > 0.5 ? 8.5 : 10);
+    const zoom = hasFilter ? (span > 0.5 ? 8.5 : span > 0.1 ? 10 : 10.5) : (span > 1.5 ? 6.8 : span > 0.5 ? 2.5 : 10);
 
     Plotly.react('mapa-electoral', [{
         type:'choroplethmapbox', geojson:geo, locations:locs, z:z,
         colorscale:cscale, zmin:0, zmax:Math.max(N-1,1),
         showscale:false, text:texts, hoverinfo:'text',
-        marker:{ opacity:0.9, line:{ width:0.8, color:'#4a4a4a' } }
+        marker:{ opacity:0.9, line:{ width:0.8, color:'#000000' } }
     }], {
         mapbox:{ style: isDark?'carto-darkmatter':'carto-positron', center:{lat:centerLat,lon:centerLon}, zoom },
         paper_bgcolor:bg, margin:{t:0,b:0,l:0,r:0}, showlegend:false

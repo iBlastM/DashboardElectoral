@@ -21,6 +21,7 @@
           "ES",
           "MORENA",
           "PT",
+          "PES",
           "MORENA_PT",
           "MORENA_PT_PES",
           "MORENA_PES",
@@ -52,6 +53,7 @@
           "ES",
           "MORENA",
           "PT",
+          "PES",
           "MORENA_PT",
           "MORENA_PT_PES",
           "MORENA_PES",
@@ -83,6 +85,7 @@
         ],
         "IMELDA GARCIA UGALDE": [
           "PVEM",
+          "PT",
           "PVEM_PT"
         ],
         "ANGEL SANCHEZ VICENTE": [
@@ -144,6 +147,7 @@
       "COLON": {
         "LEOPOLDO BARCENAS HERNANDEZ": [
           "PAN",
+          "QI",
           "PAN_QI"
         ],
         "MANUEL MONTES HERNANDEZ": [
@@ -434,6 +438,7 @@
       "QUERETARO": {
         "LUIS BERNARDO NAVA GUERRERO": [
           "PAN",
+          "QI",
           "PAN_QI"
         ],
         "MARIA ALEMAN MUÑOZ CASTILLO": [
@@ -849,6 +854,7 @@
       ],
       "MAURICIO KURI GONZALEZ": [
         "PAN",
+        "QI",
         "PAN_QI"
       ],
       "RAQUEL RUIZ DE SANTIAGO ALVAREZ": [

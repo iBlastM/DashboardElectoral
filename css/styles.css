@@ -2338,6 +2338,7 @@ body {
     min-height: 0;
     overflow: hidden;
     background: var(--bg-paper);
+    position: relative;
 }
 .candidato-foto-wrap img {
     width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
@@ -2354,6 +2355,12 @@ body {
 .candidato-foto-num {
     font-family: var(--font-display); font-size: 2.5rem; font-weight: 800;
     color: var(--border-hover); opacity: 0.35;
+}
+.candidato-foto-num-overlay {
+    position: absolute; top: 6px; left: 6px;
+    font-family: var(--font-display); font-size: 1rem; font-weight: 800;
+    color: #fff; background: rgba(0,0,0,0.5); border-radius: 4px;
+    padding: 2px 6px; line-height: 1;
 }
 
 .candidato-partido-icons {
