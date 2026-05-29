@@ -2,11 +2,13 @@
 
 const ARCHIVOS = {
     ayuntamiento: { '2024': 'jsons/Ayuntamientos_2024.json', '2021': 'jsons/Ayuntamientos_2021.json', '2018': 'jsons/Ayuntamientos_2018.json' },
-    gobernatura:  { '2021': 'jsons/Gubernatura_2021.json' }
+    gobernatura:  { '2021': 'jsons/Gubernatura_2021.json' },
+    diputacion_local: { '2024': 'jsons/DiputacionLocal_2024.json' }
 };
 const GEOJSON_MAP = {
     ayuntamiento: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' },
-    gobernatura:  { '2021': 'geojsons/secciones_2021.geojson' }
+    gobernatura:  { '2021': 'geojsons/secciones_2021.geojson' },
+    diputacion_local: { '2024': 'geojsons/secciones_2024.geojson' }
 };
 const COL_MAP = {
     ayuntamiento: {
@@ -16,9 +18,12 @@ const COL_MAP = {
     },
     gobernatura: {
         '2021': { municipio:'MUNICIPIO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','QI','PES','RSP','FxM','PAN_QI'] }
+    },
+    diputacion_local: {
+        '2024': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD','PVEM','MORENA','PT','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','MC','QS'] }
     }
 };
-const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento'], '2021':['ayuntamiento','gobernatura'], '2018':['ayuntamiento'] };
+const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento','diputacion_local'], '2021':['ayuntamiento','gobernatura'], '2018':['ayuntamiento'] };
 const ESTADOS_MX = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Ciudad de México','Coahuila','Colima','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
 
 const COLORES = {
@@ -64,6 +69,26 @@ function getFotoCandidato2021(nombre, tipo, municipio) {
     const carpeta = MUNICIPIO_CARPETA_2021[municipio] || municipio;
     const archivo = FOTO_EXCEPCIONES_2021[nombre] || `${nombre}.jpg`;
     return `images/candidatos/2021/Ayuntamientos/${carpeta}/${archivo}`;
+}
+
+// ── Fotos candidatos 2024 ──
+const MUNICIPIO_CARPETA_2024 = {
+    'COLON':'COLÓN','EL MARQUES':'EL MARQUÉS','JALPAN DE SERRA':'JALPÁN DE SERRA',
+    'LANDA DE MATAMOROS':'LANDA DE MATÁMOROS','PENAMILLER':'PEÑA MILLER','QUERETARO':'QUERÉTARO',
+    'SAN JOAQUIN':'SAN JOAQUÍN','SAN JUAN DEL RIO':'SAN JUAN DEL RÍO',
+    'TEQUISQUIAPAN':'TEQUISQUIAPÁN','TOLIMAN':'TOLIMÁN'
+};
+
+function getFotoCandidato2024(nombre, tipo, municipio) {
+    if (tipo === 'diputacion_local') {
+        const num = (municipio || '').match(/\d+/)?.[0];
+        return num ? `images/candidatos/2024/DIPUTACIÓN LOCAL/Distrito ${num}/${nombre}.jpg` : null;
+    }
+    if (tipo === 'ayuntamiento') {
+        const carpeta = MUNICIPIO_CARPETA_2024[municipio] || municipio;
+        return `images/candidatos/2024/AYUNTAMIENTOS/${carpeta}/${nombre}.jpg`;
+    }
+    return null;
 }
 
 
@@ -138,13 +163,17 @@ function buildMsList(containerId, items, sel, onSelect, searchId, groupName) {
 function initEstados() { elEstado.innerHTML = ESTADOS_MX.map(e => `<option value="${e}"${e==='Querétaro'?' selected':''}>${e}</option>`).join(''); }
 function actualizarElecciones() {
     const elecciones = ELECCIONES_POR_ANIO[elAnio.value] || ['ayuntamiento'];
-    elElec.innerHTML = elecciones.map(e => `<option value="${e}">${e==='ayuntamiento'?'Ayuntamiento':'Gobernatura'}</option>`).join('');
+    const labels = { ayuntamiento:'Ayuntamiento', gobernatura:'Gobernatura', diputacion_local:'Diputación Local' };
+    elElec.innerHTML = elecciones.map(e => `<option value="${e}">${labels[e]||e}</option>`).join('');
 }
 
 function actualizarMunicipios() {
     selMunicipios.clear(); selSecciones.clear();
     const tipo = elElec.value;
-    const munsRaw = [...new Set(datosActuales.map(r => r[colsActuales.municipio]).filter(Boolean))].sort();
+    const esDL = tipo === 'diputacion_local';
+    document.getElementById('label-municipio').textContent = esDL ? 'Distrito' : 'Municipio';
+    let munsRaw = [...new Set(datosActuales.map(r => r[colsActuales.municipio]).filter(Boolean))];
+    munsRaw = esDL ? munsRaw.sort((a,b) => (parseInt(String(a).match(/\d+/))||0) - (parseInt(String(b).match(/\d+/))||0)) : munsRaw.sort();
     const muns = munsRaw.map(m => titleCase(m));
     const munBtnEl = document.getElementById('ms-municipio-btn');
     const items = tipo === 'gobernatura' ? ['Todos', ...muns] : muns;
@@ -305,7 +334,9 @@ function renderTop3(datos, cols) {
         const pct = totalVotos > 0 ? (c.votos / totalVotos * 100).toFixed(1) : 0;
         const iconosHtml = iconosPartido(c.mainCol, 40);
         const color = COLORES[c.mainCol] || '#666';
-        const foto = anio === '2021' ? getFotoCandidato2021(c.nombre, tipo, c.municipio) : null;
+        const foto = anio === '2021' ? getFotoCandidato2021(c.nombre, tipo, c.municipio)
+                   : anio === '2024' ? getFotoCandidato2024(c.nombre, tipo, c.municipio)
+                   : null;
         const fotoHtml = foto
             ? `<div class="candidato-foto-wrap"><img src="${foto}" class="candidato-foto-img" alt="${titleCase(c.nombre)}" onerror="this.parentElement.innerHTML='<div class=\\'candidato-foto-placeholder\\'><span class=\\'candidato-foto-num\\'>${i+1}°</span></div>'"><span class="candidato-foto-num-overlay">${i + 1}°</span></div>`
             : `<div class="candidato-foto-wrap"><div class="candidato-foto-placeholder"><span class="candidato-foto-num">${i + 1}°</span></div></div>`;
@@ -313,7 +344,7 @@ function renderTop3(datos, cols) {
             ${fotoHtml}
             <div class="candidato-partido-icons">${iconosHtml}</div>
             <div class="candidato-nombre"><b>${titleCase(c.nombre)}</b></div>
-            <div class="candidato-partido-label">${(() => { const coaliciones = c.columnas.filter(p => p.includes('_')); const enCoalicion = new Set(coaliciones.flatMap(p => p.split('_'))); return c.columnas.filter(p => p.includes('_') || !enCoalicion.has(p)).map(p => p.replace(/_/g, '-')).join(' + '); })()}</div>
+            <div class="candidato-partido-label">${[...new Set(c.columnas.flatMap(p => p.replace(/_/g,'-').split('-')))].join(' + ')}</div>
             <div class="candidato-stat-row"><b class="candidato-stat-label">Votos:</b> <span class="candidato-stat-val">${fmtNum(c.votos)}</span></div>
             <div class="candidato-stat-row"><b class="candidato-stat-label">Porcentaje:</b> <span class="candidato-stat-val">${pct}%</span></div>
             <div class="candidato-accent" style="background:${color}"></div>

@@ -21,11 +21,11 @@
           "ES",
           "MORENA",
           "PT",
-          "PES",
           "MORENA_PT",
           "MORENA_PT_PES",
           "MORENA_PES",
-          "PT_PES"
+          "PT_PES",
+          "PES"
         ],
         "GUSTAVO EFRAIN MENDOZA NAVARRETE": [
           "PRI",
@@ -53,11 +53,11 @@
           "ES",
           "MORENA",
           "PT",
-          "PES",
           "MORENA_PT",
           "MORENA_PT_PES",
           "MORENA_PES",
-          "PT_PES"
+          "PT_PES",
+          "PES"
         ],
         "ILIANA GUADALUPE MONTES RIOS": [
           "PRI",
@@ -85,8 +85,8 @@
         ],
         "IMELDA GARCIA UGALDE": [
           "PVEM",
-          "PT",
-          "PVEM_PT"
+          "PVEM_PT",
+          "PT"
         ],
         "ANGEL SANCHEZ VICENTE": [
           "MORENA"
@@ -147,8 +147,8 @@
       "COLON": {
         "LEOPOLDO BARCENAS HERNANDEZ": [
           "PAN",
-          "QI",
-          "PAN_QI"
+          "PAN_QI",
+          "QI"
         ],
         "MANUEL MONTES HERNANDEZ": [
           "PRI"
@@ -438,8 +438,8 @@
       "QUERETARO": {
         "LUIS BERNARDO NAVA GUERRERO": [
           "PAN",
-          "QI",
-          "PAN_QI"
+          "PAN_QI",
+          "QI"
         ],
         "MARIA ALEMAN MUÑOZ CASTILLO": [
           "PRI"
@@ -589,7 +589,8 @@
       "AMEALCO DE BONFIL": {
         "ALEJANDRA GARCIA SANTIAGO": [
           "PAN",
-          "PAN-PRI"
+          "PAN-PRI",
+          "PRI"
         ],
         "OSCAR PEREZ MARTINEZ": [
           "MC"
@@ -844,6 +845,178 @@
           "PRD",
           "PRI-PRD"
         ]
+      },
+      "PENAMILLER": {
+        "LUIS ADHALID FIGUEROA MUNGUIA": [
+          "MC"
+        ],
+        "LIBIA AGUILAR CERVANTEZ": [
+          "PVEM"
+        ],
+        "AGNOLI GARCIA ROSALES": [
+          "MORENA"
+        ],
+        "MAURICIO IBARRA GARCIA": [
+          "PT"
+        ],
+        "LETICIA ALVARADO GUDIÑO": [
+          "QS"
+        ],
+        "ANA KAREN JIMENEZ GUILLEN": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "PINAL DE AMOLES": {
+        "ISIDRO GARAY PACHECO": [
+          "PRD"
+        ],
+        "MA. CONCEPCION OLMOS PICHARDO": [
+          "MC"
+        ],
+        "ANA LAURA CRUZ GONZALEZ": [
+          "PVEM"
+        ],
+        "REYNA QUINTANA GARCIA": [
+          "MORENA",
+          "PT",
+          "MORENA-PT"
+        ],
+        "MARIA GUADALUPE RAMIREZ PLAZA": [
+          "PAN",
+          "PRI",
+          "PAN-PRI"
+        ]
+      },
+      "QUERETARO": {
+        "PAULINA AGUADO ROMERO": [
+          "MC"
+        ],
+        "PALOMA ARCE ISLAS": [
+          "QS"
+        ],
+        "JOSE MARIA TAPIA FRANCO": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "FELIPE FERNANDO MACIAS OLVERA": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "SAN JOAQUIN": {
+        "MARIA BEATRIZ GONZALEZ SALDIVAR": [
+          "PAN"
+        ],
+        "CARLOS MANUEL LEDESMA ROBLES": [
+          "PVEM"
+        ],
+        "LEIDY ELIZABETH GONZALEZ REYES": [
+          "MORENA"
+        ],
+        "NANCY GUERRERO ARTEAGA": [
+          "PT"
+        ],
+        "J. BELEM LEDESMA LEDESMA": [],
+        "MIGUEL MARTINEZ SOLANO": [
+          "PRI",
+          "PRD",
+          "PRI-PRD"
+        ]
+      },
+      "SAN JUAN DEL RIO": {
+        "ROBERTO CARLOS CABRERA VALENCIA": [
+          "PAN"
+        ],
+        "VANIA CAMACHO GALVAN": [
+          "PRI"
+        ],
+        "MIRIAM DE JESUS GOMEZ ANAYA": [
+          "PRD"
+        ],
+        "VICTOR MANUEL ROCHA BASURTO": [
+          "MC"
+        ],
+        "ANTONIO JUAN CAMACHO RAMIREZ": [
+          "QS"
+        ],
+        "JUAN ALVARADO NAVARRETE": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ]
+      },
+      "TEQUISQUIAPAN": {
+        "JOSE GAYTAN ALCARAZ": [
+          "MC"
+        ],
+        "ADOLFO ESTRELLA DIAZ": [
+          "PVEM"
+        ],
+        "ANA ROSA CRUZ PEREZ": [
+          "QS"
+        ],
+        "ANDRES TREJO VALENCIA": [],
+        "MARIA DEL ROSARIO GARCIA HUERTA": [],
+        "HECTOR IVAN MAGAÑA RENTERIA": [
+          "MORENA",
+          "PT",
+          "MORENA-PT"
+        ],
+        "NORMA MEJIA LIRA": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "TOLIMAN": {
+        "CESAREO ALCANTARA DE SANTIAGO": [
+          "PAN"
+        ],
+        "DANIEL DE SANTIAGO LUNA": [
+          "PRI"
+        ],
+        "CARIDAD PEÑA PEREZ": [
+          "PRD"
+        ],
+        "VICTOR RESENDIZ VELAZQUEZ": [
+          "MC"
+        ],
+        "ALEJO SANCHEZ DE SANTIAGO": [
+          "PVEM"
+        ],
+        "SAUL FEREGRINO FERNANDEZ DE JAUREGUI": [
+          "QS"
+        ],
+        "SAUL SANCHEZ PEREZ": [],
+        "LORELEY ITZEL GODINEZ PAZ": [
+          "MORENA",
+          "PT",
+          "MORENA-PT"
+        ]
       }
     }
   },
@@ -854,8 +1027,8 @@
       ],
       "MAURICIO KURI GONZALEZ": [
         "PAN",
-        "QI",
-        "PAN_QI"
+        "PAN_QI",
+        "QI"
       ],
       "RAQUEL RUIZ DE SANTIAGO ALVAREZ": [
         "PRD"
@@ -881,6 +1054,387 @@
       "JUAN CARLOS MARTINEZ CECIAS RODRIGUEZ": [
         "FxM"
       ]
+    }
+  },
+  "diputacion_local": {
+    "2024": {
+      "DISTRITO 1": {
+        "MANUEL GARRIDO PATRON": [
+          "MC"
+        ],
+        "IÑAKI BASAURI ALVARADO": [
+          "QS"
+        ],
+        "LAURA ANDREA TOVAR SAAVEDRA": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "DULCE IMELDA VENTURA RENDON": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 2": {
+        "ROSA MARIA MIRIAM LOA LEDEZMA": [
+          "MC"
+        ],
+        "DAVID TORRES KELLY": [
+          "QS"
+        ],
+        "HOMERO BARRERA MCDONALD": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ROSA MARTHA PACHECO ANGELES": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 3": {
+        "MARIA GUADALUPE IBARRA LUNA": [
+          "MC"
+        ],
+        "GUSTAVO ADOLFO BATALLA AVALOS": [
+          "QS"
+        ],
+        "ARTURO MAXIMILIANO GARCIA PEREZ": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ARTURO TORRES GUTIERREZ": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 4": {
+        "DANIELA SOFIA TRUJILLO OLMEDO": [
+          "PRI"
+        ],
+        "JORGE LUNA SANTACRUZ": [
+          "MC"
+        ],
+        "BONIFACIO HURTADO ALEMAN": [
+          "QS"
+        ],
+        "CLAUDIA DIAZ GAYOU": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ANA PAOLA LOPEZ BIRLAIN": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "DISTRITO 5": {
+        "JULIANA ROSARIO HERNANDEZ QUINTANAR": [
+          "PAN"
+        ],
+        "MARIANA ORTIZ CABRERA": [
+          "PRI"
+        ],
+        "DIEGO ARMANDO URIAS HERNANDEZ": [
+          "PRD"
+        ],
+        "ZUJEY GONZALEZ MENCHACA": [
+          "MC"
+        ],
+        "ALEJANDRA MONSERRAT GALVAN RANGEL": [
+          "QS"
+        ],
+        "ALICIA COLCHADO ARIZA": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ]
+      },
+      "DISTRITO 6": {
+        "JULIETA ALEJANDRA ORNELAS GONZALEZ": [
+          "PRI"
+        ],
+        "MARIA JOSE CAZAREZ PEREZ": [
+          "MC"
+        ],
+        "KARINA MAYORGA LECONA": [
+          "QS"
+        ],
+        "PATRICIA GONZALEZ MIRANDA": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "MAURICIO CARDENAS PALACIOS": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "DISTRITO 7": {
+        "ALEJANDRA MENDOZA ROMERO": [
+          "PRI"
+        ],
+        "TANIA AMERICA GALEANA SOBERANIS": [
+          "MC"
+        ],
+        "JUAN CARLOS ELIZALDE CUEVAS": [
+          "QS"
+        ],
+        "ULISES GOMEZ DE LA ROSA": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ENRIQUE ANTONIO CORREA SADA": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "DISTRITO 8": {
+        "LUIS ANTONIO ZAPATA GUERRERO": [
+          "PAN"
+        ],
+        "JESSICA GENEVITH POZOS VAZQUEZ": [
+          "PRI"
+        ],
+        "KATHERINE SALDAÑA GARCIA": [
+          "PRD"
+        ],
+        "FRANCISCO JAVIER DE LA TORRE DELGADO": [
+          "MC"
+        ],
+        "PAVEL CARRILLO RODRIGUEZ": [
+          "PVEM"
+        ],
+        "ANDREA GUILLEN VALDELAMAR": [
+          "QS"
+        ],
+        "SOFIA PEREZ SUTTON": [
+          "MORENA",
+          "PT",
+          "MORENA-PT"
+        ]
+      },
+      "DISTRITO 9": {
+        "LETICIA GALLEGOS CHAPARRO": [
+          "PRD"
+        ],
+        "LUIS FERNANDO MARTIN DEL CAMPO ALCOCER": [
+          "MC"
+        ],
+        "JOSEFINA VILLA CASTILLO": [
+          "QS"
+        ],
+        "MARIA GEORGINA GUZMAN ALVAREZ": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "JUAN AGUILAR HERRERA": [
+          "PAN",
+          "PRI",
+          "PAN-PRI"
+        ]
+      },
+      "DISTRITO 10": {
+        "CARLOS MIER MONTES": [
+          "MC"
+        ],
+        "DELFINA GONZALEZ ROQUE": [
+          "QS"
+        ],
+        "EDGAR INZUNZA BALLESTEROS": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ABEL ESPINOZA SUAREZ": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 11": {
+        "GLORIA ARMIDA SIQUEIROS HERNANDEZ": [
+          "MC"
+        ],
+        "TANIA GUADALUPE VENCES GARCIA": [
+          "PVEM"
+        ],
+        "ROSA MARIA RIOS GARCIA": [
+          "MORENA"
+        ],
+        "ERIKA DEL ROSARIO ROSALES MORENO": [
+          "PT"
+        ],
+        "GUILLERMO VEGA GUERRERO": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 12": {
+        "DELVIM FABIOLA BARCENAS NIEVES": [
+          "PRI"
+        ],
+        "ARTURO GONZALEZ DE COSIO BARRON": [
+          "MC"
+        ],
+        "RAUL ORIHUELA GONZALEZ": [
+          "PVEM"
+        ],
+        "ADELAIDA MIREYA CHAVERO JIMENEZ": [
+          "PT"
+        ],
+        "MARITZA GUADALUPE LOPEZ GARCIA": [
+          "QS"
+        ],
+        "MARTHA DANIELA SALGADO MARQUEZ": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "DISTRITO 13": {
+        "SEBASTIAN JIMENEZ VARGAS": [
+          "PRI"
+        ],
+        "LOURDES ALEJANDRA DEL ANGEL MARTINEZ": [
+          "MC"
+        ],
+        "JORGE ARTURO GARCIA PINEDA": [
+          "PVEM"
+        ],
+        "ALMA ROSA PEREA PACHECO": [
+          "MORENA"
+        ],
+        "JAZMIN SANCHEZ BARCENAS": [
+          "PT"
+        ],
+        "SALVADOR GUSTAVO BORTONI CHIPRUT": [
+          "QS"
+        ],
+        "ALEJANDRINA VERONICA GALICIA CASTAÑON": [
+          "PAN",
+          "PRD",
+          "PAN-PRD"
+        ]
+      },
+      "DISTRITO 14": {
+        "MIGUEL ANGEL HERRERA GUERRERO": [
+          "MC"
+        ],
+        "NORMA ANGELICA RAMOS GUTIERREZ": [
+          "PVEM"
+        ],
+        "ERIC SILVA HERNANDEZ": [
+          "MORENA"
+        ],
+        "PAULINA AZCANIO CASTRO": [
+          "PT"
+        ],
+        "GUSTAVO GARCIA MARTINEZ": [
+          "QS"
+        ],
+        "LETICIA RUBIO MONTES": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      },
+      "DISTRITO 15": {
+        "LETICIA PONCE SOLARES": [
+          "MC"
+        ],
+        "MARICARMEN PEREZ VEGA": [
+          "QS"
+        ],
+        "MARIA BLANCA FLOR BENITEZ ESTRADA": [
+          "PVEM",
+          "MORENA",
+          "PT",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "ALEJANDRA CARLOTA HERNANDEZ LEDESMA": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ]
+      }
     }
   }
 }
