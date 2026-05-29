@@ -406,8 +406,16 @@ function renderPartidos(datos, cols) {
 
 
 // ── Mapa ──
-let geoData = null, geoMunicipios = null;
+let geoData = null, geoMunicipios = null, geoDistritos = null;
 document.getElementById('mapa-vista').addEventListener('change', actualizarMapa);
+
+function actualizarMapaVista() {
+    const sel = document.getElementById('mapa-vista');
+    const esDL = elElec.value === 'diputacion_local';
+    sel.innerHTML = esDL
+        ? '<option value="secciones">Secciones</option><option value="distritos">Distritos</option>'
+        : '<option value="secciones">Secciones</option><option value="municipios">Municipios</option>';
+}
 
 // Fullscreen
 document.getElementById('mapa-fullscreen').addEventListener('click', () => {
@@ -424,6 +432,8 @@ async function cargarMapa() {
     if (!geoCache[key]) geoCache[key] = await (await fetch(url)).json();
     geoData = geoCache[key];
     if (!geoMunicipios) geoMunicipios = await (await fetch('geojsons/municipios.geojson')).json();
+    if (!geoDistritos && tipo === 'diputacion_local') geoDistritos = await (await fetch('geojsons/DISTRITOS_LOCALES_24.geojson')).json();
+    actualizarMapaVista();
     actualizarMapa();
 }
 
@@ -466,6 +476,31 @@ function actualizarMapa() {
         locs = geo.features.map(f => f.id);
         colors = geo.features.map(f => { const g = munGanador[normStr(f.properties.NOM_MUN)]||''; return esIndependiente(g) ? '#aaaaaa' : (COLORES[g]||'#333'); });
         texts = geo.features.map(f => `${f.properties.NOM_MUN}: ${(munGanador[normStr(f.properties.NOM_MUN)]||'Sin datos').replace(/_/g,'-')}`);
+    } else if (vista === 'distritos' && geoDistritos) {
+        const distGanador = {};
+        datosActuales.forEach(r => {
+            const dist = normStr(r[colsActuales.municipio]);
+            if (!distGanador[dist]) distGanador[dist] = {};
+            const p = r[colsActuales.primerLugar];
+            if (p) distGanador[dist][p] = (distGanador[dist][p] || 0) + 1;
+        });
+        const ganadorPorDist = {};
+        Object.entries(distGanador).forEach(([d, partidos]) => { ganadorPorDist[d] = Object.entries(partidos).sort((a,b)=>b[1]-a[1])[0]?.[0]||''; });
+
+        const features = geoDistritos.features.filter(f => normStr(f.properties.NOM_ENT) === 'QUERETARO');
+        geo = { type:'FeatureCollection', features: features.map((f,i)=>({...f, id:String(i)})) };
+        locs = geo.features.map(f => f.id);
+        colors = geo.features.map(f => {
+            const distNum = f.properties.DISTRITO_L;
+            const key = normStr(`DISTRITO ${distNum}`);
+            const g = ganadorPorDist[key] || '';
+            return esIndependiente(g) ? '#aaaaaa' : (COLORES[g]||'#333');
+        });
+        texts = geo.features.map(f => {
+            const distNum = f.properties.DISTRITO_L;
+            const key = normStr(`DISTRITO ${distNum}`);
+            return `Distrito ${distNum}: ${(ganadorPorDist[key]||'Sin datos').replace(/_/g,'-')}`;
+        });
     } else {
         const secsFiltradas = new Set(Object.keys(secLookup));
         const features = secsFiltradas.size < geoData.features.length
@@ -525,6 +560,17 @@ function actualizarMapa() {
                 const munDisplay = titleCase(feat.properties.NOM_MUN);
                 selMunicipios.clear(); selMunicipios.add(munKey);
                 document.getElementById('ms-municipio-btn').firstChild.textContent = munDisplay + ' ';
+                actualizarSecciones();
+                renderDashboard();
+            }
+        } else if (vista === 'distritos') {
+            const idx = pt.pointIndex;
+            const feat = geo.features[idx];
+            if (feat) {
+                const distKey = normStr(`DISTRITO ${feat.properties.DISTRITO_L}`);
+                const distDisplay = titleCase(`Distrito ${feat.properties.DISTRITO_L}`);
+                selMunicipios.clear(); selMunicipios.add(distKey);
+                document.getElementById('ms-municipio-btn').firstChild.textContent = distDisplay + ' ';
                 actualizarSecciones();
                 renderDashboard();
             }
