@@ -188,6 +188,8 @@ function actualizarMunicipios() {
         selMunicipios.clear();
         if (val !== 'Todos') selMunicipios.add(normStr(val));
         munBtnEl.firstChild.textContent = val + ' ';
+        document.getElementById('ms-municipio-panel').hidden = true;
+        document.getElementById('ms-municipio-wrap').classList.remove('open');
         actualizarSecciones(); renderDashboard();
     }, 'buscar-municipio', 'radio-municipio');
     actualizarSecciones();
@@ -201,6 +203,8 @@ function actualizarSecciones() {
         selSecciones.clear();
         if (val !== 'Todas') selSecciones.add(val);
         document.getElementById('ms-seccion-btn').firstChild.textContent = (val === 'Todas' ? 'Todas' : val) + ' ';
+        document.getElementById('ms-seccion-panel').hidden = true;
+        document.getElementById('ms-seccion-wrap').classList.remove('open');
         renderDashboard();
     }, 'buscar-seccion', 'radio-seccion');
     document.getElementById('ms-seccion-btn').firstChild.textContent = 'Todas ';
@@ -599,50 +603,115 @@ function renderBarras(datos, cols) {
         sorted = filtered.sort((a,b) => b[1]-a[1]).slice(0, barrasTop);
     }
     const votosTotal = sorted.reduce((s,[,v]) => s+v, 0);
+    const maxVal = votosTotal || 1;
 
+    const container = document.getElementById('chart-barras');
     const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
     const textColor = isDark ? '#fff' : '#222';
 
-    const x = sorted.map(([p]) => p.replace(/_/g,'-'));
-    const y = sorted.map(([,v]) => v);
-    const pcts = sorted.map(([,v]) => votosTotal > 0 ? (v/votosTotal*100).toFixed(1)+'%' : '0%');
+    // Ensure canvas exists
+    let canvas = container.querySelector('canvas.barras3d-canvas');
+    if (!canvas) { container.innerHTML = ''; canvas = document.createElement('canvas'); canvas.className = 'barras3d-canvas'; canvas.style.cssText = 'width:100%;height:100%;display:block;'; container.appendChild(canvas); }
+    const rect = container.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    const W = rect.width, H = rect.height;
+    ctx.clearRect(0, 0, W, H);
 
-    // Annotations: vote count on top, % in center
-    const annotations = sorted.map(([p,v], i) => [
-        { x: x[i], y: v, text: `<b>${fmtNum(v)}</b>`, showarrow:false, font:{size:11, color:textColor}, yshift:12 },
-        { x: x[i], y: v/2, text: pcts[i], showarrow:false, font:{size:13, color:'#fff', family:'Barlow'} }
-    ]).flat();
+    if (!sorted.length) return;
 
-    // Measurement lines between bars (difference annotations)
-    const shapes = [];
-    for (let i = 0; i < sorted.length - 1; i++) {
-        const diff = sorted[i][1] - sorted[i+1][1];
-        const diffPct = votosTotal > 0 ? (diff/votosTotal*100).toFixed(1) : 0;
-        annotations.push({
-            x: x[i], y: Math.max(sorted[i][1], sorted[i+1][1]) + sorted[0][1]*0.08,
-            ax: x[i+1], ay: Math.max(sorted[i][1], sorted[i+1][1]) + sorted[0][1]*0.08,
-            xref:'x', yref:'y', axref:'x', ayref:'y',
-            showarrow:true, arrowhead:0, arrowsize:1, arrowwidth:1,
-            arrowcolor: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)',
-            text: `Δ ${fmtNum(diff)} (${diffPct}%)`, font:{size:9, color: isDark?'#aaa':'#555'}
-        });
+    const padTop = 40, padBot = 60, padL = 30, padR = 30;
+    const chartH = H - padTop - padBot;
+    const n = sorted.length;
+    const barAreaW = (W - padL - padR) / n;
+    const barW = Math.min(barAreaW * 0.55, 80);
+    const depth3d = barW * 0.22; // 3D depth offset
+
+    function darken(hex, amt) {
+        let c = hex.replace('#','');
+        if (c.length===3) c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
+        const num = parseInt(c,16);
+        let r = Math.max(0,(num>>16)-amt), g = Math.max(0,((num>>8)&0xff)-amt), b = Math.max(0,(num&0xff)-amt);
+        return `rgb(${r},${g},${b})`;
+    }
+    function lighten(hex, amt) {
+        let c = hex.replace('#','');
+        if (c.length===3) c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
+        const num = parseInt(c,16);
+        let r = Math.min(255,(num>>16)+amt), g = Math.min(255,((num>>8)&0xff)+amt), b = Math.min(255,(num&0xff)+amt);
+        return `rgb(${r},${g},${b})`;
     }
 
-    Plotly.react('chart-barras', [{
-        x, y, type:'bar',
-        marker:{ color: sorted.map(([p]) => COLORES[p]||'#666'), line:{width:1, color:'rgba(255,255,255,0.2)'} },
-        text: pcts, textposition:'none',
-        hovertemplate: '<b>%{x}</b><br>Votos: %{y:,}<br>%{text}<extra></extra>'
-    }], {
-        scene:{ xaxis:{}, yaxis:{}, zaxis:{} },
-        paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
-        font:{ color:textColor, family:'Barlow' },
-        margin:{ t:40, b:70, l:60, r:20 },
-        xaxis:{ tickangle:-30, tickfont:{size:11, family:'Barlow', color:textColor} },
-        yaxis:{ gridcolor: isDark?'rgba(255,255,255,0.08)':'rgba(0,0,0,0.08)' },
-        annotations, shapes,
-        bargap: 0.3
-    }, { responsive:true, displayModeBar:false });
+    sorted.forEach(([p, v], i) => {
+        const color = COLORES[p] || '#666';
+        const pct = votosTotal > 0 ? (v/votosTotal*100).toFixed(1) : '0.0';
+        const barH = (v / maxVal) * chartH;
+        const cx = padL + barAreaW * i + barAreaW / 2;
+        const x0 = cx - barW/2;
+        const y0 = padTop + chartH - barH; // top of bar
+        const yBot = padTop + chartH;
+
+        // Background column (full height, light gray)
+        const bgColor = isDark ? '#1a1a1a' : '#e8e8e8';
+        const bgSide = isDark ? '#111' : '#d0d0d0';
+        const bgTop = isDark ? '#222' : '#ccc';
+        // Back face (full height bg)
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(x0, padTop, barW, chartH);
+        // Right side bg
+        ctx.fillStyle = bgSide;
+        ctx.beginPath();
+        ctx.moveTo(x0+barW, padTop); ctx.lineTo(x0+barW+depth3d, padTop-depth3d);
+        ctx.lineTo(x0+barW+depth3d, padTop+chartH-depth3d); ctx.lineTo(x0+barW, padTop+chartH);
+        ctx.closePath(); ctx.fill();
+        // Top bg
+        ctx.fillStyle = bgTop;
+        ctx.beginPath();
+        ctx.moveTo(x0, padTop); ctx.lineTo(x0+depth3d, padTop-depth3d);
+        ctx.lineTo(x0+barW+depth3d, padTop-depth3d); ctx.lineTo(x0+barW, padTop);
+        ctx.closePath(); ctx.fill();
+
+        // Colored bar front face
+        ctx.fillStyle = color;
+        ctx.fillRect(x0, y0, barW, barH);
+
+        // Right side (darker)
+        ctx.fillStyle = darken(color, 60);
+        ctx.beginPath();
+        ctx.moveTo(x0+barW, y0); ctx.lineTo(x0+barW+depth3d, y0-depth3d);
+        ctx.lineTo(x0+barW+depth3d, yBot-depth3d); ctx.lineTo(x0+barW, yBot);
+        ctx.closePath(); ctx.fill();
+
+        // Top face (dark cap)
+        const topColor = isDark ? '#2a2d3a' : '#3a3d4a';
+        ctx.fillStyle = topColor;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0); ctx.lineTo(x0+depth3d, y0-depth3d);
+        ctx.lineTo(x0+barW+depth3d, y0-depth3d); ctx.lineTo(x0+barW, y0);
+        ctx.closePath(); ctx.fill();
+
+        // Percentage label inside bar
+        ctx.fillStyle = '#fff';
+        ctx.font = `bold ${Math.max(13, barW*0.22)}px Barlow, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const labelY = barH > 40 ? y0 + barH * 0.7 : y0 - 16;
+        if (barH > 40) { ctx.fillStyle = '#fff'; } else { ctx.fillStyle = textColor; }
+        ctx.fillText(pct + '%', cx, labelY);
+
+        // Vote count above bar
+        ctx.fillStyle = textColor;
+        ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+        ctx.fillText(fmtNum(v), cx + depth3d/2, y0 - depth3d - 4);
+
+        // Party name below
+        ctx.fillStyle = textColor;
+        ctx.font = `500 ${Math.max(10, barW*0.16)}px Barlow, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.fillText(p.replace(/_/g,'-'), cx, yBot + 10);
+    });
 }
 
 // Chart controls - Top / Comparativa pattern
