@@ -1,3 +1,7 @@
+# --- Entorno y configuración sensible ---
+.env
+node_modules/
+
 # --- Datos crudos / intermedios ---
 base_limpia.json
 BECAS_COMPLETO_LIMPIO.json

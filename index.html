@@ -8,10 +8,68 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
     <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  AUTH OVERLAY  -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="auth-overlay">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <img src="images/metrixSinfondo.png" alt="Metrix" class="auth-logo-img auth-logo-light">
+                <img src="images/LogoMetrixOscuro.png" alt="Metrix" class="auth-logo-img auth-logo-dark">
+            </div>
+            <h2 class="auth-title">PANEL ELECTORAL</h2>
+            <p class="auth-subtitle">Autenticación requerida</p>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="admin">🔐 Administrador</button>
+                <button class="auth-tab" data-tab="pin">🔑 Invitado (PIN)</button>
+            </div>
+
+            <!-- Panel: Admin Login -->
+            <div class="auth-panel active" id="panel-admin">
+                <form id="form-login" autocomplete="off">
+                    <div class="auth-field">
+                        <label for="login-email">Correo electrónico</label>
+                        <input type="email" id="login-email" placeholder="admin@soymetrix.com" required autocomplete="off">
+                    </div>
+                    <div class="auth-field">
+                        <label for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required autocomplete="off">
+                    </div>
+                    <div class="auth-error" id="login-error"></div>
+                    <button type="submit" class="auth-btn">Ingresar</button>
+                </form>
+            </div>
+
+            <!-- Panel: PIN Entry -->
+            <div class="auth-panel" id="panel-pin">
+                <form id="form-pin" autocomplete="off">
+                    <div class="auth-field">
+                        <label for="pin-input">Código PIN de 6 dígitos</label>
+                        <input type="text" id="pin-input" placeholder="000000" maxlength="6" pattern="\d{6}" inputmode="numeric" required autocomplete="off">
+                    </div>
+                    <div class="auth-error" id="pin-error"></div>
+                    <button type="submit" class="auth-btn">Ingresar con PIN</button>
+                </form>
+                <p class="auth-hint">Solicita un PIN al administrador. Los PINs expiran después de 10 minutos.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  DASHBOARD (oculto hasta autenticarse)  -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="app-dashboard" hidden>
 
 <!-- ── TOP BAR ── -->
 <header class="top-bar">
@@ -21,9 +79,42 @@
             <img src="images/LogoMetrixOscuro.png" alt="Metrix" class="brand-img brand-img-dark">
         </div>
         <h1 class="dashboard-title">PANEL ELECTORAL</h1>
-        <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar tema">☀</button>
+        <div class="top-bar-actions">
+            <!-- Admin PIN panel toggle (solo visible para admin) -->
+            <button id="btn-toggle-pin-panel" class="top-bar-pin-btn" title="Gestionar PINs" style="display:none;">🔑 PINs</button>
+            <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()" title="Cambiar tema">☀</button>
+            <button id="btn-logout" class="logout-btn" title="Cerrar sesión">🚪</button>
+        </div>
     </div>
 </header>
+
+<!-- ── Admin: Panel de generación de PINs ── -->
+<div id="admin-pin-panel" class="admin-pin-panel" hidden>
+    <div class="admin-pin-inner">
+        <h3>🔑 Generar PINs de Acceso</h3>
+        <p class="admin-pin-hint">Los PINs son de un solo uso y expiran en <strong>10 minutos</strong>.</p>
+        <div class="admin-pin-controls">
+            <label>Cantidad:</label>
+            <select id="pin-cantidad" class="filtro-select">
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5" selected>5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+            <button id="btn-generar-pin" class="auth-btn admin-pin-gen-btn">Generar</button>
+        </div>
+        <div id="pin-resultado" class="pin-resultado"></div>
+
+        <h4 style="margin-top:1.5rem;">📋 Historial de PINs</h4>
+        <div class="pin-historial-wrap">
+            <table class="pin-historial-table">
+                <thead><tr><th>PIN</th><th>Estado</th><th>Expiración</th><th>Creado</th></tr></thead>
+                <tbody id="pin-historial-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!-- ── FILTROS ── -->
 <div class="filtros-bar">
@@ -188,6 +279,8 @@
 </main>
 
 <footer class="footer"><span>Panel Electoral · Metrix 2026</span></footer>
+
+</div><!-- /#app-dashboard -->
 
 <script src="js/electoral.js"></script>
 </body>

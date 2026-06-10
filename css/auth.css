@@ -1,0 +1,350 @@
+/* ── AUTH.CSS ── Login overlay & admin PIN panel ── */
+
+/* ═══════════════════════════════════════════
+   AUTH OVERLAY
+   ═══════════════════════════════════════════ */
+#auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-base, #060606);
+  backdrop-filter: blur(10px);
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  background: var(--bg-card, #0d0d0d);
+  border: 1px solid var(--border, rgba(123, 193, 29, 0.15));
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow, 0 4px 20px rgba(0, 0, 0, 0.55));
+}
+
+.auth-logo {
+  margin-bottom: 0.5rem;
+}
+
+.auth-logo-img {
+  max-height: 50px;
+  object-fit: contain;
+}
+
+/* Tema claro / oscuro para el logo */
+:root[data-theme="light"] .auth-logo-dark { display: none; }
+:root[data-theme="dark"]  .auth-logo-light { display: none; }
+:root:not([data-theme="light"]) .auth-logo-light { display: none; }
+
+.auth-title {
+  font-family: var(--font-display, 'Barlow', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary, #fff);
+  margin: 0.5rem 0 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+.auth-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted, rgba(255,255,255,0.55));
+  margin-bottom: 1.5rem;
+}
+
+/* ── Tabs ── */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border, rgba(123,193,29,0.15));
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.65rem 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--font-main, 'Barlow', sans-serif);
+  background: var(--bg-paper, #161616);
+  color: var(--text-muted, rgba(255,255,255,0.55));
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-tab.active {
+  background: var(--accent-1, #7bc11d);
+  color: #000;
+}
+
+.auth-tab:hover:not(.active) {
+  color: var(--text-primary, #fff);
+}
+
+/* ── Panels ── */
+.auth-panel {
+  display: none;
+}
+
+.auth-panel.active {
+  display: block;
+}
+
+/* ── Fields ── */
+.auth-field {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.auth-field label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  font-family: var(--font-main, 'Barlow', sans-serif);
+  background: var(--bg-paper, #161616);
+  border: 1px solid var(--border, rgba(123,193,29,0.15));
+  border-radius: 8px;
+  color: var(--text-primary, #fff);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.auth-field input:focus {
+  border-color: var(--accent-1, #7bc11d);
+}
+
+.auth-field input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+/* ── Error ── */
+.auth-error {
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-bottom: 0.75rem;
+  min-height: 1.2em;
+}
+
+/* ── Button ── */
+.auth-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-main, 'Barlow', sans-serif);
+  background: var(--accent-1, #7bc11d);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.03em;
+}
+
+.auth-btn:hover {
+  background: #8fd42a;
+}
+
+.auth-btn:active {
+  transform: scale(0.98);
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted, rgba(255,255,255,0.45));
+  margin-top: 0.75rem;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════
+   TOP BAR ACTIONS
+   ═══════════════════════════════════════════ */
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.top-bar-pin-btn {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-family: var(--font-main, 'Barlow', sans-serif);
+  background: var(--accent-1, #7bc11d);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.top-bar-pin-btn:hover {
+  background: #8fd42a;
+}
+
+.logout-btn {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+  background: transparent;
+  color: var(--text-muted, rgba(255,255,255,0.55));
+  border: 1px solid var(--border, rgba(123,193,29,0.15));
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* ═══════════════════════════════════════════
+   ADMIN PIN PANEL (dropdown debajo del top bar)
+   ═══════════════════════════════════════════ */
+.admin-pin-panel {
+  background: var(--bg-card, #0d0d0d);
+  border-bottom: 1px solid var(--border, rgba(123,193,29,0.15));
+  padding: 1rem 0;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.admin-pin-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.admin-pin-inner h3 {
+  font-family: var(--font-display, 'Barlow', sans-serif);
+  font-size: 0.95rem;
+  color: var(--text-primary, #fff);
+  margin-bottom: 0.25rem;
+}
+
+.admin-pin-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted, rgba(255,255,255,0.55));
+  margin-bottom: 0.75rem;
+}
+
+.admin-pin-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-primary, #fff);
+}
+
+.admin-pin-gen-btn {
+  width: auto !important;
+  padding: 0.4rem 1rem !important;
+  font-size: 0.75rem !important;
+}
+
+/* ── PIN Result Cards ── */
+.pin-resultado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pin-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-paper, #161616);
+  border: 1px solid var(--border, rgba(123,193,29,0.2));
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  min-width: 120px;
+}
+
+.pin-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--accent-1, #7bc11d);
+}
+
+.pin-code-small {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent-1, #7bc11d);
+}
+
+.pin-expira {
+  font-size: 0.62rem;
+  color: var(--text-muted, rgba(255,255,255,0.45));
+  margin-top: 0.2rem;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+/* ── PIN Historial Table ── */
+.pin-historial-wrap {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.pin-historial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.72rem;
+}
+
+.pin-historial-table th {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  color: var(--text-muted, rgba(255,255,255,0.45));
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border, rgba(123,193,29,0.1));
+}
+
+.pin-historial-table td {
+  padding: 0.4rem 0.6rem;
+  color: var(--text-primary, #fff);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.pin-historial-table tr:hover td {
+  background: rgba(123,193,29,0.04);
+}
