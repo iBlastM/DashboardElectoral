@@ -190,8 +190,8 @@
 }
 
 .top-bar-pin-btn {
-  padding: 0.35rem 0.7rem;
-  font-size: 0.72rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.7rem;
   font-weight: 600;
   font-family: var(--font-main, 'Barlow', sans-serif);
   background: var(--accent-1, #7bc11d);
@@ -200,6 +200,8 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 .top-bar-pin-btn:hover {
