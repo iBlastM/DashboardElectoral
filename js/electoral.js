@@ -3,12 +3,12 @@
 const ARCHIVOS = {
     ayuntamiento: { '2024': 'jsons/Ayuntamientos_2024.json', '2021': 'jsons/Ayuntamientos_2021.json', '2018': 'jsons/Ayuntamientos_2018.json' },
     gobernatura:  { '2021': 'jsons/Gubernatura_2021.json' },
-    diputacion_local: { '2024': 'jsons/DiputacionLocal_2024.json' }
+    diputacion_local: { '2024': 'jsons/DiputacionLocal_2024.json', '2021': 'jsons/DiputacionLocal_2021.json', '2018': 'jsons/DiputacionLocal_2018.json' }
 };
 const GEOJSON_MAP = {
     ayuntamiento: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' },
     gobernatura:  { '2021': 'geojsons/secciones_2021.geojson' },
-    diputacion_local: { '2024': 'geojsons/secciones_2024.geojson' }
+    diputacion_local: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' }
 };
 const COL_MAP = {
     ayuntamiento: {
@@ -20,22 +20,26 @@ const COL_MAP = {
         '2021': { municipio:'MUNICIPIO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','QI','PES','RSP','FxM','PAN_QI'] }
     },
     diputacion_local: {
-        '2024': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD','PVEM','MORENA','PT','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','MC','QS'] }
+        '2024': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD','PVEM','MORENA','PT','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','MC','QS'] },
+        '2021': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','QI','PES','RSP','FM','PAN_QI','PRI_PVEM','PVEM-PT'] },
+        '2018': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PVEM','PT','MC','NA','MORENA','ES','CQ','QI','MORENA-PT-PES','P_MORENA-PT','P_MORENA-PES','P_PT-PES','PRI-PVEM','CC_PAN-PRD-MC','P_PAN-PRD','P_PAN-MC','P_PRD-MC'] }
     }
 };
-const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento','diputacion_local'], '2021':['ayuntamiento','gobernatura'], '2018':['ayuntamiento'] };
+const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento','diputacion_local'], '2021':['ayuntamiento','gobernatura','diputacion_local'], '2018':['ayuntamiento','diputacion_local'] };
 const ESTADOS_MX = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Ciudad de México','Coahuila','Colima','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
 
 const COLORES = {
     'PAN':'#0057B8','PRI':'#C4161C','PRD':'#FFD700','MORENA':'#8B1A1A','PT':'#FF0000',
     'PVEM':'#00A651','MC':'#FF8C00','QI':'#E0218A','PES':'#7B2D8B','RSP':'#FF8080',
-    'FXM':'#FF69B4','FxM':'#FF69B4','NA':'#00BCD4','ES':'#7B2D8B','CQ':'#E0218A','QS':'#E0218A',
+    'FXM':'#FF69B4','FxM':'#FF69B4','FM':'#FF69B4','NA':'#00BCD4','ES':'#7B2D8B','CQ':'#E0218A','QS':'#E0218A',
     'PAN-PRI-PRD':'#0057B8','PAN-PRI':'#0057B8','PAN-PRD':'#0057B8','PRI-PRD':'#C4161C',
     'PVEM-MORENA-PT':'#8B1A1A','PVEM-MORENA':'#8B1A1A','PVEM-PT':'#00A651','MORENA-PT':'#8B1A1A',
     'PAN_PRD_QI':'#0057B8','PAN_PRD':'#0057B8','PAN_QI':'#0057B8','PRD_QI':'#FFD700',
     'PRI_PVEM':'#C4161C','PVEM_PT':'#00A651','PT_QI':'#FF0000',
     'PAN_PRD_MC':'#0057B8','PAN_MC':'#0057B8','PRD_MC':'#FFD700',
-    'MORENA_PT_PES':'#8B1A1A','MORENA_PT':'#8B1A1A','MORENA_PES':'#8B1A1A','PT_PES':'#FF0000'
+    'MORENA_PT_PES':'#8B1A1A','MORENA_PT':'#8B1A1A','MORENA_PES':'#8B1A1A','PT_PES':'#FF0000',
+    'MORENA-PT-PES':'#8B1A1A','P_MORENA-PT':'#8B1A1A','P_MORENA-PES':'#8B1A1A','P_PT-PES':'#FF0000',
+    'PRI-PVEM':'#C4161C','CC_PAN-PRD-MC':'#0057B8','P_PAN-PRD':'#0057B8','P_PAN-MC':'#0057B8','P_PRD-MC':'#FFD700'
 };
 // Partidos individuales (no coaliciones)
 const PARTIDOS_INDIVIDUALES = ['PAN','PRI','MC','MORENA','PVEM','PT'];
@@ -65,6 +69,10 @@ function getFotoCandidato2021(nombre, tipo, municipio) {
     if (tipo === 'gobernatura') {
         const archivo = FOTOS_GUBERNATURA_2021[nombre];
         return archivo ? `images/candidatos/2021/Gubernatura/${archivo}` : null;
+    }
+    if (tipo === 'diputacion_local') {
+        const num = (municipio || '').match(/\d+/)?.[0];
+        return num ? `images/candidatos/2021/Distritos/Distrito ${num}/${nombre}.jpg` : null;
     }
     const carpeta = MUNICIPIO_CARPETA_2021[municipio] || municipio;
     const archivo = FOTO_EXCEPCIONES_2021[nombre] || `${nombre}.jpg`;
@@ -316,22 +324,25 @@ function renderTop3(datos, cols) {
         }
     }
 
-    // Fallback if no candidatos data
-    if (!top3 || !top3.length) {
+    // Fallback: fill with party-based top if candidatos data is missing or incomplete
+    if (!top3 || top3.length < 3) {
+        const usedCols = new Set((top3 || []).flatMap(c => c.columnas));
         const groups = {};
         cols.partidos.forEach(col => {
+            if (usedCols.has(col)) return;
             const base = col.replace(/-/g,'_').split('_')[0];
             if (!groups[base]) groups[base] = [];
             groups[base].push(col);
         });
-        top3 = Object.entries(groups).map(([base, columns]) => {
+        const fallback = Object.entries(groups).map(([base, columns]) => {
             const votos = columns.reduce((s, col) => s + datos.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
             const mainCol = columns.reduce((best, col) => {
                 const v = datos.reduce((ss, r) => ss + parseNum(r[col]), 0);
                 return v > best[1] ? [col, v] : best;
             }, ['', 0])[0];
             return { nombre: base, votos, mainCol, columnas: columns };
-        }).filter(c => c.votos > 0).sort((a, b) => b.votos - a.votos).slice(0, 3);
+        }).filter(c => c.votos > 0).sort((a, b) => b.votos - a.votos);
+        top3 = [...(top3 || []), ...fallback].sort((a, b) => b.votos - a.votos).slice(0, 3);
     }
 
     document.getElementById('top-ganadores').innerHTML = top3.map((c, i) => {
@@ -491,7 +502,8 @@ function actualizarMapa() {
         const ganadorPorDist = {};
         Object.entries(distGanador).forEach(([d, partidos]) => { ganadorPorDist[d] = Object.entries(partidos).sort((a,b)=>b[1]-a[1])[0]?.[0]||''; });
 
-        const features = geoDistritos.features.filter(f => normStr(f.properties.NOM_ENT) === 'QUERETARO');
+        let features = geoDistritos.features.filter(f => normStr(f.properties.NOM_ENT) === 'QUERETARO');
+        if (selMunicipios.size) features = features.filter(f => selMunicipios.has(normStr(`DISTRITO ${f.properties.DISTRITO_L}`)));
         geo = { type:'FeatureCollection', features: features.map((f,i)=>({...f, id:String(i)})) };
         locs = geo.features.map(f => f.id);
         colors = geo.features.map(f => {
@@ -566,6 +578,7 @@ function actualizarMapa() {
                 document.getElementById('ms-municipio-btn').firstChild.textContent = munDisplay + ' ';
                 actualizarSecciones();
                 renderDashboard();
+                actualizarMapa();
             }
         } else if (vista === 'distritos') {
             const idx = pt.pointIndex;
@@ -577,6 +590,7 @@ function actualizarMapa() {
                 document.getElementById('ms-municipio-btn').firstChild.textContent = distDisplay + ' ';
                 actualizarSecciones();
                 renderDashboard();
+                actualizarMapa();
             }
         }
     });
