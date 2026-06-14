@@ -815,6 +815,14 @@ function renderTabla(datos, cols) {
 }
 
 // ── Init ──
+// Mostrar botón de PINs solo para admin
+(function checkAdminUI() {
+    if (typeof AUTH !== 'undefined' && AUTH.isAdmin && AUTH.isAdmin()) {
+        const btn = document.getElementById('btn-toggle-pin-panel');
+        if (btn) btn.style.display = '';
+    }
+})();
+
 initEstados();
 actualizarElecciones();
 cargarDatos();
