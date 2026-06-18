@@ -283,6 +283,7 @@ function renderDashboard() {
     renderTop3(datos, cols);
     renderPartidos(datos, cols);
     renderBarras(datos, cols);
+    renderHistorico();
     renderTabla(datos, cols);
     actualizarMapa();
 }
@@ -327,27 +328,61 @@ function renderTop3(datos, cols) {
     // Fallback: fill with party-based top if candidatos data is missing or incomplete
     if (!top3 || top3.length < 3) {
         const usedCols = new Set((top3 || []).flatMap(c => c.columnas));
-        const groups = {};
-        cols.partidos.forEach(col => {
-            if (usedCols.has(col)) return;
-            const base = col.replace(/-/g,'_').split('_')[0];
-            if (!groups[base]) groups[base] = [];
-            groups[base].push(col);
+        const availCols = cols.partidos.filter(col => !usedCols.has(col));
+        const indiv = availCols.filter(c => !c.includes('-') && !c.includes('_'));
+        const coalitionCols = availCols.filter(c => c.includes('-') || c.includes('_'))
+            .map(col => {
+                let name = col;
+                if (name.startsWith('P_')) name = name.slice(2);
+                else if (name.startsWith('CC_')) name = name.slice(3);
+                const tokens = name.replace(/_/g, '-').split('-');
+                const comps = new Set(tokens.filter(t => indiv.includes(t) || (t === 'PES' && indiv.includes('ES'))).map(t => t === 'PES' ? 'ES' : t));
+                return { col, comps };
+            })
+            .sort((a, b) => b.comps.size - a.comps.size);
+        const anchors = [];
+        const assigned = {};
+        coalitionCols.forEach(({ col, comps }) => {
+            if (comps.size < 2) return;
+            const parent = anchors.find(a => [...comps].every(c => a.members.has(c)));
+            if (parent) { assigned[col] = parent.key; }
+            else { anchors.push({ key: col, members: comps }); assigned[col] = col; }
         });
-        const fallback = Object.entries(groups).map(([base, columns]) => {
+        indiv.forEach(p => {
+            const a = anchors.find(a => a.members.has(p));
+            assigned[p] = a ? a.key : p;
+        });
+        coalitionCols.forEach(({ col, comps }) => {
+            if (!assigned[col]) assigned[col] = col;
+        });
+        const groups = {};
+        availCols.forEach(col => {
+            const key = assigned[col] || col;
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(col);
+        });
+        const fallback = Object.entries(groups).map(([key, columns]) => {
             const votos = columns.reduce((s, col) => s + datos.reduce((ss, r) => ss + parseNum(r[col]), 0), 0);
             const mainCol = columns.reduce((best, col) => {
                 const v = datos.reduce((ss, r) => ss + parseNum(r[col]), 0);
                 return v > best[1] ? [col, v] : best;
             }, ['', 0])[0];
-            return { nombre: base, votos, mainCol, columnas: columns };
+            return { nombre: key.replace(/[-_]/g, ' '), votos, mainCol, columnas: columns };
         }).filter(c => c.votos > 0).sort((a, b) => b.votos - a.votos);
         top3 = [...(top3 || []), ...fallback].sort((a, b) => b.votos - a.votos).slice(0, 3);
     }
 
     document.getElementById('top-ganadores').innerHTML = top3.map((c, i) => {
         const pct = totalVotos > 0 ? (c.votos / totalVotos * 100).toFixed(1) : 0;
-        const iconosHtml = iconosPartido(c.mainCol, 40);
+        const partidosUnicos = [...new Set(c.columnas.flatMap(col => {
+            let name = col;
+            if (name.startsWith('P_')) name = name.slice(2);
+            else if (name.startsWith('CC_')) name = name.slice(3);
+            return name.replace(/_/g, '-').split('-');
+        }))].filter(p => ICONOS[p]);
+        const iconosHtml = partidosUnicos.length
+            ? partidosUnicos.map(p => `<img src="${ICONOS[p]}" class="p-icon-square" style="width:40px;height:40px;">`).join('')
+            : iconosPartido(c.mainCol, 40);
         const color = COLORES[c.mainCol] || '#666';
         const foto = anio === '2021' ? getFotoCandidato2021(c.nombre, tipo, c.municipio)
                    : anio === '2024' ? getFotoCandidato2024(c.nombre, tipo, c.municipio)
@@ -598,32 +633,49 @@ function actualizarMapa() {
 
 
 // ── Distribución de Votos: 3D bars ──
+function buildCoalitionGroups(cols) {
+    const indiv = cols.partidos.filter(c => !c.includes('-') && !c.includes('_'));
+    const coalitionCols = cols.partidos.filter(c => c.includes('-') || c.includes('_'))
+        .map(col => {
+            let name = col;
+            if (name.startsWith('P_')) name = name.slice(2);
+            else if (name.startsWith('CC_')) name = name.slice(3);
+            const tokens = name.replace(/_/g, '-').split('-');
+            const comps = new Set(tokens.filter(t => indiv.includes(t) || (t === 'PES' && indiv.includes('ES'))).map(t => t === 'PES' ? 'ES' : t));
+            return { col, comps };
+        })
+        .sort((a, b) => b.comps.size - a.comps.size);
+    const anchors = [];
+    const assigned = {};
+    coalitionCols.forEach(({ col, comps }) => {
+        if (comps.size < 2) return;
+        const parent = anchors.find(a => [...comps].every(c => a.members.has(c)));
+        if (parent) { assigned[col] = parent.key; }
+        else { anchors.push({ key: col, members: comps }); assigned[col] = col; }
+    });
+    indiv.forEach(p => {
+        const a = anchors.find(a => a.members.has(p));
+        assigned[p] = a ? a.key : p;
+    });
+    coalitionCols.forEach(({ col }) => { if (!assigned[col]) assigned[col] = col; });
+    const groups = {};
+    cols.partidos.forEach(col => {
+        const key = assigned[col] || col;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(col);
+    });
+    return groups;
+}
+
 function renderBarras(datos, cols) {
     const totales = {};
     cols.partidos.forEach(p => { totales[p] = 0; });
     datos.forEach(r => cols.partidos.forEach(p => { totales[p] += parseNum(r[p]); }));
 
-    let filtered;
-    if (barrasVista === 'individual') {
-        filtered = Object.entries(totales).filter(([p,v]) => v > 0 && !esCoalicion(p));
-    } else {
-        filtered = Object.entries(totales).filter(([p,v]) => v > 0 && esCoalicion(p));
-    }
-
-    let sorted;
-    if (barrasMode === 'comparativa' && barrasSeleccion.size) {
-        sorted = filtered.filter(([p]) => barrasSeleccion.has(p)).sort((a,b) => b[1]-a[1]);
-    } else {
-        sorted = filtered.sort((a,b) => b[1]-a[1]).slice(0, barrasTop);
-    }
-    const votosTotal = sorted.reduce((s,[,v]) => s+v, 0);
-    const maxVal = votosTotal || 1;
-
     const container = document.getElementById('chart-barras');
     const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
     const textColor = isDark ? '#fff' : '#222';
 
-    // Ensure canvas exists
     let canvas = container.querySelector('canvas.barras3d-canvas');
     if (!canvas) { container.innerHTML = ''; canvas = document.createElement('canvas'); canvas.className = 'barras3d-canvas'; canvas.style.cssText = 'width:100%;height:100%;display:block;'; container.appendChild(canvas); }
     const rect = container.getBoundingClientRect();
@@ -634,15 +686,6 @@ function renderBarras(datos, cols) {
     const W = rect.width, H = rect.height;
     ctx.clearRect(0, 0, W, H);
 
-    if (!sorted.length) return;
-
-    const padTop = 40, padBot = 60, padL = 30, padR = 30;
-    const chartH = H - padTop - padBot;
-    const n = sorted.length;
-    const barAreaW = (W - padL - padR) / n;
-    const barW = Math.min(barAreaW * 0.55, 80);
-    const depth3d = barW * 0.22; // 3D depth offset
-
     function darken(hex, amt) {
         let c = hex.replace('#','');
         if (c.length===3) c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
@@ -650,13 +693,33 @@ function renderBarras(datos, cols) {
         let r = Math.max(0,(num>>16)-amt), g = Math.max(0,((num>>8)&0xff)-amt), b = Math.max(0,(num&0xff)-amt);
         return `rgb(${r},${g},${b})`;
     }
-    function lighten(hex, amt) {
-        let c = hex.replace('#','');
-        if (c.length===3) c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
-        const num = parseInt(c,16);
-        let r = Math.min(255,(num>>16)+amt), g = Math.min(255,((num>>8)&0xff)+amt), b = Math.min(255,(num&0xff)+amt);
-        return `rgb(${r},${g},${b})`;
+
+    if (barrasVista === 'coalicion') {
+        renderBarrasCoalicion(datos, cols, totales, ctx, W, H, isDark, textColor, darken);
+    } else {
+        renderBarrasSimple(totales, ctx, W, H, isDark, textColor, darken);
     }
+}
+
+function renderBarrasSimple(totales, ctx, W, H, isDark, textColor, darken) {
+    let filtered = Object.entries(totales).filter(([p,v]) => v > 0 && !esCoalicion(p));
+
+    let sorted;
+    if (barrasMode === 'comparativa' && barrasSeleccion.size) {
+        sorted = filtered.filter(([p]) => barrasSeleccion.has(p)).sort((a,b) => b[1]-a[1]);
+    } else {
+        sorted = filtered.sort((a,b) => b[1]-a[1]).slice(0, barrasTop);
+    }
+    if (!sorted.length) return;
+
+    const votosTotal = sorted.reduce((s,[,v]) => s+v, 0);
+    const maxVal = votosTotal || 1;
+    const padTop = 40, padBot = 60, padL = 30, padR = 30;
+    const chartH = H - padTop - padBot;
+    const n = sorted.length;
+    const barAreaW = (W - padL - padR) / n;
+    const barW = Math.min(barAreaW * 0.55, 80);
+    const depth3d = barW * 0.22;
 
     sorted.forEach(([p, v], i) => {
         const color = COLORES[p] || '#666';
@@ -664,41 +727,34 @@ function renderBarras(datos, cols) {
         const barH = (v / maxVal) * chartH;
         const cx = padL + barAreaW * i + barAreaW / 2;
         const x0 = cx - barW/2;
-        const y0 = padTop + chartH - barH; // top of bar
+        const y0 = padTop + chartH - barH;
         const yBot = padTop + chartH;
 
-        // Background column (full height, light gray)
         const bgColor = isDark ? '#1a1a1a' : '#e8e8e8';
         const bgSide = isDark ? '#111' : '#d0d0d0';
         const bgTop = isDark ? '#222' : '#ccc';
-        // Back face (full height bg)
         ctx.fillStyle = bgColor;
         ctx.fillRect(x0, padTop, barW, chartH);
-        // Right side bg
         ctx.fillStyle = bgSide;
         ctx.beginPath();
         ctx.moveTo(x0+barW, padTop); ctx.lineTo(x0+barW+depth3d, padTop-depth3d);
         ctx.lineTo(x0+barW+depth3d, padTop+chartH-depth3d); ctx.lineTo(x0+barW, padTop+chartH);
         ctx.closePath(); ctx.fill();
-        // Top bg
         ctx.fillStyle = bgTop;
         ctx.beginPath();
         ctx.moveTo(x0, padTop); ctx.lineTo(x0+depth3d, padTop-depth3d);
         ctx.lineTo(x0+barW+depth3d, padTop-depth3d); ctx.lineTo(x0+barW, padTop);
         ctx.closePath(); ctx.fill();
 
-        // Colored bar front face
         ctx.fillStyle = color;
         ctx.fillRect(x0, y0, barW, barH);
 
-        // Right side (darker)
         ctx.fillStyle = darken(color, 60);
         ctx.beginPath();
         ctx.moveTo(x0+barW, y0); ctx.lineTo(x0+barW+depth3d, y0-depth3d);
         ctx.lineTo(x0+barW+depth3d, yBot-depth3d); ctx.lineTo(x0+barW, yBot);
         ctx.closePath(); ctx.fill();
 
-        // Top face (dark cap)
         const topColor = isDark ? '#2a2d3a' : '#3a3d4a';
         ctx.fillStyle = topColor;
         ctx.beginPath();
@@ -706,25 +762,173 @@ function renderBarras(datos, cols) {
         ctx.lineTo(x0+barW+depth3d, y0-depth3d); ctx.lineTo(x0+barW, y0);
         ctx.closePath(); ctx.fill();
 
-        // Percentage label inside bar
-        ctx.fillStyle = '#fff';
-        ctx.font = `bold ${Math.max(13, barW*0.22)}px Barlow, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        const labelY = barH > 40 ? y0 + barH * 0.7 : y0 - 16;
-        if (barH > 40) { ctx.fillStyle = '#fff'; } else { ctx.fillStyle = textColor; }
-        ctx.fillText(pct + '%', cx, labelY);
+        if (barH > 40) {
+            // Porcentaje dentro de la barra
+            ctx.font = `bold ${Math.max(13, barW*0.22)}px Barlow, sans-serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#fff';
+            ctx.fillText(pct + '%', cx, y0 + barH * 0.7);
+            // Votos encima de la barra
+            ctx.fillStyle = textColor;
+            ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+            ctx.fillText(fmtNum(v), cx + depth3d/2, y0 - depth3d - 4);
+        } else {
+            // Barra pequeña: votos y porcentaje ambos encima, separados
+            const topEdge = y0 - depth3d - 4;
+            ctx.fillStyle = textColor;
+            ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+            ctx.fillText(fmtNum(v), cx + depth3d/2, topEdge - 14);
+            ctx.font = `bold ${Math.max(11, barW*0.18)}px Barlow, sans-serif`;
+            ctx.textBaseline = 'bottom';
+            ctx.fillText(pct + '%', cx + depth3d/2, topEdge);
+        }
 
-        // Vote count above bar
-        ctx.fillStyle = textColor;
-        ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-        ctx.fillText(fmtNum(v), cx + depth3d/2, y0 - depth3d - 4);
-
-        // Party name below
         ctx.fillStyle = textColor;
         ctx.font = `500 ${Math.max(10, barW*0.16)}px Barlow, sans-serif`;
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-        ctx.fillText(p.replace(/_/g,'-'), cx, yBot + 10);
+        ctx.fillText(p.replace(/_/g,'-'), cx, padTop + chartH + 10);
+    });
+}
+
+function renderBarrasCoalicion(datos, cols, totales, ctx, W, H, isDark, textColor, darken) {
+    const groups = buildCoalitionGroups(cols);
+    // Build coalition group totals (only groups with 2+ columns = actual coalitions)
+    let coalitionData = Object.entries(groups)
+        .filter(([key, columns]) => columns.length > 1)
+        .map(([key, columns]) => {
+            const segments = columns.map(col => ({ col, votos: totales[col] || 0 }))
+                .filter(s => s.votos > 0)
+                .sort((a, b) => b.votos - a.votos);
+            const total = segments.reduce((s, seg) => s + seg.votos, 0);
+            return { key, segments, total };
+        })
+        .filter(g => g.total > 0)
+        .sort((a, b) => b.total - a.total);
+
+    if (barrasMode === 'comparativa' && barrasSeleccion.size) {
+        coalitionData = coalitionData.filter(g => barrasSeleccion.has(g.key));
+    } else {
+        coalitionData = coalitionData.slice(0, barrasTop);
+    }
+    if (!coalitionData.length) return;
+
+    const maxVal = Object.values(totales).reduce((a, b) => a + b, 0) || 1;
+    const padTop = 40, padBot = 70, padL = 30, padR = 140;
+    const chartH = H - padTop - padBot;
+    const n = coalitionData.length;
+    const barAreaW = (W - padL - padR) / n;
+    const barW = Math.min(barAreaW * 0.55, 80);
+    const depth3d = barW * 0.22;
+
+    // Collect all segment labels for the legend
+    const legendItems = [];
+    const legendSeen = new Set();
+
+    coalitionData.forEach((group, i) => {
+        const cx = padL + barAreaW * i + barAreaW / 2;
+        const x0 = cx - barW / 2;
+        const yBot = padTop + chartH;
+        const totalBarH = (group.total / maxVal) * chartH;
+
+        // Background column
+        const bgColor = isDark ? '#1a1a1a' : '#e8e8e8';
+        const bgSide = isDark ? '#111' : '#d0d0d0';
+        const bgTop = isDark ? '#222' : '#ccc';
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(x0, padTop, barW, chartH);
+        ctx.fillStyle = bgSide;
+        ctx.beginPath();
+        ctx.moveTo(x0+barW, padTop); ctx.lineTo(x0+barW+depth3d, padTop-depth3d);
+        ctx.lineTo(x0+barW+depth3d, padTop+chartH-depth3d); ctx.lineTo(x0+barW, padTop+chartH);
+        ctx.closePath(); ctx.fill();
+        ctx.fillStyle = bgTop;
+        ctx.beginPath();
+        ctx.moveTo(x0, padTop); ctx.lineTo(x0+depth3d, padTop-depth3d);
+        ctx.lineTo(x0+barW+depth3d, padTop-depth3d); ctx.lineTo(x0+barW, padTop);
+        ctx.closePath(); ctx.fill();
+
+        // Draw stacked segments (largest at bottom)
+        let yOffset = yBot;
+        group.segments.forEach((seg, si) => {
+            const segH = (seg.votos / maxVal) * chartH;
+            const segY0 = yOffset - segH;
+            const color = COLORES[seg.col] || '#666';
+
+            // Front face
+            ctx.fillStyle = color;
+            ctx.fillRect(x0, segY0, barW, segH);
+
+            // Right side
+            ctx.fillStyle = darken(color, 60);
+            ctx.beginPath();
+            ctx.moveTo(x0+barW, segY0); ctx.lineTo(x0+barW+depth3d, segY0-depth3d);
+            ctx.lineTo(x0+barW+depth3d, yOffset-depth3d); ctx.lineTo(x0+barW, yOffset);
+            ctx.closePath(); ctx.fill();
+
+            // Segment label inside if tall enough
+            if (segH > 18) {
+                const label = seg.col.replace(/^P_|^CC_/, '').replace(/_/g,'-');
+                ctx.fillStyle = '#fff';
+                ctx.font = `bold ${Math.max(9, Math.min(12, segH * 0.5))}px Barlow, sans-serif`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(label, cx, segY0 + segH / 2);
+            }
+
+            // Collect for legend
+            if (!legendSeen.has(seg.col)) {
+                legendSeen.add(seg.col);
+                legendItems.push({ col: seg.col, color });
+            }
+
+            yOffset = segY0;
+        });
+
+        // Top face (dark cap on topmost segment)
+        const topY = yBot - totalBarH;
+        const topColor = isDark ? '#2a2d3a' : '#3a3d4a';
+        ctx.fillStyle = topColor;
+        ctx.beginPath();
+        ctx.moveTo(x0, topY); ctx.lineTo(x0+depth3d, topY-depth3d);
+        ctx.lineTo(x0+barW+depth3d, topY-depth3d); ctx.lineTo(x0+barW, topY);
+        ctx.closePath(); ctx.fill();
+
+        // Total vote count above bar
+        ctx.fillStyle = textColor;
+        ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+        ctx.fillText(fmtNum(group.total), cx + depth3d/2, topY - depth3d - 4);
+
+        // Coalition name below
+        ctx.fillStyle = textColor;
+        ctx.font = `500 ${Math.max(9, barW*0.14)}px Barlow, sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        const displayName = group.key.replace(/^P_|^CC_/, '').replace(/_/g, '-');
+        ctx.fillText(displayName, cx, yBot + 8);
+    });
+
+    // Draw legend on the right
+    const legendX = W - padR + 15;
+    let legendY = padTop + 10;
+    ctx.font = `bold 11px Barlow, sans-serif`;
+    ctx.fillStyle = textColor;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('Partidos:', legendX, legendY);
+    legendY += 18;
+
+    legendItems.forEach(item => {
+        if (legendY > H - 20) return;
+        ctx.fillStyle = item.color;
+        ctx.fillRect(legendX, legendY, 12, 12);
+        ctx.strokeStyle = isDark ? '#555' : '#999';
+        ctx.strokeRect(legendX, legendY, 12, 12);
+        ctx.fillStyle = textColor;
+        ctx.font = `400 10px Barlow, sans-serif`;
+        ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+        const label = item.col.replace(/^P_|^CC_/, '').replace(/_/g, '-');
+        ctx.fillText(label, legendX + 16, legendY + 1);
+        legendY += 16;
     });
 }
 
@@ -767,7 +971,17 @@ function getBarrasKeys() {
     const totales = {};
     cols.partidos.forEach(p => { totales[p] = 0; });
     datos.forEach(r => cols.partidos.forEach(p => { totales[p] += parseNum(r[p]); }));
-    return Object.entries(totales).filter(([p,v]) => v > 0 && (barrasVista==='individual' ? !esCoalicion(p) : esCoalicion(p))).sort((a,b)=>b[1]-a[1]).map(([p])=>p);
+    if (barrasVista === 'individual') {
+        return Object.entries(totales).filter(([p,v]) => v > 0 && !esCoalicion(p)).sort((a,b)=>b[1]-a[1]).map(([p])=>p);
+    }
+    // Coalición mode: return coalition group keys
+    const groups = buildCoalitionGroups(cols);
+    return Object.entries(groups)
+        .filter(([key, columns]) => columns.length > 1)
+        .map(([key, columns]) => ({ key, total: columns.reduce((s, col) => s + (totales[col] || 0), 0) }))
+        .filter(g => g.total > 0)
+        .sort((a, b) => b.total - a.total)
+        .map(g => g.key);
 }
 
 function openBarrasModal() {
@@ -795,12 +1009,124 @@ barrasModal?.querySelector('.rng-apply-btn')?.addEventListener('click', () => {
     renderBarras(getDatosFiltrados(), colsActuales);
 });
 
+// ── Comparativo Histórico ──
+const historicoCache = {};
+async function renderHistorico() {
+    const container = document.getElementById('chart-historico');
+    if (!container) return;
+    Plotly.purge(container);
+    container.innerHTML = '';
+    const tipo = elElec.value;
+    const anioActual = elAnio.value;
+    const aniosDisponibles = Object.keys(ARCHIVOS[tipo] || {}).sort();
+    if (aniosDisponibles.length < 2) {
+        container.innerHTML = '<p style="padding:1rem;color:var(--text-muted)">No hay datos históricos disponibles para este tipo de elección.</p>';
+        return;
+    }
+
+    // Partidos individuales que existen en al menos un año
+    const partidosComunes = ['PAN', 'PRI', 'PRD', 'PVEM', 'PT', 'MC', 'MORENA'];
+
+    // Load data for all years (reuse current year from datosActuales)
+    const datosPorAnio = {};
+    for (const anio of aniosDisponibles) {
+        if (anio === anioActual) {
+            datosPorAnio[anio] = datosActuales;
+        } else {
+            const cacheKey = `${tipo}_${anio}`;
+            if (!historicoCache[cacheKey]) {
+                historicoCache[cacheKey] = await cargarCSV(ARCHIVOS[tipo][anio]);
+            }
+            datosPorAnio[anio] = historicoCache[cacheKey];
+        }
+    }
+
+    // For each year, filter by municipio/distrito and sección
+    const series = {};
+    partidosComunes.forEach(p => { series[p] = []; });
+
+    aniosDisponibles.forEach(anio => {
+        const cols = COL_MAP[tipo][anio];
+        let datos = datosPorAnio[anio];
+
+        // Filter by municipio/distrito
+        if (selMunicipios.size) {
+            datos = datos.filter(r => selMunicipios.has(normStr(r[cols.municipio])));
+        }
+        // Filter by sección
+        if (selSecciones.size) {
+            datos = datos.filter(r => selSecciones.has(String(r[cols.seccion])));
+        }
+
+        partidosComunes.forEach(p => {
+            const colName = cols.partidos.find(c => c === p);
+            if (colName && datos.length) {
+                const total = datos.reduce((s, r) => s + parseNum(r[colName]), 0);
+                series[p].push(total);
+            } else {
+                series[p].push(null);
+            }
+        });
+    });
+
+    // Build Plotly traces
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const aniosNum = aniosDisponibles.map(Number);
+    const traces = partidosComunes
+        .filter(p => series[p].some(v => v !== null && v > 0))
+        .map(p => ({
+            x: aniosNum,
+            y: series[p],
+            name: p,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { color: COLORES[p] || '#666', width: 3 },
+            marker: { size: aniosNum.map(a => a === +anioActual ? 14 : 7), color: COLORES[p] || '#666' },
+            connectgaps: true
+        }));
+
+    const layout = {
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { family: 'Barlow, sans-serif', color: isDark ? '#fff' : '#222' },
+        margin: { t: 30, b: 50, l: 60, r: 20 },
+        xaxis: {
+            tickvals: aniosNum,
+            ticktext: aniosDisponibles,
+            gridcolor: isDark ? '#333' : '#ddd',
+            dtick: 1,
+            range: [aniosNum[0] - 0.5, aniosNum[aniosNum.length - 1] + 0.5]
+        },
+        yaxis: {
+            gridcolor: isDark ? '#333' : '#ddd',
+            title: 'Votos'
+        },
+        legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
+        shapes: [{
+            type: 'line',
+            x0: +anioActual, x1: +anioActual,
+            y0: 0, y1: 1,
+            yref: 'paper',
+            line: { color: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)', width: 2, dash: 'dash' }
+        }],
+        annotations: [{
+            x: +anioActual, y: 1, yref: 'paper',
+            text: `${anioActual} (seleccionado)`,
+            showarrow: false,
+            font: { size: 11, color: isDark ? '#aaa' : '#555' },
+            yshift: 10
+        }]
+    };
+
+    Plotly.newPlot(container, traces, layout, { responsive: true, displayModeBar: false });
+}
+
 // ── Tabla ──
 function renderTabla(datos, cols) {
     const el = document.getElementById('tabla-secciones');
     if (!datos.length) { el.innerHTML = '<p style="padding:1rem;color:var(--text-muted)">Sin datos</p>'; return; }
     el.innerHTML = `<table class="electoral-table">
-        <thead><tr><th>Sección</th><th>Municipio</th><th>Lista Nominal</th><th>Votos</th><th>Part.</th><th>1er Lugar</th><th>Votos</th><th>2do Lugar</th><th>Votos</th><th>3er Lugar</th><th>Votos</th></tr></thead>
+        <thead><tr><th>Sección</th><th>${elElec.value === 'diputacion_local' ? 'Distrito' : 'Municipio'}</th><th>Lista Nominal</th><th>Votos</th><th>Part.</th><th>1er Lugar</th><th>Votos</th><th>2do Lugar</th><th>Votos</th><th>3er Lugar</th><th>Votos</th></tr></thead>
         <tbody>${datos.slice(0,50).map(r => {
             const part = parseNum(r[cols.participacion]);
             return `<tr>
