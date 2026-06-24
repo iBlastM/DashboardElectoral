@@ -667,6 +667,42 @@ function buildCoalitionGroups(cols) {
     return groups;
 }
 
+let _barrasHitAreas = [];
+let _barrasTooltip = null;
+
+function _initBarrasTooltip(container, canvas) {
+    if (canvas._barrasTooltipInit) return;
+    canvas._barrasTooltipInit = true;
+    _barrasTooltip = document.createElement('div');
+    _barrasTooltip.style.cssText = 'position:absolute;pointer-events:none;background:rgba(30,30,30,0.92);color:#fff;padding:6px 10px;border-radius:6px;font:600 12px Barlow,sans-serif;white-space:nowrap;opacity:0;transition:opacity 0.15s;z-index:100;';
+    container.style.position = 'relative';
+    container.appendChild(_barrasTooltip);
+
+    canvas.addEventListener('mousemove', function(e) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        let hit = null;
+        for (const area of _barrasHitAreas) {
+            if (mx >= area.x && mx <= area.x + area.w && my >= area.y && my <= area.y + area.h) {
+                hit = area; break;
+            }
+        }
+        if (hit) {
+            const label = hit.partido.replace(/^P_|^CC_/, '').replace(/_/g,'-');
+            _barrasTooltip.textContent = `${fmtNum(hit.votos)} — ${label} (${hit.pct}%)`;
+            _barrasTooltip.style.left = (mx + 12) + 'px';
+            _barrasTooltip.style.top = (my - 30) + 'px';
+            _barrasTooltip.style.opacity = '1';
+        } else {
+            _barrasTooltip.style.opacity = '0';
+        }
+    });
+    canvas.addEventListener('mouseleave', function() {
+        _barrasTooltip.style.opacity = '0';
+    });
+}
+
 function renderBarras(datos, cols) {
     const totales = {};
     cols.partidos.forEach(p => { totales[p] = 0; });
@@ -685,6 +721,8 @@ function renderBarras(datos, cols) {
     ctx.scale(dpr, dpr);
     const W = rect.width, H = rect.height;
     ctx.clearRect(0, 0, W, H);
+
+    _initBarrasTooltip(container, canvas);
 
     function darken(hex, amt) {
         let c = hex.replace('#','');
@@ -714,36 +752,38 @@ function renderBarrasSimple(totales, ctx, W, H, isDark, textColor, darken) {
 
     const votosTotal = sorted.reduce((s,[,v]) => s+v, 0);
     const maxVal = votosTotal || 1;
-    const padTop = 40, padBot = 60, padL = 30, padR = 30;
-    const chartH = H - padTop - padBot;
+    const padTop = 20, padBot = 20, padL = 130, padR = 100;
+    const chartW = W - padL - padR;
     const n = sorted.length;
-    const barAreaW = (W - padL - padR) / n;
-    const barW = Math.min(barAreaW * 0.55, 80);
-    const depth3d = barW * 0.22;
+    const barAreaH = (H - padTop - padBot) / n;
+    const barH = Math.min(barAreaH * 0.55, 60);
+    const depth3d = barH * 0.22;
+
+    _barrasHitAreas = [];
 
     sorted.forEach(([p, v], i) => {
         const color = COLORES[p] || '#666';
         const pct = votosTotal > 0 ? (v/votosTotal*100).toFixed(1) : '0.0';
-        const barH = (v / maxVal) * chartH;
-        const cx = padL + barAreaW * i + barAreaW / 2;
-        const x0 = cx - barW/2;
-        const y0 = padTop + chartH - barH;
-        const yBot = padTop + chartH;
+        const barW = (v / maxVal) * chartW;
+        const cy = padTop + barAreaH * i + barAreaH / 2;
+        const y0 = cy - barH/2;
+        const x0 = padL;
+        const xEnd = padL + barW;
 
         const bgColor = isDark ? '#1a1a1a' : '#e8e8e8';
         const bgSide = isDark ? '#111' : '#d0d0d0';
         const bgTop = isDark ? '#222' : '#ccc';
         ctx.fillStyle = bgColor;
-        ctx.fillRect(x0, padTop, barW, chartH);
-        ctx.fillStyle = bgSide;
-        ctx.beginPath();
-        ctx.moveTo(x0+barW, padTop); ctx.lineTo(x0+barW+depth3d, padTop-depth3d);
-        ctx.lineTo(x0+barW+depth3d, padTop+chartH-depth3d); ctx.lineTo(x0+barW, padTop+chartH);
-        ctx.closePath(); ctx.fill();
+        ctx.fillRect(x0, y0, chartW, barH);
         ctx.fillStyle = bgTop;
         ctx.beginPath();
-        ctx.moveTo(x0, padTop); ctx.lineTo(x0+depth3d, padTop-depth3d);
-        ctx.lineTo(x0+barW+depth3d, padTop-depth3d); ctx.lineTo(x0+barW, padTop);
+        ctx.moveTo(x0, y0); ctx.lineTo(x0+depth3d, y0-depth3d);
+        ctx.lineTo(x0+chartW+depth3d, y0-depth3d); ctx.lineTo(x0+chartW, y0);
+        ctx.closePath(); ctx.fill();
+        ctx.fillStyle = bgSide;
+        ctx.beginPath();
+        ctx.moveTo(x0+chartW, y0); ctx.lineTo(x0+chartW+depth3d, y0-depth3d);
+        ctx.lineTo(x0+chartW+depth3d, y0+barH-depth3d); ctx.lineTo(x0+chartW, y0+barH);
         ctx.closePath(); ctx.fill();
 
         ctx.fillStyle = color;
@@ -752,7 +792,7 @@ function renderBarrasSimple(totales, ctx, W, H, isDark, textColor, darken) {
         ctx.fillStyle = darken(color, 60);
         ctx.beginPath();
         ctx.moveTo(x0+barW, y0); ctx.lineTo(x0+barW+depth3d, y0-depth3d);
-        ctx.lineTo(x0+barW+depth3d, yBot-depth3d); ctx.lineTo(x0+barW, yBot);
+        ctx.lineTo(x0+barW+depth3d, y0+barH-depth3d); ctx.lineTo(x0+barW, y0+barH);
         ctx.closePath(); ctx.fill();
 
         const topColor = isDark ? '#2a2d3a' : '#3a3d4a';
@@ -762,39 +802,29 @@ function renderBarrasSimple(totales, ctx, W, H, isDark, textColor, darken) {
         ctx.lineTo(x0+barW+depth3d, y0-depth3d); ctx.lineTo(x0+barW, y0);
         ctx.closePath(); ctx.fill();
 
-        if (barH > 40) {
-            // Porcentaje dentro de la barra
-            ctx.font = `bold ${Math.max(13, barW*0.22)}px Barlow, sans-serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        if (barW > 80) {
+            ctx.font = `bold ${Math.max(12, barH*0.35)}px Barlow, sans-serif`;
+            ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
             ctx.fillStyle = '#fff';
-            ctx.fillText(pct + '%', cx, y0 + barH * 0.7);
-            // Votos encima de la barra
-            ctx.fillStyle = textColor;
-            ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-            ctx.fillText(fmtNum(v), cx + depth3d/2, y0 - depth3d - 4);
-        } else {
-            // Barra pequeña: votos y porcentaje ambos encima, separados
-            const topEdge = y0 - depth3d - 4;
-            ctx.fillStyle = textColor;
-            ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-            ctx.fillText(fmtNum(v), cx + depth3d/2, topEdge - 14);
-            ctx.font = `bold ${Math.max(11, barW*0.18)}px Barlow, sans-serif`;
-            ctx.textBaseline = 'bottom';
-            ctx.fillText(pct + '%', cx + depth3d/2, topEdge);
+            ctx.fillText(pct + '%', x0 + 10, cy);
         }
 
         ctx.fillStyle = textColor;
-        ctx.font = `500 ${Math.max(10, barW*0.16)}px Barlow, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-        ctx.fillText(p.replace(/_/g,'-'), cx, padTop + chartH + 10);
+        ctx.font = `600 ${Math.max(10, barH*0.22)}px Barlow, sans-serif`;
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(fmtNum(v), xEnd + depth3d + 6, cy - depth3d/2);
+
+        ctx.fillStyle = textColor;
+        ctx.font = `500 ${Math.max(10, barH*0.28)}px Barlow, sans-serif`;
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+        ctx.fillText(p.replace(/_/g,'-'), padL - 8, cy);
+
+        _barrasHitAreas.push({ x: x0, y: y0, w: barW, h: barH, partido: p, votos: v, pct });
     });
 }
 
 function renderBarrasCoalicion(datos, cols, totales, ctx, W, H, isDark, textColor, darken) {
     const groups = buildCoalitionGroups(cols);
-    // Build coalition group totals (only groups with 2+ columns = actual coalitions)
     let coalitionData = Object.entries(groups)
         .filter(([key, columns]) => columns.length > 1)
         .map(([key, columns]) => {
@@ -815,120 +845,89 @@ function renderBarrasCoalicion(datos, cols, totales, ctx, W, H, isDark, textColo
     if (!coalitionData.length) return;
 
     const maxVal = Object.values(totales).reduce((a, b) => a + b, 0) || 1;
-    const padTop = 40, padBot = 70, padL = 30, padR = 140;
-    const chartH = H - padTop - padBot;
+    const padTop = 20, padBot = 20, padL = 150, padR = 100;
+    const chartW = W - padL - padR;
     const n = coalitionData.length;
-    const barAreaW = (W - padL - padR) / n;
-    const barW = Math.min(barAreaW * 0.55, 80);
-    const depth3d = barW * 0.22;
+    const barAreaH = (H - padTop - padBot) / n;
+    const barH = Math.min(barAreaH * 0.55, 60);
+    const depth3d = barH * 0.22;
 
-    // Collect all segment labels for the legend
     const legendItems = [];
     const legendSeen = new Set();
 
-    coalitionData.forEach((group, i) => {
-        const cx = padL + barAreaW * i + barAreaW / 2;
-        const x0 = cx - barW / 2;
-        const yBot = padTop + chartH;
-        const totalBarH = (group.total / maxVal) * chartH;
+    _barrasHitAreas = [];
 
-        // Background column
+    coalitionData.forEach((group, i) => {
+        const cy = padTop + barAreaH * i + barAreaH / 2;
+        const y0 = cy - barH / 2;
+        const x0 = padL;
+        const totalBarW = (group.total / maxVal) * chartW;
+
         const bgColor = isDark ? '#1a1a1a' : '#e8e8e8';
         const bgSide = isDark ? '#111' : '#d0d0d0';
         const bgTop = isDark ? '#222' : '#ccc';
         ctx.fillStyle = bgColor;
-        ctx.fillRect(x0, padTop, barW, chartH);
-        ctx.fillStyle = bgSide;
-        ctx.beginPath();
-        ctx.moveTo(x0+barW, padTop); ctx.lineTo(x0+barW+depth3d, padTop-depth3d);
-        ctx.lineTo(x0+barW+depth3d, padTop+chartH-depth3d); ctx.lineTo(x0+barW, padTop+chartH);
-        ctx.closePath(); ctx.fill();
+        ctx.fillRect(x0, y0, chartW, barH);
         ctx.fillStyle = bgTop;
         ctx.beginPath();
-        ctx.moveTo(x0, padTop); ctx.lineTo(x0+depth3d, padTop-depth3d);
-        ctx.lineTo(x0+barW+depth3d, padTop-depth3d); ctx.lineTo(x0+barW, padTop);
+        ctx.moveTo(x0, y0); ctx.lineTo(x0+depth3d, y0-depth3d);
+        ctx.lineTo(x0+chartW+depth3d, y0-depth3d); ctx.lineTo(x0+chartW, y0);
+        ctx.closePath(); ctx.fill();
+        ctx.fillStyle = bgSide;
+        ctx.beginPath();
+        ctx.moveTo(x0+chartW, y0); ctx.lineTo(x0+chartW+depth3d, y0-depth3d);
+        ctx.lineTo(x0+chartW+depth3d, y0+barH-depth3d); ctx.lineTo(x0+chartW, y0+barH);
         ctx.closePath(); ctx.fill();
 
-        // Draw stacked segments (largest at bottom)
-        let yOffset = yBot;
+        let xOffset = x0;
         group.segments.forEach((seg, si) => {
-            const segH = (seg.votos / maxVal) * chartH;
-            const segY0 = yOffset - segH;
+            const segW = (seg.votos / maxVal) * chartW;
             const color = COLORES[seg.col] || '#666';
 
-            // Front face
             ctx.fillStyle = color;
-            ctx.fillRect(x0, segY0, barW, segH);
+            ctx.fillRect(xOffset, y0, segW, barH);
 
-            // Right side
             ctx.fillStyle = darken(color, 60);
             ctx.beginPath();
-            ctx.moveTo(x0+barW, segY0); ctx.lineTo(x0+barW+depth3d, segY0-depth3d);
-            ctx.lineTo(x0+barW+depth3d, yOffset-depth3d); ctx.lineTo(x0+barW, yOffset);
+            ctx.moveTo(xOffset+segW, y0); ctx.lineTo(xOffset+segW+depth3d, y0-depth3d);
+            ctx.lineTo(xOffset+segW+depth3d, y0+barH-depth3d); ctx.lineTo(xOffset+segW, y0+barH);
             ctx.closePath(); ctx.fill();
 
-            // Segment label inside if tall enough
-            if (segH > 18) {
+            if (si === 0 && segW > 30) {
                 const label = seg.col.replace(/^P_|^CC_/, '').replace(/_/g,'-');
                 ctx.fillStyle = '#fff';
-                ctx.font = `bold ${Math.max(9, Math.min(12, segH * 0.5))}px Barlow, sans-serif`;
+                ctx.font = `bold ${Math.max(9, Math.min(12, barH * 0.35))}px Barlow, sans-serif`;
                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-                ctx.fillText(label, cx, segY0 + segH / 2);
+                ctx.fillText(label, xOffset + segW / 2, cy);
             }
 
-            // Collect for legend
             if (!legendSeen.has(seg.col)) {
                 legendSeen.add(seg.col);
                 legendItems.push({ col: seg.col, color });
             }
 
-            yOffset = segY0;
+            _barrasHitAreas.push({ x: xOffset, y: y0, w: segW, h: barH, partido: seg.col, votos: seg.votos, pct: (seg.votos/group.total*100).toFixed(1), coalition: group.key });
+
+            xOffset += segW;
         });
 
-        // Top face (dark cap on topmost segment)
-        const topY = yBot - totalBarH;
         const topColor = isDark ? '#2a2d3a' : '#3a3d4a';
         ctx.fillStyle = topColor;
         ctx.beginPath();
-        ctx.moveTo(x0, topY); ctx.lineTo(x0+depth3d, topY-depth3d);
-        ctx.lineTo(x0+barW+depth3d, topY-depth3d); ctx.lineTo(x0+barW, topY);
+        ctx.moveTo(x0, y0); ctx.lineTo(x0+depth3d, y0-depth3d);
+        ctx.lineTo(x0+totalBarW+depth3d, y0-depth3d); ctx.lineTo(x0+totalBarW, y0);
         ctx.closePath(); ctx.fill();
 
-        // Total vote count above bar
         ctx.fillStyle = textColor;
-        ctx.font = `600 ${Math.max(10, barW*0.15)}px Barlow, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-        ctx.fillText(fmtNum(group.total), cx + depth3d/2, topY - depth3d - 4);
+        ctx.font = `600 ${Math.max(10, barH*0.22)}px Barlow, sans-serif`;
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillText(fmtNum(group.total), x0 + totalBarW + depth3d + 6, cy - depth3d/2);
 
-        // Coalition name below
         ctx.fillStyle = textColor;
-        ctx.font = `500 ${Math.max(9, barW*0.14)}px Barlow, sans-serif`;
-        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        ctx.font = `500 ${Math.max(10, barH*0.28)}px Barlow, sans-serif`;
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
         const displayName = group.key.replace(/^P_|^CC_/, '').replace(/_/g, '-');
-        ctx.fillText(displayName, cx, yBot + 8);
-    });
-
-    // Draw legend on the right
-    const legendX = W - padR + 15;
-    let legendY = padTop + 10;
-    ctx.font = `bold 11px Barlow, sans-serif`;
-    ctx.fillStyle = textColor;
-    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-    ctx.fillText('Partidos:', legendX, legendY);
-    legendY += 18;
-
-    legendItems.forEach(item => {
-        if (legendY > H - 20) return;
-        ctx.fillStyle = item.color;
-        ctx.fillRect(legendX, legendY, 12, 12);
-        ctx.strokeStyle = isDark ? '#555' : '#999';
-        ctx.strokeRect(legendX, legendY, 12, 12);
-        ctx.fillStyle = textColor;
-        ctx.font = `400 10px Barlow, sans-serif`;
-        ctx.textAlign = 'left'; ctx.textBaseline = 'top';
-        const label = item.col.replace(/^P_|^CC_/, '').replace(/_/g, '-');
-        ctx.fillText(label, legendX + 16, legendY + 1);
-        legendY += 16;
+        ctx.fillText(displayName, padL - 8, cy);
     });
 }
 
@@ -1082,14 +1081,16 @@ async function renderHistorico() {
             mode: 'lines+markers',
             line: { color: COLORES[p] || '#666', width: 3 },
             marker: { size: aniosNum.map(a => a === +anioActual ? 14 : 7), color: COLORES[p] || '#666' },
-            connectgaps: true
+            connectgaps: true,
+            hovertemplate: '%{customdata}<extra></extra>',
+            customdata: series[p].map((v, idx) => v !== null ? `${v.toLocaleString('en-US')} ${p} ${aniosDisponibles[idx]}` : '')
         }));
 
     const layout = {
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
         font: { family: 'Barlow, sans-serif', color: isDark ? '#fff' : '#222' },
-        margin: { t: 30, b: 50, l: 60, r: 20 },
+        margin: { t: 30, b: 50, l: 80, r: 20 },
         xaxis: {
             tickvals: aniosNum,
             ticktext: aniosDisponibles,
@@ -1099,7 +1100,8 @@ async function renderHistorico() {
         },
         yaxis: {
             gridcolor: isDark ? '#333' : '#ddd',
-            title: 'Votos'
+            title: 'Votos',
+            tickformat: ','
         },
         legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
         shapes: [{
@@ -1122,23 +1124,69 @@ async function renderHistorico() {
 }
 
 // ── Tabla ──
+let tablaVista = 'individual';
+
 function renderTabla(datos, cols) {
     const el = document.getElementById('tabla-secciones');
     if (!datos.length) { el.innerHTML = '<p style="padding:1rem;color:var(--text-muted)">Sin datos</p>'; return; }
-    el.innerHTML = `<table class="electoral-table">
-        <thead><tr><th>Sección</th><th>${elElec.value === 'diputacion_local' ? 'Distrito' : 'Municipio'}</th><th>Lista Nominal</th><th>Votos</th><th>Part.</th><th>1er Lugar</th><th>Votos</th><th>2do Lugar</th><th>Votos</th><th>3er Lugar</th><th>Votos</th></tr></thead>
-        <tbody>${datos.slice(0,50).map(r => {
-            const part = parseNum(r[cols.participacion]);
-            return `<tr>
-                <td>${r[cols.seccion]}</td><td>${titleCase(r[cols.municipio])}</td>
-                <td>${fmtNum(parseNum(r[cols.listaNominal]))}</td><td>${fmtNum(parseNum(r[cols.votosEmitidos]))}</td>
-                <td>${(part<=1?part*100:part).toFixed(1)}%</td>
-                <td><span class="lugar-badge" style="background:${COLORES[r[cols.primerLugar]]||'#666'}">${r[cols.primerLugar]||'-'}</span></td><td>${fmtNum(parseNum(r[cols.votosP]))}</td>
-                <td><span class="lugar-badge" style="background:${COLORES[r[cols.segundoLugar]]||'#666'}">${r[cols.segundoLugar]||'-'}</span></td><td>${fmtNum(parseNum(r[cols.votos2]))}</td>
-                <td><span class="lugar-badge" style="background:${COLORES[r[cols.tercerLugar]]||'#666'}">${r[cols.tercerLugar]||'-'}</span></td><td>${fmtNum(parseNum(r[cols.votos3]))}</td>
-            </tr>`;
-        }).join('')}</tbody></table>`;
+
+    const locHeader = elElec.value === 'diputacion_local' ? 'Distrito' : 'Municipio';
+    const thead = `<thead><tr><th>Sección</th><th>${locHeader}</th><th>Lista Nominal</th><th>Votos</th><th>Part.</th><th>1er Lugar</th><th>Votos</th><th>2do Lugar</th><th>Votos</th><th>3er Lugar</th><th>Votos</th></tr></thead>`;
+
+    if (tablaVista === 'coalicion') {
+        const groups = buildCoalitionGroups(cols);
+        const coalitionGroups = Object.entries(groups).filter(([, columns]) => columns.length > 1);
+        el.innerHTML = `<table class="electoral-table">
+            ${thead}
+            <tbody>${datos.slice(0,50).map(r => {
+                const part = parseNum(r[cols.participacion]);
+                const groupTotals = {};
+                coalitionGroups.forEach(([key, columns]) => {
+                    const total = columns.reduce((s, c) => s + parseNum(r[c]), 0);
+                    if (total > 0) groupTotals[key] = total;
+                });
+                const top3 = Object.entries(groupTotals).sort((a,b) => b[1]-a[1]).slice(0, 3);
+                const displayName = k => k.replace(/^P_|^CC_/, '').replace(/_/g,'-');
+                return `<tr>
+                    <td>${r[cols.seccion]}</td><td>${titleCase(r[cols.municipio])}</td>
+                    <td>${fmtNum(parseNum(r[cols.listaNominal]))}</td><td>${fmtNum(parseNum(r[cols.votosEmitidos]))}</td>
+                    <td>${(part<=1?part*100:part).toFixed(1)}%</td>
+                    <td>${top3[0] ? `<span class="lugar-badge" style="background:${COLORES[top3[0][0]]||'#666'}">${displayName(top3[0][0])}</span>` : '-'}</td><td>${top3[0] ? fmtNum(top3[0][1]) : '-'}</td>
+                    <td>${top3[1] ? `<span class="lugar-badge" style="background:${COLORES[top3[1][0]]||'#666'}">${displayName(top3[1][0])}</span>` : '-'}</td><td>${top3[1] ? fmtNum(top3[1][1]) : '-'}</td>
+                    <td>${top3[2] ? `<span class="lugar-badge" style="background:${COLORES[top3[2][0]]||'#666'}">${displayName(top3[2][0])}</span>` : '-'}</td><td>${top3[2] ? fmtNum(top3[2][1]) : '-'}</td>
+                </tr>`;
+            }).join('')}</tbody></table>`;
+    } else {
+        const indivCols = cols.partidos.filter(p => !esCoalicion(p));
+        el.innerHTML = `<table class="electoral-table">
+            ${thead}
+            <tbody>${datos.slice(0,50).map(r => {
+                const part = parseNum(r[cols.participacion]);
+                const top3 = indivCols.map(p => [p, parseNum(r[p])]).filter(([,v]) => v > 0).sort((a,b) => b[1]-a[1]).slice(0, 3);
+                return `<tr>
+                    <td>${r[cols.seccion]}</td><td>${titleCase(r[cols.municipio])}</td>
+                    <td>${fmtNum(parseNum(r[cols.listaNominal]))}</td><td>${fmtNum(parseNum(r[cols.votosEmitidos]))}</td>
+                    <td>${(part<=1?part*100:part).toFixed(1)}%</td>
+                    <td>${top3[0] ? `<span class="lugar-badge" style="background:${COLORES[top3[0][0]]||'#666'}">${top3[0][0]}</span>` : '-'}</td><td>${top3[0] ? fmtNum(top3[0][1]) : '-'}</td>
+                    <td>${top3[1] ? `<span class="lugar-badge" style="background:${COLORES[top3[1][0]]||'#666'}">${top3[1][0]}</span>` : '-'}</td><td>${top3[1] ? fmtNum(top3[1][1]) : '-'}</td>
+                    <td>${top3[2] ? `<span class="lugar-badge" style="background:${COLORES[top3[2][0]]||'#666'}">${top3[2][0]}</span>` : '-'}</td><td>${top3[2] ? fmtNum(top3[2][1]) : '-'}</td>
+                </tr>`;
+            }).join('')}</tbody></table>`;
+    }
 }
+
+document.getElementById('btn-tabla-individual').addEventListener('click', function() {
+    tablaVista = 'individual';
+    this.classList.add('active');
+    document.getElementById('btn-tabla-coalicion').classList.remove('active');
+    if (datosActuales.length && colsActuales) renderTabla(datosActuales, colsActuales);
+});
+document.getElementById('btn-tabla-coalicion').addEventListener('click', function() {
+    tablaVista = 'coalicion';
+    this.classList.add('active');
+    document.getElementById('btn-tabla-individual').classList.remove('active');
+    if (datosActuales.length && colsActuales) renderTabla(datosActuales, colsActuales);
+});
 
 // ── Init ──
 // Mostrar botón de PINs solo para admin
