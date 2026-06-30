@@ -3,12 +3,14 @@
 const ARCHIVOS = {
     ayuntamiento: { '2024': 'jsons/Ayuntamientos_2024.json', '2021': 'jsons/Ayuntamientos_2021.json', '2018': 'jsons/Ayuntamientos_2018.json' },
     gobernatura:  { '2021': 'jsons/Gubernatura_2021.json' },
-    diputacion_local: { '2024': 'jsons/DiputacionLocal_2024.json', '2021': 'jsons/DiputacionLocal_2021.json', '2018': 'jsons/DiputacionLocal_2018.json' }
+    diputacion_local: { '2024': 'jsons/DiputacionLocal_2024.json', '2021': 'jsons/DiputacionLocal_2021.json', '2018': 'jsons/DiputacionLocal_2018.json' },
+    diputacion_federal: { '2024': 'jsons/DiputacionFederal_2024.json', '2021': 'jsons/DiputacionFederal_2021.json', '2018': 'jsons/DiputacionFederal_2018.json' }
 };
 const GEOJSON_MAP = {
     ayuntamiento: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' },
     gobernatura:  { '2021': 'geojsons/secciones_2021.geojson' },
-    diputacion_local: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' }
+    diputacion_local: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' },
+    diputacion_federal: { '2024': 'geojsons/secciones_2024.geojson', '2021': 'geojsons/secciones_2021.geojson', '2018': 'geojsons/secciones_2018.geojson' }
 };
 const COL_MAP = {
     ayuntamiento: {
@@ -23,27 +25,36 @@ const COL_MAP = {
         '2024': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD','PVEM','MORENA','PT','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','MC','QS'] },
         '2021': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','QI','PES','RSP','FM','PAN_QI','PRI_PVEM','PVEM-PT'] },
         '2018': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','PVEM','PT','MC','NA','MORENA','ES','CQ','QI','MORENA-PT-PES','P_MORENA-PT','P_MORENA-PES','P_PT-PES','PRI-PVEM','CC_PAN-PRD-MC','P_PAN-PRD','P_PAN-MC','P_PRD-MC'] }
+    },
+    diputacion_federal: {
+        '2024': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD'] },
+        '2021': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','MORENA','PT','PES','RSP','FXM','CI','PVEM-MORENA-PT','PVEM-MORENA','PVEM-PT','MORENA-PT','PAN-PRI-PRD','PAN-PRI','PAN-PRD','PRI-PRD'] },
+        '2018': { municipio:'DISTRITO', seccion:'SECCION', listaNominal:'LISTA_NOMINAL', votosEmitidos:'VOTOS_EMITIDOS', participacion:'PARTICIPACION', primerLugar:'1ER_LUGAR', votosP:'1ERO_VOTOS', segundoLugar:'2DO_LUGAR', votos2:'2DO_VOTOS', tercerLugar:'3ER_LUGAR', votos3:'3RO_VOTOS', nulos:'NULOS', partidos:['PAN','PRI','PRD','MC','PVEM','NA','ES','MORENA','PT-MORENA-PES','MORENA-PES','PT-PES','MORENA-PT','PT','PAN-PRD-MC','PAN-MC','PAN-PRD','PRD-MC','PRI-PVEM-NA','PRI-PVEM','PRI-NA','PVEM-NA','CI01','CI02'] }
     }
 };
-const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento','diputacion_local'], '2021':['ayuntamiento','gobernatura','diputacion_local'], '2018':['ayuntamiento','diputacion_local'] };
+const ELECCIONES_POR_ANIO = { '2024':['ayuntamiento','diputacion_local','diputacion_federal'], '2021':['ayuntamiento','gobernatura','diputacion_local','diputacion_federal'], '2018':['ayuntamiento','diputacion_local','diputacion_federal'] };
 const ESTADOS_MX = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Ciudad de México','Coahuila','Colima','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
 
 const COLORES = {
     'PAN':'#0057B8','PRI':'#C4161C','PRD':'#FFD700','MORENA':'#8B1A1A','PT':'#FF0000',
     'PVEM':'#00A651','MC':'#FF8C00','QI':'#E0218A','PES':'#7B2D8B','RSP':'#FF8080',
     'FXM':'#FF69B4','FxM':'#FF69B4','FM':'#FF69B4','NA':'#00BCD4','ES':'#7B2D8B','CQ':'#E0218A','QS':'#E0218A',
+    'CI':'#999999','CI01':'#999999','CI02':'#999999',
     'PAN-PRI-PRD':'#0057B8','PAN-PRI':'#0057B8','PAN-PRD':'#0057B8','PRI-PRD':'#C4161C',
     'PVEM-MORENA-PT':'#8B1A1A','PVEM-MORENA':'#8B1A1A','PVEM-PT':'#00A651','MORENA-PT':'#8B1A1A',
+    'PAN-PRD-MC':'#0057B8','PAN-MC':'#0057B8','PRD-MC':'#FFD700',
+    'PT-MORENA-PES':'#8B1A1A','MORENA-PES':'#8B1A1A','PT-PES':'#FF0000',
+    'PRI-PVEM-NA':'#C4161C','PRI-PVEM':'#C4161C','PRI-NA':'#C4161C','PVEM-NA':'#00A651',
     'PAN_PRD_QI':'#0057B8','PAN_PRD':'#0057B8','PAN_QI':'#0057B8','PRD_QI':'#FFD700',
     'PRI_PVEM':'#C4161C','PVEM_PT':'#00A651','PT_QI':'#FF0000',
     'PAN_PRD_MC':'#0057B8','PAN_MC':'#0057B8','PRD_MC':'#FFD700',
     'MORENA_PT_PES':'#8B1A1A','MORENA_PT':'#8B1A1A','MORENA_PES':'#8B1A1A','PT_PES':'#FF0000',
     'MORENA-PT-PES':'#8B1A1A','P_MORENA-PT':'#8B1A1A','P_MORENA-PES':'#8B1A1A','P_PT-PES':'#FF0000',
-    'PRI-PVEM':'#C4161C','CC_PAN-PRD-MC':'#0057B8','P_PAN-PRD':'#0057B8','P_PAN-MC':'#0057B8','P_PRD-MC':'#FFD700'
+    'CC_PAN-PRD-MC':'#0057B8','P_PAN-PRD':'#0057B8','P_PAN-MC':'#0057B8','P_PRD-MC':'#FFD700'
 };
 // Partidos individuales (no coaliciones)
 const PARTIDOS_INDIVIDUALES = ['PAN','PRI','MC','MORENA','PVEM','PT'];
-const PARTIDOS_IND = ['QI','CQ','QS']; // independientes
+const PARTIDOS_IND = ['QI','CQ','QS','CI','CI01','CI02']; // independientes
 
 const ICONOS = { 'PAN':'images/partidos/pan.png','PRI':'images/partidos/pri.png','PRD':'images/partidos/prd.png','MORENA':'images/partidos/morena.png','PT':'images/partidos/pt.png','PVEM':'images/partidos/pvem.png','MC':'images/partidos/mc.png' };
 
@@ -70,6 +81,11 @@ function getFotoCandidato2021(nombre, tipo, municipio) {
         const archivo = FOTOS_GUBERNATURA_2021[nombre];
         return archivo ? `images/candidatos/2021/Gubernatura/${archivo}` : null;
     }
+    if (tipo === 'diputacion_federal') {
+        const num = (municipio || '').match(/\d+/)?.[0];
+        const archivo = nombre.replace(/ /g, '_') + '.jpg';
+        return num ? `images/candidatos/2021/Diputados Federales/Distr ${num}/${archivo}` : null;
+    }
     if (tipo === 'diputacion_local') {
         const num = (municipio || '').match(/\d+/)?.[0];
         return num ? `images/candidatos/2021/Distritos/Distrito ${num}/${nombre}.jpg` : null;
@@ -88,6 +104,11 @@ const MUNICIPIO_CARPETA_2024 = {
 };
 
 function getFotoCandidato2024(nombre, tipo, municipio) {
+    if (tipo === 'diputacion_federal') {
+        const num = (municipio || '').match(/\d+/)?.[0];
+        const archivo = nombre.toUpperCase().replace(/ /g, '_') + '.jpg';
+        return num ? `images/candidatos/2024/DIPUTACIÓN FEDERAL/Distrito ${num}/${archivo}` : null;
+    }
     if (tipo === 'diputacion_local') {
         const num = (municipio || '').match(/\d+/)?.[0];
         return num ? `images/candidatos/2024/DIPUTACIÓN LOCAL/Distrito ${num}/${nombre}.jpg` : null;
@@ -171,14 +192,14 @@ function buildMsList(containerId, items, sel, onSelect, searchId, groupName) {
 function initEstados() { elEstado.innerHTML = ESTADOS_MX.map(e => `<option value="${e}"${e==='Querétaro'?' selected':''}>${e}</option>`).join(''); }
 function actualizarElecciones() {
     const elecciones = ELECCIONES_POR_ANIO[elAnio.value] || ['ayuntamiento'];
-    const labels = { ayuntamiento:'Ayuntamiento', gobernatura:'Gobernatura', diputacion_local:'Diputación Local' };
+    const labels = { ayuntamiento:'Ayuntamiento', gobernatura:'Gobernatura', diputacion_local:'Diputación Local', diputacion_federal:'Diputación Federal' };
     elElec.innerHTML = elecciones.map(e => `<option value="${e}">${labels[e]||e}</option>`).join('');
 }
 
 function actualizarMunicipios() {
     selMunicipios.clear(); selSecciones.clear();
     const tipo = elElec.value;
-    const esDL = tipo === 'diputacion_local';
+    const esDL = tipo === 'diputacion_local' || tipo === 'diputacion_federal';
     document.getElementById('label-municipio').textContent = esDL ? 'Distrito' : 'Municipio';
     let munsRaw = [...new Set(datosActuales.map(r => r[colsActuales.municipio]).filter(Boolean))];
     munsRaw = esDL ? munsRaw.sort((a,b) => (parseInt(String(a).match(/\d+/))||0) - (parseInt(String(b).match(/\d+/))||0)) : munsRaw.sort();
@@ -461,10 +482,14 @@ document.getElementById('mapa-vista').addEventListener('change', actualizarMapa)
 
 function actualizarMapaVista() {
     const sel = document.getElementById('mapa-vista');
-    const esDL = elElec.value === 'diputacion_local';
-    sel.innerHTML = esDL
-        ? '<option value="secciones">Secciones</option><option value="distritos">Distritos</option>'
-        : '<option value="secciones">Secciones</option><option value="municipios">Municipios</option>';
+    const tipo = elElec.value;
+    if (tipo === 'diputacion_local') {
+        sel.innerHTML = '<option value="secciones">Secciones</option><option value="distritos">Distritos</option>';
+    } else if (tipo === 'diputacion_federal') {
+        sel.innerHTML = '<option value="secciones">Secciones</option>';
+    } else {
+        sel.innerHTML = '<option value="secciones">Secciones</option><option value="municipios">Municipios</option>';
+    }
 }
 
 // Fullscreen
@@ -1130,7 +1155,7 @@ function renderTabla(datos, cols) {
     const el = document.getElementById('tabla-secciones');
     if (!datos.length) { el.innerHTML = '<p style="padding:1rem;color:var(--text-muted)">Sin datos</p>'; return; }
 
-    const locHeader = elElec.value === 'diputacion_local' ? 'Distrito' : 'Municipio';
+    const locHeader = (elElec.value === 'diputacion_local' || elElec.value === 'diputacion_federal') ? 'Distrito' : 'Municipio';
     const thead = `<thead><tr><th>Sección</th><th>${locHeader}</th><th>Lista Nominal</th><th>Votos</th><th>Part.</th><th>1er Lugar</th><th>Votos</th><th>2do Lugar</th><th>Votos</th><th>3er Lugar</th><th>Votos</th></tr></thead>`;
 
     if (tablaVista === 'coalicion') {

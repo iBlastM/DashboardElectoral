@@ -75,6 +75,7 @@
           "CQ"
         ],
         "MARIA CELSA AVELINO GARCIA": [
+          "QI",
           "ES",
           "MORENA",
           "PT",
@@ -112,7 +113,7 @@
         "MARICRUZ RESENDIZ VEGA": [
           "ES"
         ],
-        "OEL PEDRAZA COLIN": [
+        "JOEL PEDRAZA COLIN": [
           "MORENA"
         ],
         "NORMA GUDIÑO HERNANDEZ": [
@@ -122,6 +123,9 @@
           "CQ"
         ],
         "FATIMA ABIGAIL HURTADO CASTAÑON": [
+          "QI"
+        ],
+        "MANUEL AGUILLÓN IBARRA": [
           "QI"
         ],
         "MA. ANTONIETA PUEBLA VEGA": [
@@ -2198,6 +2202,7 @@
           "MC"
         ],
         "VIRGINIA LOPEZ ORDAZ": [
+          "PVEM",
           "RSP"
         ],
         "MARIA ROSALBA HURTADO SALERO": [
@@ -2433,6 +2438,310 @@
       "DISTRITO 2": {
         "MARIA EUGENIA VELEZ GUZMAN": [
           "MC"
+        ]
+      }
+    }
+  },
+  "diputacion_federal": {
+    "2024": {
+      "DISTRITO 1": {
+        "Luz María Quintanar Feregrino": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Gilberto Herrera Ruiz": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-PT",
+          "PVEM-MORENA",
+          "MORENA-PT"
+        ],
+        "Arturo Calderón Ruanova": [
+          "MC"
+        ]
+      },
+      "DISTRITO 2": {
+        "Germaín Garfias Alcántara": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Ricardo Astudillo Suárez": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-PT",
+          "PVEM-MORENA",
+          "MORENA-PT"
+        ],
+        "Laura Zitlally Rubio de la Isla": [
+          "MC"
+        ]
+      },
+      "DISTRITO 3": {
+        "Ma. Lorena García Jimeno Alcocer": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Rodrigo Carrera Ávalos": [
+          "PVEM"
+        ],
+        "Sandra Beatriz Vázquez Meza": [
+          "PT"
+        ],
+        "Verónica Martínez Estrada": [
+          "MC"
+        ],
+        "Maribel Barrón Soto": [
+          "MORENA"
+        ]
+      },
+      "DISTRITO 4": {
+        "Roberto Sosa Pichardo": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Cristina del Llano Feregrino": [
+          "PVEM"
+        ],
+        "Pedro Carrasco Trejo": [
+          "PT"
+        ],
+        "Elba Carolina Íñiguez Vargas": [
+          "MC"
+        ],
+        "Ma. Gabriela Michaus Rocha": [
+          "MORENA"
+        ]
+      },
+      "DISTRITO 5": {
+        "Mario Calzada Mercado": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Bárbara Escobedo Luján": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-PT",
+          "PVEM-MORENA",
+          "MORENA-PT"
+        ],
+        "Javier Pérez Rocha Malcher": [
+          "MC"
+        ]
+      },
+      "DISTRITO 6": {
+        "Beatriz Guadalupe Marmolejo Rojas": [
+          "PAN",
+          "PRI",
+          "PRD",
+          "PAN-PRI-PRD",
+          "PAN-PRI",
+          "PAN-PRD",
+          "PRI-PRD"
+        ],
+        "Luis Humberto Fernández Fuentes": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-PT",
+          "PVEM-MORENA",
+          "MORENA-PT"
+        ],
+        "Sin candidatura": [
+          "MC"
+        ]
+      }
+    },
+    "2021": {
+      "DISTRITO 1": {
+        "SONIA ROCHA ACOSTA": [
+          "PAN"
+        ],
+        "ROSA MARICELA OLVERA ALVARADO": [
+          "PRI"
+        ],
+        "JOCELYN HERNANDEZ DOMINGUEZ": [
+          "PRD"
+        ],
+        "LAURA ALEXA HERNANDEZ BALBOA": [
+          "PVEM"
+        ],
+        "JOSE LUIS MARTINEZ BARRAGAN": [
+          "PT"
+        ],
+        "ANA MARIA MENESES LOPEZ": [
+          "MC"
+        ],
+        "SALOMON GARCIA MONTES": [
+          "MORENA"
+        ],
+        "RAFAELA ORTEGA DIAZ": [
+          "PES"
+        ],
+        "JOSE IGNACIO ALBERTO RUBIO CHAVEZ": [
+          "RSP"
+        ],
+        "PEDRO SIERRA PEREZ": [
+          "FXM"
+        ]
+      },
+      "DISTRITO 2": {
+        "MARCIA SOLORZANO GALLEGO": [
+          "PAN"
+        ],
+        "JOSE HUGO CABRERA RUIZ": [
+          "PRI"
+        ],
+        "YLSSE LORENA PONCE HERNANDEZ": [
+          "PRD"
+        ],
+        "JORGE LUIS MONTES NIEVES": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "MIRNA DIANA CHAVEZ PEREZ": [
+          "MC"
+        ],
+        "ERIKA LEE GUTIERREZ": [
+          "PES"
+        ],
+        "LIZBETH NOGUEZ ZUÑIGA": [
+          "RSP"
+        ],
+        "CLAUDIA ORDAZ GUZMAN": [
+          "FXM"
+        ]
+      },
+      "DISTRITO 3": {
+        "IGNACIO LOYOLA VERA": [
+          "PAN"
+        ],
+        "ROSA MARTHA PACHECO ANGELES": [
+          "PRI"
+        ],
+        "SANDRA EDITH LOPEZ OJEDA": [
+          "PRD"
+        ],
+        "BEATRIZ SILVIA ROBLES GUTIERREZ": [
+          "PVEM",
+          "PT",
+          "MORENA",
+          "PVEM-MORENA-PT",
+          "PVEM-MORENA",
+          "PVEM-PT",
+          "MORENA-PT"
+        ],
+        "MARIA PERUSQUIA FLORES": [
+          "MC"
+        ],
+        "ANAHI CAROLINA RAMIREZ AYALA": [
+          "PES"
+        ],
+        "JUAN ERREGUIN OLVERA": [
+          "RSP"
+        ],
+        "RAMON STUARDO LLAMAS SERVIN": [
+          "FXM"
+        ]
+      },
+      "DISTRITO 4": {
+        "FELIPE FERNANDO MACIAS OLVERA": [
+          "PAN"
+        ],
+        "JUAN GERARDO VAZQUEZ HERRERA": [
+          "PRI"
+        ],
+        "HUMBERTO GERARDO RUIZ LOPEZ": [
+          "PRD"
+        ],
+        "ROSA MARIA ECHEVERRIA PINEDA": [
+          "PVEM"
+        ],
+        "ANA YOLANDA LOPEZ DOMINGUEZ": [
+          "PT"
+        ],
+        "JOSUE ALBERTO QUINO ANDRADE": [
+          "MC"
+        ],
+        "PALOMA ARCE ISLAS": [
+          "MORENA"
+        ],
+        "SANTIAGO FABIAN ARROYO SEGUEDO": [
+          "PES"
+        ],
+        "CLAUDIA LUCIA NAVA SERRANO": [
+          "RSP"
+        ],
+        "GABRIELA ARGUELLES SOLIS": [
+          "FXM"
+        ]
+      },
+      "DISTRITO 5": {
+        "ERIKA DE LOS ANGELES DIAZ VILLALON": [
+          "PAN"
+        ],
+        "MARIA FERNANDA MARTINEZ AGUILAR": [
+          "PRI"
+        ],
+        "LETICIA REAL MEDINA": [
+          "PRD"
+        ],
+        "JOSE CARLOS BAÑUELOS MIER": [
+          "PVEM"
+        ],
+        "YOHUANY NAVARRO ALVAREZ": [
+          "PT"
+        ],
+        "MARIA EUGENIA PAULINA MORALES OCHOA": [
+          "MC"
+        ],
+        "OMAR DE JESUS NAVA": [
+          "MORENA"
+        ],
+        "JOSE ALFREDO PIÑA GONZALEZ": [
+          "PES"
+        ],
+        "CARLA CAROLINA ALCANTARA PADILLA": [
+          "RSP"
+        ],
+        "DULCE JACQUELINA HUERTA TELLEZ": [
+          "FXM"
         ]
       }
     }
