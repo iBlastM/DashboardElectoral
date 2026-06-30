@@ -1,11 +1,11 @@
 {
   "name": "dashboard-electoral",
   "version": "1.0.0",
-  "description": "Panel Electoral con autenticación - Metrix",
+  "description": "Panel Electoral con autenticaci\u00f3n - Metrix",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "node api.js && node server.js",
+    "dev": "node api.js && node server.js",
     "seed": "node seed.js"
   },
   "dependencies": {
