@@ -1,5 +1,4 @@
 # --- Entorno y configuración sensible ---
-.env
 node_modules/
 
 # --- Datos crudos / intermedios ---
@@ -27,7 +26,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.env
 .venv/
 
 # --- Sistema operativo ---
@@ -46,3 +44,4 @@ temp_interactive_push.bat
 
 # --- Desarrollo local (sin autenticación) ---
 index_local.html
+config.bat
