@@ -477,6 +477,9 @@ function renderPartidos(datos, cols) {
 
 
 // ── Mapa ──
+// Estilos base de OpenFreeMap (MapLibre): gratuitos, sin API key ni registro.
+const MAP_STYLE_LIGHT = 'https://tiles.openfreemap.org/styles/positron';
+const MAP_STYLE_DARK  = 'https://tiles.openfreemap.org/styles/dark';
 let geoData = null, geoMunicipios = null, geoDistritos = null;
 document.getElementById('mapa-vista').addEventListener('change', actualizarMapa);
 
@@ -606,12 +609,13 @@ function actualizarMapa() {
     const zoom = hasFilter ? (span > 0.5 ? 8.5 : span > 0.1 ? 10 : 10.5) : (span > 1.5 ? 6.8 : span > 0.5 ? 2.5 : 10);
 
     Plotly.react('mapa-electoral', [{
-        type:'choroplethmapbox', geojson:geo, locations:locs, z:z,
+        type:'choroplethmap', geojson:geo, locations:locs, z:z,
+        below:'', // polígonos sobre todas las capas del mapa base (calles, carreteras, etiquetas)
         colorscale:cscale, zmin:0, zmax:Math.max(N-1,1),
         showscale:false, text:texts, hoverinfo:'text',
         marker:{ opacity:0.9, line:{ width:0.8, color:'#000000' } }
     }], {
-        mapbox:{ style: isDark?'carto-darkmatter':'carto-positron', center:{lat:centerLat,lon:centerLon}, zoom },
+        map:{ style: isDark?MAP_STYLE_DARK:MAP_STYLE_LIGHT, center:{lat:centerLat,lon:centerLon}, zoom },
         paper_bgcolor:bg, margin:{t:0,b:0,l:0,r:0}, showlegend:false
     }, { responsive:true, displayModeBar:false });
 
