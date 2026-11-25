@@ -45,3 +45,7 @@ temp_interactive_push.bat
 # --- Desarrollo local (sin autenticación) ---
 index_local.html
 config.bat
+# Proteccion de credenciales locales (Metrix Clean 4.0)
+.env
+.env.*
+!.env.example
